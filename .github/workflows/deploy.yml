@@ -21,5 +21,4 @@ jobs:
 
 # TODO: 
 #  - Add step to run tests
-#  - Add step to build and push Docker image to ECR
 #  - Add step to deploy infrastructure
