@@ -26,6 +26,7 @@ resource "aws_iam_role" "github_actions_role" {
   })
 }
 
+# TODO once finished make a role for gh actions that deploys only resources needed
 resource "aws_iam_role_policy_attachment" "github_actions_policy_attach" {
   role       = aws_iam_role.github_actions_role.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
