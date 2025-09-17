@@ -18,3 +18,8 @@ jobs:
         with:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: eu-west-2
+
+# TODO: 
+#  - Add step to run tests
+#  - Add step to build and push Docker image to ECR
+#  - Add step to deploy infrastructure
