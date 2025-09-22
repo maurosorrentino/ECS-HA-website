@@ -16,7 +16,7 @@ jobs:
       - name: Set up AWS CLI with OIDC Role
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: eu-west-2
 
       - name: Setup Terraform
