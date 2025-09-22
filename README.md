@@ -3,4 +3,5 @@ TODO:
 - make basic test
 - finish deploy pipeline
 - make build and push docker image to ECR pipeline
+- add app pipeline
 - add PR pipeline
