@@ -1,13 +1,11 @@
-# TODO var
 resource "aws_iam_openid_connect_provider" "github" {
   url             = "https://token.actions.githubusercontent.com"
   client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"] # GitHub OIDC thumbprint
+  thumbprint_list = [var.GITHUB_THUMBPRINT] # GitHub OIDC thumbprint
 }
 
-# TODO add environment to var and put it in name
 resource "aws_iam_role" "github_actions_role" {
-  name = "GitHubActions<ProjectName>Role"
+  name = "${var.ENV}GitHubActionsProjectNameRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
