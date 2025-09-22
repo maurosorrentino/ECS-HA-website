@@ -16,7 +16,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to ${{ github.event.inputs.environment }} environment
+    name: Deploy infra to ${{ github.event.inputs.environment }} environment
     uses: ./.github/workflows/deploy_infrastructure.yml
     with:
       environment: ${{ github.event.inputs.environment }}
