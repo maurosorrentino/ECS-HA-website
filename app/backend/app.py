@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import boto3
+from sqlalchemy import create_engine, text
+import os
 
 app = FastAPI()
 
@@ -14,12 +15,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/do-something")
-async def do_something():
+# Database connection string (use ECS env vars)
+DB_USER = os.getenv("DB_USER", "postgres")
+DB_PASS = os.getenv("DB_PASS", "password")
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_NAME = os.getenv("DB_NAME", "testdb")
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:5432/{DB_NAME}"
+engine = create_engine(DATABASE_URL, echo=True, future=True)
+
+@app.get("/api/put-into-db")
+async def put_into_db():
     try:
-        rds = boto3.client("rds")
-        rds.describe_db_instances()
+        with engine.begin() as conn:
+            conn.execute(
+                text("INSERT INTO messages (content) VALUES (:content)"),
+                {"content": "Hello from FastAPI on ECS!"}
+            )
+        return {"status": "success"}
     except Exception as e:
         return {"status": "error", "details": str(e)}
-
-    return {"status": "success"}

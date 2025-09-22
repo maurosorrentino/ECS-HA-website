@@ -1,4 +1,4 @@
-name: Deploy Environment
+name: Deploy Infrastructure
 on:
   workflow_call:
     inputs:

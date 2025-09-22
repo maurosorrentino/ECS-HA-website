@@ -1,4 +1,4 @@
-name: ECS-HA-failover-website-pipeline
+name: infrastructure-pipeline
 
 on:
   push:
@@ -12,12 +12,11 @@ on:
         type: choice
         options:
           - dev
-          - staging
           - prod
 
 jobs:
   deploy:
     name: Deploy to ${{ github.event.inputs.environment }} environment
-    uses: ./.github/workflows/deploy.yml
+    uses: ./.github/workflows/deploy_infrastructure.yml
     with:
       environment: ${{ github.event.inputs.environment }}
