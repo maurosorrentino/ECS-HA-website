@@ -1,23 +1,23 @@
-# name: ecr-ecs-pipeline
+name: ecr-ecs-pipeline
 
-# on:
-#   push:
-#     tags:
-#       - 'v*'
-#   workflow_dispatch:
-#     inputs:
-#       environment:
-#         description: 'Environment to deploy to'
-#         required: true
-#         default: 'dev'
-#         type: choice
-#         options:
-#           - dev
-#           - prod
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - prod
 
-# jobs:
-#   deploy:
-#     name: Deploy images to ${{ github.event.inputs.environment }} environment
-#     uses: ./.github/workflows/deploy_ecr_ecs_images.yml
-#     with:
-#       environment: ${{ github.event.inputs.environment }}
+jobs:
+  deploy:
+    name: Deploy images to ${{ github.event.inputs.environment }} environment
+    uses: ./.github/workflows/deploy_ecr_ecs_images.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}

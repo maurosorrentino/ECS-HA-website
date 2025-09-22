@@ -19,6 +19,24 @@ jobs:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: eu-west-2
 
-# TODO: 
-#  - Add step to run tests
-#  - Add step to deploy infrastructure
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        working-directory: terraform-infrastructure
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: terraform-infrastructure
+        run: terraform plan
+
+      - name: Terraform Apply
+        working-directory: terraform-infrastructure
+        run: terraform apply -auto-approve
+
+      - name: Get Terraform Outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-outputs-${{ inputs.environment }}
+          path: terraform-infrastructure/outputs.json
+          retention-days: 1
