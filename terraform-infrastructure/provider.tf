@@ -11,6 +11,12 @@ terraform {
 
 provider "aws" {
   region = "eu-west-2"
+
+  default_tags {
+    tags = {
+      Project = "ECS-HA-failover-website"
+    }
+  }
 }
 
 data "aws_caller_identity" "current" {}
