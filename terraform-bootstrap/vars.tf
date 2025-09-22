@@ -15,3 +15,9 @@ variable "GITHUB_THUMBPRINT" {
   type        = string
   default     = "6938fd4d98bab03faadb97b34396831e3780aea1"
 }
+
+variable "GITHUB_REPO" {
+  description = "The GitHub repository in the format owner/repo"
+  type        = string
+  default     = "maurosorrentino/ECS-HA-failover-website"
+}

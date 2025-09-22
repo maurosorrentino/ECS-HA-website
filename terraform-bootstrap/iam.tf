@@ -17,7 +17,10 @@ resource "aws_iam_role" "github_actions_role" {
       Action = "sts:AssumeRoleWithWebIdentity"
       Condition = {
         StringLike = {
-          "token.actions.githubusercontent.com:sub" = "repo:maurosorrentino/ECS-HA-failover-website/:ref:refs/heads/main"
+          "token.actions.githubusercontent.com:sub" = [
+            "repo:${var.GITHUB_REPO}:ref:refs/heads/main",
+            "repo:${var.GITHUB_REPO}:environments:*"
+          ]
         }
       }
     }]
