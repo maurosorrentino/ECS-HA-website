@@ -2,7 +2,7 @@ name: ECS-HA-failover-website-pipeline
 
 on:
   push:
-    branches: [main]
+    branches: [feature]
   workflow_dispatch:
     inputs:
       environment:
