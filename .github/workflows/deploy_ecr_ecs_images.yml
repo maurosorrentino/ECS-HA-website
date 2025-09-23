@@ -1,0 +1,42 @@
+name: Deploy Infrastructure
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up AWS CLI with OIDC Role
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: eu-west-2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        working-directory: terraform-infrastructure
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: terraform-infrastructure
+        run: terraform plan
+
+      - name: Terraform Apply
+        working-directory: terraform-infrastructure
+        run: terraform apply -auto-approve
+
+      - name: Get Terraform Outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-outputs-${{ inputs.environment }}
+          path: terraform-infrastructure/outputs.json
+          retention-days: 1
