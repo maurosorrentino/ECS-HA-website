@@ -1,4 +1,4 @@
-name: Deploy Infrastructure
+name: Deploy ECS images
 on:
   workflow_call:
     inputs:
