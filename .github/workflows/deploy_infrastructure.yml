@@ -8,11 +8,16 @@ on:
 
 jobs:
   deploy:
-    environment: ${{ inputs.environment }}
+    environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: DEBUG REMOVE LATER
+        run: |
+          env
+          echo "- ${{ inputs.environment }} - ${{ github.event.inputs.environment }} - ${{ secrets.AWS_ROLE_ARN }}"
 
       - name: Set up AWS CLI with OIDC Role
         uses: aws-actions/configure-aws-credentials@v3
