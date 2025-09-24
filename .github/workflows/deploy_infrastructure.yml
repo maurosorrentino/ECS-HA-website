@@ -19,6 +19,11 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: eu-west-2
 
+      # TODO REMOVE LATER
+      - name: Test AWS caller identity
+        if: always()
+        run: aws sts get-caller-identity
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
