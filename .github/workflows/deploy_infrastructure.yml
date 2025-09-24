@@ -14,11 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: DEBUG REMOVE LATER
-        run: |
-          env
-          echo "- ${{ inputs.environment }} - ${{ github.event.inputs.environment }} - ${{ secrets.AWS_ROLE_ARN }}"
-
       - name: Set up AWS CLI with OIDC Role
         uses: aws-actions/configure-aws-credentials@v3
         with:
