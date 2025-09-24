@@ -1,7 +1,7 @@
 resource "aws_iam_openid_connect_provider" "github" {
   url             = "https://token.actions.githubusercontent.com"
   client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = [var.GITHUB_THUMBPRINT] # GitHub OIDC thumbprint
+  thumbprint_list = [var.GITHUB_THUMBPRINT]
 }
 
 resource "aws_iam_role" "github_actions_role" {
@@ -19,7 +19,7 @@ resource "aws_iam_role" "github_actions_role" {
         StringLike = {
           "token.actions.githubusercontent.com:sub" = [
             "repo:${var.GITHUB_REPO}:ref:refs/tags/v*",
-            "repo:${var.GITHUB_REPO}:environments:*"
+            "repo:${var.GITHUB_REPO}:environment:*"
           ]
         }
       }
