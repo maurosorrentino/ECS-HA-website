@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "terraform_state" {
-    bucket = "${var.ENV}-terraform-state-department-name"
+    bucket = "terraform-state-department-name"
 }
 
 resource "aws_dynamodb_table" "terraform_locks" {
