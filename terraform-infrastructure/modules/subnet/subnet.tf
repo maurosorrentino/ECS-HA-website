@@ -6,6 +6,4 @@ resource "aws_subnet" "subnet_private" {
     tags = {
         Name = var.name
     }
-
-    depends_on = [aws_vpc.project_name_vpc]
 }
