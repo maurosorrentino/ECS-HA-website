@@ -12,50 +12,26 @@ resource "aws_subnet" "project_name_public" {
   depends_on = [aws_vpc.project_name_vpc]
 }
 
-module "project_name_private_subnet_a_backend" {
-  source            = "./modules/subnet"
-  availability_zone = "${var.region}a"
-  cidr_block        = "10.0.2.0/24" # 256 IPs
-  name              = "project-name-backend-private-subnet-${var.region}a"
-  depends_on        = [aws_vpc.project_name_vpc]
+resource "aws_subnet" "backend_private_subnets" {
+  for_each = { for s in local.backend_subnets : s.name => s }
+
+  vpc_id                  = aws_vpc.project_name_vpc.id
+  cidr_block              = each.value.cidr
+  availability_zone       = each.value.az
+
+  tags = {
+    Name = each.value.name
+  }
 }
 
-module "project_name_private_subnet_b_backend" {
-  source            = "./modules/subnet"
-  availability_zone = "${var.region}b"
-  cidr_block        = "10.0.4.0/24" # 256 IPs
-  name              = "project-name-backend-private-subnet-${var.region}b"
-  depends_on        = [aws_vpc.project_name_vpc]
-}
+resource "aws_subnet" "frontend_private_subnets" {
+  for_each = { for s in local.frontend_subnets : s.name => s }
 
-module "project_name_private_subnet_c_backend" {
-  source            = "./modules/subnet"
-  availability_zone = "${var.region}c"
-  cidr_block        = "10.0.6.0/24" # 256 IPs
-  name              = "project-name-backend-private-subnet-${var.region}c"
-  depends_on        = [aws_vpc.project_name_vpc]
-}
+  vpc_id                  = aws_vpc.project_name_vpc.id
+  cidr_block              = each.value.cidr
+  availability_zone       = each.value.az
 
-module "project_name_private_subnet_a_frontend" {
-  source            = "./modules/subnet"
-  availability_zone = "${var.region}a"
-  cidr_block        = "10.0.1.0/24" # 256 IPs
-  name              = "project-name-frontend-private-subnet-${var.region}a"
-  depends_on        = [aws_vpc.project_name_vpc]
-}
-
-module "project_name_private_subnet_b_frontend" {
-  source            = "./modules/subnet"
-  availability_zone = "${var.region}b"
-  cidr_block        = "10.0.3.0/24" # 256 IPs
-  name              = "project-name-frontend-private-subnet-${var.region}b"
-  depends_on        = [aws_vpc.project_name_vpc]
-}
-
-module "project_name_private_subnet_c_frontend" {
-  source            = "./modules/subnet"
-  availability_zone = "${var.region}c"
-  cidr_block        = "10.0.5.0/24" # 256 IPs
-  name              = "project-name-frontend-private-subnet-${var.region}c"
-  depends_on        = [aws_vpc.project_name_vpc]
+  tags = {
+    Name = each.value.name
+  }
 }
