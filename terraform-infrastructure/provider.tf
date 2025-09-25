@@ -14,7 +14,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project = "ECS-HA-failover-website"
+      Project = var.project_name
     }
   }
 }

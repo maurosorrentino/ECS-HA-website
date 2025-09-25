@@ -6,7 +6,7 @@ resource "aws_subnet" "project_name_public" {
   availability_zone       = "${var.region}a"
 
   tags = {
-    Name = "project-name-public-subnet"
+    Name = "${var.project_name}-public-subnet"
   }
   depends_on = [aws_vpc.project_name_vpc]
 }

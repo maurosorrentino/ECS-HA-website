@@ -7,7 +7,7 @@ resource "aws_route_table" "project_name_public_rt" {
   }
 
   tags = {
-    Name = "project-name-public-rt"
+    Name = "${var.project_name}-public-rt"
   }
 
   depends_on = [aws_internet_gateway.project_name_igw]
