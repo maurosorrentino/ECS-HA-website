@@ -1,5 +1,4 @@
-# 
-resource "aws_route_table" "public" {
+resource "aws_route_table" "project_name_public_rt" {
     vpc_id = aws_vpc.project_name_vpc.id
 
     route {
@@ -15,8 +14,8 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public" {
-    subnet_id      = aws_subnet.public.id
-    route_table_id = aws_route_table.public.id
+    subnet_id      = aws_subnet.project_name_public.id
+    route_table_id = aws_route_table.project_name_public_rt.id
 }
 
 # TODO add private route table and NAT gateway for private subnets
