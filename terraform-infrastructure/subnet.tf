@@ -22,6 +22,7 @@ resource "aws_subnet" "backend_private_subnets" {
   tags = {
     Name = each.value.name
   }
+  depends_on = [aws_vpc.project_name_vpc]
 }
 
 resource "aws_subnet" "frontend_private_subnets" {
@@ -34,4 +35,5 @@ resource "aws_subnet" "frontend_private_subnets" {
   tags = {
     Name = each.value.name
   }
+  depends_on = [aws_vpc.project_name_vpc]
 }
