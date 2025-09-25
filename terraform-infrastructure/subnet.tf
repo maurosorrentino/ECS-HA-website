@@ -1,7 +1,7 @@
 resource "aws_subnet" "project_name_public" {
   vpc_id = aws_vpc.project_name_vpc.id
   # I think I only need one IP for ALB and 1 for nat gateway
-  cidr_block              = "172.16.0.0/28" # 16 IPs
+  cidr_block              = "10.1.0.0/28" # 16 IPs
   map_public_ip_on_launch = true
   availability_zone       = "${var.region}a"
 
