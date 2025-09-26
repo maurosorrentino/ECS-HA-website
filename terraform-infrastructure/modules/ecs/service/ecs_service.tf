@@ -16,7 +16,3 @@ resource "aws_ecs_service" "service" {
     container_port   = 80
   }
 }
-
-output "ecs_task_arn" {
-  value = aws_ecs_service.service.arn
-}

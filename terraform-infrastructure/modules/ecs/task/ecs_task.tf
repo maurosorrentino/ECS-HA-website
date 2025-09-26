@@ -31,3 +31,7 @@ resource "aws_ecs_task_definition" "task" {
     ]
   }
 }
+
+output "ecs_task_arn" {
+  value = aws_ecs_task_definition.task.arn
+}
