@@ -15,9 +15,9 @@ resource "aws_subnet" "project_name_public_subnet" {
 resource "aws_subnet" "private_subnets" {
   for_each = { for s in local.private_subnets : s.name => s }
 
-  vpc_id                  = aws_vpc.project_name_vpc.id
-  cidr_block              = each.value.cidr
-  availability_zone       = each.value.az
+  vpc_id            = aws_vpc.project_name_vpc.id
+  cidr_block        = each.value.cidr
+  availability_zone = each.value.az
 
   tags = {
     Name = each.value.name

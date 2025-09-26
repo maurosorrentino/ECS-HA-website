@@ -1,10 +1,9 @@
-# TODO loop or module
 resource "aws_lb" "project_name_frontend_alb" {
   name               = "frontend-alb"
-  internal           = false
+  internal           = false # cloudfront in front of it
   load_balancer_type = "application"
-  security_groups    = 
-  subnets            = [aws_subnet.project_name_public_subnet.id]
+  security_groups    = # TODO https from cloudfront
+  subnets            = [aws_subnet.project_name_public_subnet.id] # TODO 3 public subnets
 
   enable_deletion_protection = false
   idle_timeout               = 60
