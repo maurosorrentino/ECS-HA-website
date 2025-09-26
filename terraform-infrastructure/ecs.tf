@@ -7,44 +7,25 @@ resource "aws_ecs_cluster" "project_name_ecs_cluster" {
   }
 }
 
-resource "aws_ecs_task_definition" "frontend_task" {
-  family = "service"
-  container_definitions = jsonencode([
-    {
-      name      = "first"
-      image     = "service-first"
-      cpu       = 10
-      memory    = 512
-      essential = true
-      portMappings = [
-        {
-          containerPort = 80
-          hostPort      = 80
-        }
-      ]
-    },
-    {
-      name      = "second"
-      image     = "service-second"
-      cpu       = 10
-      memory    = 256
-      essential = true
-      portMappings = [
-        {
-          containerPort = 443
-          hostPort      = 443
-        }
-      ]
-    }
-  ])
+module "frontend_ecs_task" {
+  source    = "./modules/task/ecs"
+  task_name = "frontend"
+}
 
-  volume {
-    name      = "service-storage"
-    host_path = "/ecs/service-storage"
-  }
+module "backend_ecs_task" {
+  source    = "./modules/task/ecs"
+  task_name = "backend"
+}
 
-  placement_constraints {
-    type       = "memberOf"
-    expression = "attribute:ecs.availability-zone in [us-west-2a, us-west-2b]"
-  }
+# TODO ALB, sg
+module "frontend_ecs_service" {
+  source                = "./modules/service/ecs"
+  service_name          = "frontend"
+  cluster_id            = aws_ecs_cluster.project_name_ecs_cluster.id
+  task_arn              = module.frontend_ecs_task.ecs_task_arn
+  subnets_ids           = [ for name, subnet in aws_subnet.private_subnets : subnet.id if contains(name, "frontend") ]
+  security_groups_ids   = 
+  alb_target_group_arn  = 
+
+  depends_on = [aws_subnet.private_subnets, alb_target_group, sg]
 }

@@ -49,6 +49,16 @@ locals {
       name = "${var.project_name}-alb-private-subnet-a"
       cidr = "10.0.10.0/24"
       az   = "eu-west-2a"
+    },
+    {
+      name = "${var.project_name}-alb-private-subnet-b"
+      cidr = "10.0.11.0/24"
+      az   = "eu-west-2b"
+    },
+    {
+      name = "${var.project_name}-alb-private-subnet-c"
+      cidr = "10.0.12.0/24"
+      az   = "eu-west-2c"
     }
   ]
 }
