@@ -27,5 +27,5 @@ module "frontend_ecs_service" {
   security_groups_ids   = #TODO
   alb_target_group_arn  = aws_lb_target_group.project_name_frontend_tg.arn
 
-  depends_on = [aws_subnet.private_subnets, alb_target_group, sg] #TODO
+  depends_on = [aws_subnet.private_subnets, aws_lb_target_group.project_name_frontend_tg, sg] #TODO
 }
