@@ -1,4 +1,5 @@
 locals {
+  # 256 IP addresses per subnet
   private_subnets = [
     {
       name = "${var.project_name}-backend-private-subnet-a"
@@ -58,6 +59,25 @@ locals {
     {
       name = "${var.project_name}-alb-private-subnet-c"
       cidr = "10.0.12.0/24"
+      az   = "eu-west-2c"
+    }
+  ]
+
+  # 16 IP addresses per subnet
+  public_subnets = [
+    {
+      name = "${var.project_name}-public-subnet-a"
+      cidr = "10.0.13.0/28"
+      az   = "eu-west-2a"
+    },
+    {
+      name = "${var.project_name}-public-subnet-b"
+      cidr = "10.0.14.0/28"
+      az   = "eu-west-2b"
+    },
+    {
+      name = "${var.project_name}-public-subnet-c"
+      cidr = "10.0.15.0/28"
       az   = "eu-west-2c"
     }
   ]

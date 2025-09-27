@@ -1,13 +1,14 @@
 # TODO 3 public subnets with loop 
 resource "aws_subnet" "project_name_public_subnet" {
+  for_each = { for s in local.public_subnets : s.name => s }
+
   vpc_id = aws_vpc.project_name_vpc.id
-  # TODO I think I only need 1 IP for ALBs and 1 for nat gateway
-  cidr_block              = "10.0.16.0/28" # 16 IPs
+  cidr_block              = each.value.cidr
   map_public_ip_on_launch = true
-  availability_zone       = "${var.region}a"
+  availability_zone       = each.value.az
 
   tags = {
-    Name = "${var.project_name}-public-subnet"
+    Name = each.value.name
   }
   depends_on = [aws_vpc.project_name_vpc]
 }
