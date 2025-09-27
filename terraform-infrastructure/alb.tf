@@ -2,10 +2,9 @@ resource "aws_lb" "project_name_frontend_alb" {
   name               = "frontend-alb"
   internal           = false # cloudfront in front of it
   load_balancer_type = "application"
-  security_groups    = # TODO https from cloudfront
-  subnets            = [aws_subnet.project_name_public_subnet.id] # TODO 3 public subnets
-
-  enable_deletion_protection = false
+  security_groups    = [aws_security_group.frontend_alb_sg.id]
+  subnets            = [for name, subnet in aws_subnet.project_name_public_subnet : subnet.id]
+  enable_deletion_protection = true
   idle_timeout               = 60
   drop_invalid_header_fields = true
 
@@ -13,7 +12,7 @@ resource "aws_lb" "project_name_frontend_alb" {
     Name = "${var.project_name}-frontend-alb"
   }
 
-  depends_on = [aws_subnet.project_name_public_subnet, sg]
+  depends_on = [aws_subnet.project_name_public_subnet, aws_security_group.frontend_alb_sg]
 }
 
 resource "aws_lb_target_group" "project_name_frontend_tg" {

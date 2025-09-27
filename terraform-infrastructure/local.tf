@@ -1,5 +1,5 @@
 locals {
-  # 256 IP addresses per subnet
+  # 256 IPs addresses per subnet
   private_subnets = [
     {
       name = "${var.project_name}-backend-private-subnet-a"
@@ -63,7 +63,7 @@ locals {
     }
   ]
 
-  # 16 IP addresses per subnet
+  # 16 IPs addresses per subnet
   public_subnets = [
     {
       name = "${var.project_name}-public-subnet-a"
