@@ -25,3 +25,4 @@ resource "aws_security_group" "frontend_alb_sg" {
 
   depends_on = [aws_vpc.project_name_vpc, cloudfront] #TODO
 }
+

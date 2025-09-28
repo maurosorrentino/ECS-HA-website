@@ -1,9 +1,9 @@
 resource "aws_lb" "project_name_frontend_alb" {
-  name               = "frontend-alb"
-  internal           = false # cloudfront in front of it
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.frontend_alb_sg.id]
-  subnets            = [for name, subnet in aws_subnet.project_name_public_subnet : subnet.id]
+  name                       = "frontend-alb"
+  internal                   = false # cloudfront in front of it
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.frontend_alb_sg.id]
+  subnets                    = [for name, subnet in aws_subnet.project_name_public_subnet : subnet.id]
   enable_deletion_protection = true
   idle_timeout               = 60
   drop_invalid_header_fields = true
