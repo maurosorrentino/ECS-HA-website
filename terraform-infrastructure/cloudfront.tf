@@ -1,7 +1,6 @@
 resource "aws_cloudfront_distribution" "frontend" {
-  enabled             = true
-  is_ipv6_enabled     = true
-  default_root_object = # TODO
+  enabled         = true
+  is_ipv6_enabled = true
 
   origin {
     domain_name = aws_lb.project_name_frontend_alb.dns_name
@@ -18,8 +17,8 @@ resource "aws_cloudfront_distribution" "frontend" {
   default_cache_behavior {
     target_origin_id = "alb-origin"
 
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
+    allowed_methods = ["GET", "HEAD", "OPTIONS"]
+    cached_methods  = ["GET", "HEAD"]
 
     # Redirect HTTP clients to HTTPS at the edge
     viewer_protocol_policy = "redirect-to-https"
@@ -31,15 +30,15 @@ resource "aws_cloudfront_distribution" "frontend" {
       }
     }
 
-    min_ttl     = 0 # min_ttl = 0 means CloudFront can revalidate with the origin on every request if needed.
-    default_ttl = 3600 # 1 hour, minimum time CloudFront keeps an object in cache before it checks the origin for an updated version.
+    min_ttl     = 0     # min_ttl = 0 means CloudFront can revalidate with the origin on every request if needed.
+    default_ttl = 3600  # 1 hour, minimum time CloudFront keeps an object in cache before it checks the origin for an updated version.
     max_ttl     = 86400 # 24 hours, maximum time CloudFront keeps an object in cache before it checks the origin for an updated version.
 
     # Compress text-based responses (gzip/brotli where supported)
     compress = true
   }
 
-    # can cache based on specific API as well
+  # can cache based on specific API as well
   # ordered_cache_behavior {
   #   path_pattern     = "/api/*"
   #   target_origin_id = "alb-origin"
@@ -53,8 +52,8 @@ resource "aws_cloudfront_distribution" "frontend" {
   # }
 
   logging_config {
-    bucket         = # TODO
-    prefix         = "cloudfront-logs/"
+    bucket = aws_s3_bucket.cloudfront_logs_s3.bucket_domain_name
+    prefix = "cloudfront-logs/"
   }
 
   viewer_certificate {
@@ -67,7 +66,7 @@ resource "aws_cloudfront_distribution" "frontend" {
     }
   }
 
-    tags = {
-        Name = "${var.project_name}-cloudfront"
-    }
+  tags = {
+    Name = "${var.project_name}-cloudfront"
+  }
 }
