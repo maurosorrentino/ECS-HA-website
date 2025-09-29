@@ -3,7 +3,7 @@ resource "aws_cloudfront_distribution" "frontend" {
   is_ipv6_enabled = true
 
   origin {
-    domain_name = aws_lb.project_name_frontend_alb.dns_name
+    domain_name = module.project_name_frontend_alb.alb_dns_name
     origin_id   = "alb-origin"
 
     custom_origin_config {
@@ -72,4 +72,6 @@ resource "aws_cloudfront_distribution" "frontend" {
   tags = {
     Name = "${var.project_name}-cloudfront"
   }
+
+  depends_on = [module.project_name_frontend_alb, aws_s3_bucket.cloudfront_logs_s3]
 }

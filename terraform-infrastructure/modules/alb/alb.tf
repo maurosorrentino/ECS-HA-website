@@ -37,3 +37,7 @@ resource "aws_lb_listener" "project_name_listener_https" {
     target_group_arn = aws_lb_target_group.project_name_tg.arn
   }
 }
+
+output "alb_dns_name" {
+  value = aws_lb.project_name_alb.dns_name
+}
