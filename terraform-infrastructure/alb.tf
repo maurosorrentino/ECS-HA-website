@@ -8,3 +8,14 @@ module "project_name_frontend_alb" {
 
   depends_on = [aws_subnet.project_name_public_subnet, aws_security_group.frontend_alb_sg]
 }
+
+module "project_name_backend_alb" {
+  source                = "./modules/alb"
+  alb_name              = "${var.project_name}-backend-alb"
+  alb_target_group_name = "${var.project_name}-backend-tg"
+  vpc_id                = aws_vpc.project_name_vpc.id
+  alb_security_groups   = [aws_security_group.backend_alb_sg.id]
+  alb_subnets           = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id]
+
+  depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.backend_alb_sg]
+}

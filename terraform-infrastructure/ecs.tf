@@ -7,24 +7,24 @@ resource "aws_ecs_cluster" "project_name_ecs_cluster" {
   }
 }
 
-module "frontend_ecs_task" {
+module "project_name_frontend_ecs_task" {
   source    = "./modules/task/ecs"
   task_name = "frontend"
 }
 
-module "backend_ecs_task" {
+module "project_name_backend_ecs_task" {
   source    = "./modules/task/ecs"
   task_name = "backend"
 }
 
-module "frontend_ecs_service" {
+module "project_name_frontend_ecs_service" {
   source                = "./modules/service/ecs"
   service_name          = "frontend"
   cluster_id            = aws_ecs_cluster.project_name_ecs_cluster.id
-  task_arn              = module.frontend_ecs_task.ecs_task_arn
+  task_arn              = module.project_name_frontend_ecs_task.ecs_task_arn
   subnets_ids           = [ for name, subnet in aws_subnet.private_subnets : subnet.id if contains(name, "frontend") ]
   security_groups_ids   = [aws_security_group.ecs_frontend_service_sg.id]
-  alb_target_group_arn  = aws_lb_target_group.project_name_frontend_tg.arn
+  alb_target_group_arn  = module.project_name_frontend_alb.target_group_arn
 
-  depends_on = [aws_subnet.private_subnets, aws_lb_target_group.project_name_frontend_tg, aws_security_group.ecs_frontend_service_sg]
+  depends_on = [aws_subnet.private_subnets, module.project_name_frontend_alb, aws_security_group.ecs_frontend_service_sg]
 }

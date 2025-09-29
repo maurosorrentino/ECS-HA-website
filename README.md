@@ -7,10 +7,7 @@ TODO:
 - add PR pipeline
 
 TODO terraform
-- route53
-- acm (attach it to cdm once done)
-- cdn sg
-- route53 sg
+- alb acm
 - ecs frontend sg
 - alb (private subnet) sg
 - backend task / service + sg
