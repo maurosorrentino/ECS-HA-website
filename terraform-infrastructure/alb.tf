@@ -6,7 +6,7 @@ module "project_name_frontend_alb" {
   alb_security_groups   = [aws_security_group.project_name_frontend_alb_sg.id]
   alb_subnets           = [for name, subnet in aws_subnet.project_name_public_subnets : subnet.id]
 
-  depends_on = [aws_subnet.project_name_public_subnet, aws_security_group.project_name_frontend_alb_sg]
+  depends_on = [aws_subnet.project_name_public_subnets, aws_security_group.project_name_frontend_alb_sg]
 }
 
 module "project_name_backend_alb" {
