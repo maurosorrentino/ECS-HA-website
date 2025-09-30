@@ -73,5 +73,5 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
     Name = "${var.project_name}-cloudfront"
   }
 
-  depends_on = [module.project_name_frontend_alb, aws_s3_bucket.cloudfront_logs_s3, aws_acm_certificate_validation.project_name_cdn_cert]
+  depends_on = [module.project_name_frontend_alb, aws_s3_bucket.cloudfront_logs_s3, aws_acm_certificate.project_name_cdn_cert]
 }
