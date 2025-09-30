@@ -22,7 +22,7 @@ module "project_name_frontend_ecs_service" {
   service_name         = "frontend"
   cluster_id           = aws_ecs_cluster.project_name_ecs_cluster.id
   task_arn             = module.project_name_frontend_ecs_task.ecs_task_arn
-  subnets_ids          = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if contains(name, "frontend")]
+  subnets_ids          = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("frontend", name))]
   security_groups_ids  = [aws_security_group.project_name_ecs_frontend_service_sg.id]
   alb_target_group_arn = module.project_name_frontend_alb.target_group_arn
 
@@ -34,7 +34,7 @@ module "project_name_backend_ecs_service" {
   service_name         = "backend"
   cluster_id           = aws_ecs_cluster.project_name_ecs_cluster.id
   task_arn             = module.project_name_backend_ecs_task.ecs_task_arn
-  subnets_ids          = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if contains(name, "backend")]
+  subnets_ids          = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("backend", name))]
   security_groups_ids  = [aws_security_group.project_name_ecs_backend_service_sg.id]
   alb_target_group_arn = module.project_name_backend_alb.target_group_arn
 
