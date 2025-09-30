@@ -109,7 +109,7 @@ resource "aws_security_group_rule" "project_name_ecs_frontend_service_ingress" {
   from_port                = 443
   to_port                  = 443
   protocol                 = "tcp"
-  security_group_id        = aws_security_group.project_name_ecs_frontend_alb_sg.id
+  security_group_id        = aws_security_group.project_name_frontend_alb_sg.id
   source_security_group_id = aws_security_group.project_name_frontend_alb_sg.id
 }
 
