@@ -58,7 +58,7 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
 
   viewer_certificate {
     cloudfront_default_certificate = false
-    acm_certificate_arn            = aws_acm_certificate.project_name_cert.arn
+    acm_certificate_arn            = aws_acm_certificate.project_name_cdn_cert.arn
     ssl_support_method             = "sni-only"
     minimum_protocol_version       = "TLSv1.2_2021"
   }
@@ -73,5 +73,5 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
     Name = "${var.project_name}-cloudfront"
   }
 
-  depends_on = [module.project_name_frontend_alb, aws_s3_bucket.cloudfront_logs_s3, aws_acm_certificate_validation.project_name_cert]
+  depends_on = [module.project_name_frontend_alb, aws_s3_bucket.cloudfront_logs_s3, aws_acm_certificate_validation.project_name_cdn_cert]
 }
