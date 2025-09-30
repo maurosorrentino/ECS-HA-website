@@ -8,17 +8,17 @@ resource "aws_ecs_cluster" "project_name_ecs_cluster" {
 }
 
 module "project_name_frontend_ecs_task" {
-  source    = "./modules/task/ecs"
+  source    = "./modules/ecs/task"
   task_name = "frontend"
 }
 
 module "project_name_backend_ecs_task" {
-  source    = "./modules/task/ecs"
+  source    = "./modules/ecs/task"
   task_name = "backend"
 }
 
 module "project_name_frontend_ecs_service" {
-  source               = "./modules/service/ecs"
+  source               = "./modules/ecs/service"
   service_name         = "frontend"
   cluster_id           = aws_ecs_cluster.project_name_ecs_cluster.id
   task_arn             = module.project_name_frontend_ecs_task.ecs_task_arn
@@ -30,7 +30,7 @@ module "project_name_frontend_ecs_service" {
 }
 
 module "project_name_backend_ecs_service" {
-  source               = "./modules/service/ecs"
+  source               = "./modules/ecs/service"
   service_name         = "backend"
   cluster_id           = aws_ecs_cluster.project_name_ecs_cluster.id
   task_arn             = module.project_name_backend_ecs_task.ecs_task_arn
