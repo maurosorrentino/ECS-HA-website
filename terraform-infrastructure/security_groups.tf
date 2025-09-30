@@ -3,7 +3,7 @@ data "aws_ip_ranges" "cloudfront" {
   regions  = ["GLOBAL"]
 }
 
-resource "aws_security_group" "project_name_ecs_frontend_service_sg" { #done
+resource "aws_security_group" "project_name_ecs_frontend_service_sg" { 
   name        = "${var.project_name}-ecs-frontend-service-sg"
   description = "ECS service SG: ALB in -> ECS -> private ALB out"
   vpc_id      = aws_vpc.project_name_vpc.id
@@ -19,7 +19,7 @@ resource "aws_security_group" "project_name_frontend_alb_sg" {
   depends_on = [aws_vpc.project_name_vpc]
 }
 
-resource "aws_security_group" "project_name_backend_alb_sg" { #done
+resource "aws_security_group" "project_name_backend_alb_sg" { 
   name        = "${var.project_name}-backend-alb-sg"
   description = "Allow HTTP from ECS service to backend ALB"
   vpc_id      = aws_vpc.project_name_vpc.id
@@ -27,7 +27,7 @@ resource "aws_security_group" "project_name_backend_alb_sg" { #done
   depends_on = [aws_vpc.project_name_vpc]
 }
 
-resource "aws_security_group" "project_name_rds_sg" { # done
+resource "aws_security_group" "project_name_rds_sg" { 
   name        = "${var.project_name}-rds-sg"
   description = "RDS security group"
   vpc_id      = aws_vpc.project_name_vpc.id
@@ -35,7 +35,7 @@ resource "aws_security_group" "project_name_rds_sg" { # done
   depends_on = [aws_vpc.project_name_vpc]
 }
 
-resource "aws_security_group" "project_name_ecs_backend_service_sg" { #done
+resource "aws_security_group" "project_name_ecs_backend_service_sg" { 
   name        = "${var.project_name}-ecs-backend-service-sg"
   description = "backend ECS service to RDS"
   vpc_id      = aws_vpc.project_name_vpc.id
