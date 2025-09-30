@@ -1,4 +1,4 @@
-resource "aws_subnet" "project_name_public_subnet" {
+resource "aws_subnet" "project_name_public_subnets" {
   for_each = { for s in local.public_subnets : s.name => s }
 
   vpc_id                  = aws_vpc.project_name_vpc.id
@@ -12,7 +12,7 @@ resource "aws_subnet" "project_name_public_subnet" {
   depends_on = [aws_vpc.project_name_vpc]
 }
 
-resource "aws_subnet" "private_subnets" {
+resource "aws_subnet" "project_name_private_subnets" {
   for_each = { for s in local.private_subnets : s.name => s }
 
   vpc_id            = aws_vpc.project_name_vpc.id
