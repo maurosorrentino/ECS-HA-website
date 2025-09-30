@@ -7,7 +7,7 @@ resource "aws_acm_certificate" "project_name_cdn_cert" {
   }
 }
 
-resource "aws_acm_certificate_validation" "project_name_cert_validation" {
-  certificate_arn         = aws_acm_certificate.project_name_cert.arn
-  validation_record_fqdns = [aws_route53_record.project_name_cert_validation.fqdn]
+resource "aws_acm_certificate_validation" "project_name_cdn_cert_validation" {
+  certificate_arn         = aws_acm_certificate.project_name_cdn_cert.arn
+  validation_record_fqdns = [aws_route53_record.project_name_cdn_cert_validation.fqdn]
 }
