@@ -9,7 +9,7 @@ resource "aws_acm_certificate" "project_name_cdn_cert" {
 
 resource "aws_acm_certificate_validation" "project_name_cdn_cert_validation" {
   certificate_arn         = aws_acm_certificate.project_name_cdn_cert.arn
-  validation_record_fqdns = [aws_route53_record.project_name_cdn_cert_validation.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.project_name_cdn_cert_validation : record.fqdn]
 
   depends_on = [aws_route53_record.project_name_cdn_cert_validation]
 }
