@@ -22,3 +22,8 @@ variable "alb_security_groups" {
   description = "List of security group IDs for the ALB"
   type        = list(string)
 }
+
+variable "s3_prefix" {
+  description = "Prefix for the S3 bucket to store ALB access logs"
+  type        = string
+}

@@ -1,5 +1,9 @@
-resource "aws_s3_bucket" "cloudfront_logs_s3" {
+resource "aws_s3_bucket" "project_name_cloudfront_logs_s3" {
   bucket = "${var.project_name}-cloudfront-logs-bucket"
+}
+
+resource "aws_s3_bucket" "project_name_alb_logs_s3" {
+  bucket = "${var.project_name}-alb-logs-bucket"
 }
 
 # TODO kms for encryption
