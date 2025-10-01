@@ -4,7 +4,7 @@ resource "aws_lb" "project_name_alb" {
   load_balancer_type         = "application"
   security_groups            = var.alb_security_groups
   subnets                    = var.alb_subnets
-  enable_deletion_protection = true
+  enable_deletion_protection = false
   idle_timeout               = 60
   drop_invalid_header_fields = true
 
