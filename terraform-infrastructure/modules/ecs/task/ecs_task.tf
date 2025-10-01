@@ -7,7 +7,7 @@ resource "aws_ecs_task_definition" "task" {
 
   container_definitions = jsonencode([
     {
-      name      = var.task_name
+      name = var.task_name
       # smallest possible base image as real image update will happen via another pipeline
       image     = "alpine:latest"
       cpu       = 256 # 0.25 vCPU

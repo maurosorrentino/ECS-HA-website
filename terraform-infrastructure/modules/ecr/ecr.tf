@@ -8,23 +8,23 @@ resource "aws_ecr_repository" "project_name_ecr_repo" {
 }
 
 resource "aws_ecr_lifecycle_policy" "project_name_ecr_lc_policy" {
-    repository = aws_ecr_repository.project_name_ecr_repo.name
+  repository = aws_ecr_repository.project_name_ecr_repo.name
 
-    policy = jsonencode({
-        rules = [
-            {
-                rulePriority = 1
-                description  = "Expire untagged images if more than 4 exist"
-                selection    = {
-                    tagStatus   = "tagged"
-                    tagPrefixList: ["v"]
-                    countType   = "imageCountMoreThan"
-                    countNumber = 4
-                }
-                action = {
-                    type = "expire"
-                }
-            }
-        ]
-    })
+  policy = jsonencode({
+    rules = [
+      {
+        rulePriority = 1
+        description  = "Expire untagged images if more than 4 exist"
+        selection = {
+          tagStatus = "tagged"
+          tagPrefixList : ["v"]
+          countType   = "imageCountMoreThan"
+          countNumber = 4
+        }
+        action = {
+          type = "expire"
+        }
+      }
+    ]
+  })
 }
