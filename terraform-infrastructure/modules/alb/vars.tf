@@ -27,3 +27,8 @@ variable "s3_prefix" {
   description = "Prefix for the S3 bucket to store ALB access logs"
   type        = string
 }
+
+variable "bucket_id" {
+  description = "The ID of the S3 bucket to store ALB access logs"
+  type        = string
+}

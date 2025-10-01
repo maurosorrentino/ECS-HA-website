@@ -9,7 +9,7 @@ resource "aws_lb" "project_name_alb" {
   drop_invalid_header_fields = true
 
   access_logs {
-    bucket  = aws_s3_bucket.project_name_alb_logs_s3.bucket
+    bucket  = var.bucket_id
     prefix  = var.s3_prefix
     enabled = true
   }

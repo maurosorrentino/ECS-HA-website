@@ -5,6 +5,7 @@ module "project_name_frontend_alb" {
   vpc_id                = aws_vpc.project_name_vpc.id
   alb_security_groups   = [aws_security_group.project_name_frontend_alb_sg.id]
   alb_subnets           = [for name, subnet in aws_subnet.project_name_public_subnets : subnet.id]
+  bucket_id             = aws_s3_bucket.project_name_alb_logs_s3.id
   s3_prefix             = "frontend-alb-logs/"
 
   depends_on = [aws_subnet.project_name_public_subnets, aws_security_group.project_name_frontend_alb_sg, aws_s3_bucket.project_name_alb_logs_s3]
@@ -17,6 +18,7 @@ module "project_name_backend_alb" {
   vpc_id                = aws_vpc.project_name_vpc.id
   alb_security_groups   = [aws_security_group.project_name_backend_alb_sg.id]
   alb_subnets           = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id]
+  bucket_id             = aws_s3_bucket.project_name_alb_logs_s3.id
   s3_prefix             = "backend-alb-logs/"
 
   depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_backend_alb_sg, aws_s3_bucket.project_name_alb_logs_s3]
