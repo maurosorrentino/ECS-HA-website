@@ -1,4 +1,4 @@
-resource "aws_ecs_task_definition" "task" {
+resource "aws_ecs_task_definition" "project_name_task" {
   family                   = var.task_name
   network_mode             = "bridge"
   requires_compatibilities = ["EC2"]
@@ -33,5 +33,5 @@ resource "aws_ecs_task_definition" "task" {
 }
 
 output "ecs_task_arn" {
-  value = aws_ecs_task_definition.task.arn
+  value = aws_ecs_task_definition.project_name_task.arn
 }
