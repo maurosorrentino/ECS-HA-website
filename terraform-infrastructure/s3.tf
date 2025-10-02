@@ -1,3 +1,4 @@
+# TODO module
 resource "aws_s3_bucket" "project_name_cloudfront_logs_s3" {
   bucket = "${var.project_name}-cloudfront-logs-bucket"
 }
