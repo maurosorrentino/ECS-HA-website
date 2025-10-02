@@ -1,5 +1,3 @@
-
-
 # PLEASE NOTE: the following is now working as this is a personal project and the missing piece is register a domain name
 # You can uncomment and use it if you have a domain name registered in Route53, without a domain name terraform will hang 
 # for an hour at "aws_acm_certificate_validation.project_name_cdn_cert_validation: Still creating..." 
