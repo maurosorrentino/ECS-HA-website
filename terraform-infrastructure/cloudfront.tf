@@ -57,11 +57,17 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = false
-    acm_certificate_arn            = aws_acm_certificate.project_name_cdn_cert.arn
-    ssl_support_method             = "sni-only"
-    minimum_protocol_version       = "TLSv1.2_2021"
+    cloudfront_default_certificate = true
   }
+
+  # please see acm.tf and route53.tf for the certificate creation and validation
+  # uncomment the following viewer_certificate block and comment the above one if you have a domain name
+  # viewer_certificate {
+  #   cloudfront_default_certificate = false
+  #   acm_certificate_arn            = aws_acm_certificate.project_name_cdn_cert.arn
+  #   ssl_support_method             = "sni-only"
+  #   minimum_protocol_version       = "TLSv1.2_2021"
+  # }
 
   restrictions {
     geo_restriction {
