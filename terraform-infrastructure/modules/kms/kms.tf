@@ -18,3 +18,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_encryption
     }
   }
 }
+
+output "kms_arn" {
+  value = aws_kms_key.project_name_s3_bucket_key.arn
+}

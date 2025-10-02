@@ -1,4 +1,7 @@
 locals {
+  cloudfront_bucket_name = "${var.project_name}-cloudfront-logs"
+  alb_bucket_name        = "${var.project_name}-alb-logs"
+
   # 256 IPs addresses per subnet
   private_subnets = [
     {

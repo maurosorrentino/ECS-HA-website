@@ -36,3 +36,11 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "project_name_s3_e
     }
   }
 }
+
+output "bucket_name" {
+  value = aws_s3_bucket.project_name_s3.bucket
+}
+
+output "bucket_id" {
+  value = aws_s3_bucket.project_name_s3.id
+}
