@@ -7,7 +7,7 @@
 # and I will use cdn domain name (dxxxxxx.cloudfront.net) instead of a friendly name (app.project_name.com)
 
 # resource "aws_acm_certificate" "project_name_cdn_cert" {
-#   domain_name       = "app.${var.project_name}.com"
+#   domain_name       = "${var.project_name}.com"
 #   validation_method = "DNS"
 
 #   lifecycle {
