@@ -1,6 +1,10 @@
 resource "aws_kms_key" "project_name_s3_bucket_key" {
   description         = "KMS key for S3 ${var.bucket_name}"
   enable_key_rotation = true # automatic rotation every year
+
+  policy                  = templatefile("${path.module}/kms_policy.json", {
+    ACCOUNT_ID = var.account_id
+  })
 }
 
 resource "aws_kms_alias" "project_name_s3_bucket_key_alias" {
