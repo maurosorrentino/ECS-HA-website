@@ -75,9 +75,10 @@ resource "aws_launch_template" "project_name_ecs_lt" {
     security_groups             = var.launch_template_security_groups_ids
   }
 
+  # this is needed to connect the instance to the ECS cluster
   user_data = base64encode(<<-EOT
               #!/bin/bash
-              echo testing
+              echo ECS_CLUSTER=${var.cluster_name} >> /etc/ecs/ecs.config
               EOT
   )
 }

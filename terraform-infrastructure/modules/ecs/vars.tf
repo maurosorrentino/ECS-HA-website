@@ -37,3 +37,8 @@ variable "launch_template_security_groups_ids" {
   description = "List of security group IDs for the launch template"
   type        = list(string)
 }
+
+variable "cluster_name" {
+  description = "The name of the ECS cluster"
+  type        = string
+}

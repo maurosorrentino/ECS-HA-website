@@ -10,6 +10,7 @@ resource "aws_ecs_cluster" "project_name_ecs_cluster" {
 module "project_name_frontend_ecs_service" {
   source                              = "./modules/ecs"
   service_name                        = "frontend"
+  cluster_name                        = aws_ecs_cluster.project_name_ecs_cluster.name
   cluster_id                          = aws_ecs_cluster.project_name_ecs_cluster.id
   subnets_ids                         = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("frontend", name))]
   security_groups_ids                 = [aws_security_group.project_name_ecs_frontend_service_sg.id]
@@ -24,6 +25,7 @@ module "project_name_frontend_ecs_service" {
 module "project_name_backend_ecs_service" {
   source                              = "./modules/ecs"
   service_name                        = "backend"
+  cluster_name                        = aws_ecs_cluster.project_name_ecs_cluster.name
   cluster_id                          = aws_ecs_cluster.project_name_ecs_cluster.id
   subnets_ids                         = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("backend", name))]
   security_groups_ids                 = [aws_security_group.project_name_ecs_backend_service_sg.id]
@@ -33,5 +35,4 @@ module "project_name_backend_ecs_service" {
   launch_template_security_groups_ids = [aws_security_group.project_name_ecs_instance_sg.id]            # TODO
 
   depends_on = [aws_subnet.project_name_private_subnets, module.project_name_backend_alb, aws_security_group.project_name_ecs_backend_service_sg]
-
 }
