@@ -7,8 +7,8 @@ resource "aws_s3_bucket_policy" "project_name_cloudfront_logs_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid      = "AllowCloudFrontToWriteLogs"
-        Effect   = "Allow"
+        Sid    = "AllowCloudFrontToWriteLogs"
+        Effect = "Allow"
         Principal = {
           Service = "cloudfront.amazonaws.com"
         }
@@ -33,8 +33,8 @@ resource "aws_s3_bucket_policy" "project_name_alb_logs_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid      = "AllowALBToWriteLogs"
-        Effect   = "Allow"
+        Sid    = "AllowALBToWriteLogs"
+        Effect = "Allow"
         Principal = {
           AWS = "*"
         }

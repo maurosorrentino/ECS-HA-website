@@ -53,73 +53,73 @@ resource "aws_security_group_rule" "project_name_frontend_alb_sg_ingress" {
 }
 
 resource "aws_security_group_rule" "project_name_frontend_alb_sg_egress" {
-  type              = "egress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  security_group_id = aws_security_group.project_name_frontend_alb_sg.id
-  source_security_group_id = aws_security_group.project_name_ecs_frontend_service_sg.id  
+  type                     = "egress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.project_name_frontend_alb_sg.id
+  source_security_group_id = aws_security_group.project_name_ecs_frontend_service_sg.id
 }
 
 resource "aws_security_group_rule" "project_name_ecs_frontend_service_sg_ingress" {
-  type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  security_group_id = aws_security_group.project_name_ecs_frontend_service_sg.id
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.project_name_ecs_frontend_service_sg.id
   source_security_group_id = aws_security_group.project_name_frontend_alb_sg.id
 }
 
 resource "aws_security_group_rule" "project_name_ecs_frontend_service_sg_egress" {
-  type              = "egress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  security_group_id = aws_security_group.project_name_ecs_frontend_service_sg.id
+  type                     = "egress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.project_name_ecs_frontend_service_sg.id
   source_security_group_id = aws_security_group.project_name_backend_alb_sg.id
 }
 
 resource "aws_security_group_rule" "project_name_backend_alb_sg_ingress" {
-  type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  security_group_id = aws_security_group.project_name_backend_alb_sg.id
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.project_name_backend_alb_sg.id
   source_security_group_id = aws_security_group.project_name_ecs_frontend_service_sg.id
 }
 
 resource "aws_security_group_rule" "project_name_backend_alb_sg_egress" {
-  type              = "egress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  security_group_id = aws_security_group.project_name_backend_alb_sg.id
+  type                     = "egress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.project_name_backend_alb_sg.id
   source_security_group_id = aws_security_group.project_name_ecs_backend_service_sg.id
 }
 
 resource "aws_security_group_rule" "project_name_ecs_backend_service_sg_ingress" {
-  type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  security_group_id = aws_security_group.project_name_ecs_backend_service_sg.id
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.project_name_ecs_backend_service_sg.id
   source_security_group_id = aws_security_group.project_name_backend_alb_sg.id
 }
 
 resource "aws_security_group_rule" "project_name_ecs_backend_service_sg_egress" {
-  type              = "egress"
-  from_port         = 3306
-  to_port           = 3306
-  protocol          = "tcp"
-  security_group_id = aws_security_group.project_name_ecs_backend_service_sg.id
+  type                     = "egress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.project_name_ecs_backend_service_sg.id
   source_security_group_id = aws_security_group.project_name_rds_sg.id
 }
 
 resource "aws_security_group_rule" "project_name_rds_sg_ingress" {
-  type              = "ingress"
-  from_port         = 3306
-  to_port           = 3306
-  protocol          = "tcp"
-  security_group_id = aws_security_group.project_name_rds_sg.id
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.project_name_rds_sg.id
   source_security_group_id = aws_security_group.project_name_ecs_backend_service_sg.id
 }

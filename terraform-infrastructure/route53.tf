@@ -1,4 +1,4 @@
-# PLEASE NOTE: the following is now working as this is a personal project and the missing piece is register a domain name
+# PLEASE NOTE: the following wasn't tested properly as this is a personal project and the missing piece is register a domain name
 # You can uncomment and use it if you have a domain name registered in Route53, without a domain name terraform will hang 
 # for an hour at "aws_acm_certificate_validation.project_name_cdn_cert_validation: Still creating..." 
 # and then the token will expire making the pipeline fail. the project will continue with user talking directly to cdn
