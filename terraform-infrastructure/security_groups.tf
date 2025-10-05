@@ -51,6 +51,14 @@ resource "aws_security_group" "project_name_ecs_launch_template_sg" {
   depends_on = [aws_vpc.project_name_vpc]
 }
 
+resource "aws_security_group" "project_name_ecr_vpc_endpoint_sg" {
+  name        = "${var.project_name}-ecr-vpc-endpoint-sg"
+  description = "Allow ECS launch templates to access ECR via VPC endpoint"
+  vpc_id      = aws_vpc.project_name_vpc.id
+
+  depends_on = [aws_vpc.project_name_vpc] 
+}
+
 resource "aws_security_group_rule" "project_name_frontend_alb_sg_ingress" {
   type              = "ingress"
   from_port         = 443

@@ -1,5 +1,3 @@
-data "aws_caller_identity" "current" {}
-
 resource "aws_s3_bucket_policy" "project_name_cloudfront_logs_policy" {
   bucket = aws_s3_bucket.project_name_cloudfront_logs_s3.id
 
