@@ -5,10 +5,10 @@ module "project_name_frontend_alb" {
   vpc_id                = aws_vpc.project_name_vpc.id
   alb_security_groups   = [aws_security_group.project_name_frontend_alb_sg.id]
   alb_subnets           = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("alb", name))]
-  bucket_id             = aws_s3_bucket.project_name_alb_logs_s3.id
+  bucket_id             = module.project_name_alb_logs_s3.bucket_id
   s3_prefix             = "frontend-alb-logs/"
 
-  depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_frontend_alb_sg, aws_s3_bucket.project_name_alb_logs_s3]
+  depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_frontend_alb_sg, module.project_name_alb_logs_s3]
 }
 
 module "project_name_backend_alb" {
@@ -18,8 +18,8 @@ module "project_name_backend_alb" {
   vpc_id                = aws_vpc.project_name_vpc.id
   alb_security_groups   = [aws_security_group.project_name_backend_alb_sg.id]
   alb_subnets           = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("alb", name))]
-  bucket_id             = aws_s3_bucket.project_name_alb_logs_s3.id
+  bucket_id             = module.project_name_alb_logs_s3.bucket_id
   s3_prefix             = "backend-alb-logs/"
 
-  depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_backend_alb_sg, aws_s3_bucket.project_name_alb_logs_s3]
+  depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_backend_alb_sg, module.project_name_alb_logs_s3]
 }
