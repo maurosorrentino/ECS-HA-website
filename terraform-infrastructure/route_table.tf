@@ -10,7 +10,7 @@ resource "aws_route_table" "project_name_public_rt" {
     Name = "${var.project_name}-public-rt"
   }
 
-  depends_on = [aws_internet_gateway.project_name_igw]
+  depends_on = [aws_internet_gateway.project_name_igw, aws_vpc.project_name_vpc]
 }
 
 resource "aws_route_table_association" "public" {
@@ -21,3 +21,22 @@ resource "aws_route_table_association" "public" {
 
 # TODO add private route table and NAT gateway for private subnets
 # to do at last as nat isn't covered by free tier 
+# Private route table
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.project_name_vpc.id
+
+  tags = {
+    Name = "${var.project_name}-private-route-table"
+  }
+
+  depends_on = [aws_vpc.project_name_vpc]
+}
+
+# Associate route table with private subnets
+resource "aws_route_table_association" "private" {
+  for_each       = aws_subnet.project_name_private_subnets
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.private.id
+
+  depends_on = [aws_subnet.project_name_private_subnets]
+}

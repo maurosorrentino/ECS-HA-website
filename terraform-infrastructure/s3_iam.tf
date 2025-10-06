@@ -1,0 +1,40 @@
+resource "aws_s3_bucket_policy" "alb_logs" {
+  bucket = module.project_name_alb_logs_s3.bucket_id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid: "AllowALBLogging",
+        Effect: "Allow",
+        Principal: {
+          Service: "logdelivery.elb.amazonaws.com"
+        },
+        Action: "s3:PutObject",
+        Resource: "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*",
+        Condition: {
+          StringEquals: {
+            "aws:SourceAccount": data.aws_caller_identity.current.account_id
+          }
+        }
+      },
+      {
+        Sid: "AllowVPCEndpointAccess",
+        Effect: "Allow",
+        Principal: "*",
+        Action: "s3:*",
+        Resource: [
+          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}",
+          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*"
+        ],
+        Condition: {
+          StringEquals: {
+            "aws:SourceVpce": aws_vpc_endpoint.s3_alb_logs_vpc_endpoint.id
+          }
+        }
+      }
+    ]
+  })
+
+  depends_on = [module.project_name_alb_logs_s3, aws_vpc_endpoint.s3_alb_logs_vpc_endpoint]
+}
