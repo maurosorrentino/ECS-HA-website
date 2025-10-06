@@ -92,3 +92,7 @@ resource "aws_launch_template" "project_name_ecs_lt" {
               EOT
   )
 }
+
+output "launch_template_id" {
+  value = aws_launch_template.project_name_ecs_lt.id
+}
