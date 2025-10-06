@@ -17,6 +17,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "project_name_s3_lifecycle" {
     id     = "TransitionToDeepArchive"
     status = "Enabled"
 
+    filter {} # without it gives a warning that in future it will be an error
+
     transition {
       days          = 30
       storage_class = "DEEP_ARCHIVE"
