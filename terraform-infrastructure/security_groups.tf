@@ -149,3 +149,24 @@ resource "aws_security_group_rule" "project_name_ecs_launch_template_sg_egress_e
   source_security_group_id = aws_security_group.project_name_ecr_vpc_endpoint_sg.id
   description              = "Allow outbound HTTPS to ECR VPC endpoint"
 }
+
+resource "aws_security_group" "vpc_endpoints_sg" {
+  name        = "${var.project_name}-vpc-endpoints-sg"
+  description = "Allow ECS tasks to reach interface VPC endpoints"
+  vpc_id      = aws_vpc.project_name_vpc.id
+
+  ingress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.project_name_ecs_backend_service_sg.id, 
+    aws_security_group.project_name_ecs_frontend_service_sg.id]
+  }
+
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}

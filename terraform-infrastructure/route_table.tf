@@ -19,9 +19,6 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.project_name_public_rt.id
 }
 
-# TODO add private route table and NAT gateway for private subnets
-# to do at last as nat isn't covered by free tier 
-# Private route table
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.project_name_vpc.id
 
@@ -34,8 +31,8 @@ resource "aws_route_table" "private" {
 
 # Associate route table with private subnets
 resource "aws_route_table_association" "private" {
-  for_each       = aws_subnet.project_name_private_subnets
-  subnet_id      = each.value.id
+  for_each       = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("alb", name))]
+  subnet_id      = each.value
   route_table_id = aws_route_table.private.id
 
   depends_on = [aws_subnet.project_name_private_subnets]
