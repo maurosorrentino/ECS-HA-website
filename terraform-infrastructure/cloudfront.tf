@@ -52,7 +52,7 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
   # }
 
   logging_config {
-    bucket = aws_s3_bucket.project_name_cloudfront_logs_s3.bucket_domain_name
+    bucket = module.project_name_cloudfront_logs_s3.bucket_domain_name
     prefix = "cloudfront-logs/"
   }
 
@@ -79,5 +79,6 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
     Name = "${var.project_name}-cloudfront"
   }
 
-  depends_on = [module.project_name_frontend_alb, aws_s3_bucket.project_name_cloudfront_logs_s3, aws_acm_certificate.project_name_cdn_cert]
+  # if you have a domain add aws_acm_certificate.project_name_cdn_cert in depends_on
+  depends_on = [module.project_name_frontend_alb, module.project_name_cloudfront_logs_s3]
 }
