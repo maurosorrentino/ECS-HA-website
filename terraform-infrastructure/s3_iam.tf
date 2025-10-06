@@ -5,31 +5,31 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid: "AllowALBLogging",
-        Effect: "Allow",
-        Principal: {
-          Service: "logdelivery.elb.amazonaws.com"
+        Sid : "AllowALBLogging",
+        Effect : "Allow",
+        Principal : {
+          Service : "logdelivery.elb.amazonaws.com"
         },
-        Action: "s3:PutObject",
-        Resource: "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*",
-        Condition: {
-          StringEquals: {
-            "aws:SourceAccount": data.aws_caller_identity.current.account_id
+        Action : "s3:PutObject",
+        Resource : "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*",
+        Condition : {
+          StringEquals : {
+            "aws:SourceAccount" : data.aws_caller_identity.current.account_id
           }
         }
       },
       {
-        Sid: "AllowVPCEndpointAccess",
-        Effect: "Allow",
-        Principal: "*",
-        Action: "s3:*",
-        Resource: [
+        Sid : "AllowVPCEndpointAccess",
+        Effect : "Allow",
+        Principal : "*",
+        Action : "s3:*",
+        Resource : [
           "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}",
           "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*"
         ],
-        Condition: {
-          StringEquals: {
-            "aws:SourceVpce": aws_vpc_endpoint.s3_alb_logs_vpc_endpoint.id
+        Condition : {
+          StringEquals : {
+            "aws:SourceVpce" : aws_vpc_endpoint.s3_alb_logs_vpc_endpoint.id
           }
         }
       }
@@ -46,12 +46,12 @@ resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid: "AllowCloudFrontLogs",
-        Effect: "Allow",
+        Sid : "AllowCloudFrontLogs",
+        Effect : "Allow",
         Principal = {
           Service = "delivery.logs.amazonaws.com"
         },
-        Action = "s3:PutObject",
+        Action   = "s3:PutObject",
         Resource = "arn:aws:s3:::${module.project_name_cloudfront_logs_s3.bucket_id}/*",
         Condition = {
           StringEquals = {
@@ -60,12 +60,12 @@ resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
         }
       },
       {
-        Sid: "AllowBucketAclCheck",
-        Effect: "Allow",
+        Sid : "AllowBucketAclCheck",
+        Effect : "Allow",
         Principal = {
           Service = "delivery.logs.amazonaws.com"
         },
-        Action = "s3:GetBucketAcl",
+        Action   = "s3:GetBucketAcl",
         Resource = "arn:aws:s3:::${module.project_name_cloudfront_logs_s3.bucket_id}"
       }
     ]
