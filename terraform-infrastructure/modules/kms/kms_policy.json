@@ -7,7 +7,7 @@
       "Effect": "Allow",
       "Principal": {
         "AWS": [
-          "arn:aws:iam::${var.account_id}:role/test-role"
+          "arn:aws:iam::${account_id}:role/test-role"
         ]
       },
       "Action": [
@@ -23,7 +23,7 @@
       "Sid": "AllowAdminKeyManagement",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::${var.account_id}:role/AdminRole"
+        "AWS": "arn:aws:iam::${account_id}:role/AdminRole"
       },
       "Action": [
         "kms:*"
