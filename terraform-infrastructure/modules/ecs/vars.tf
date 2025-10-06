@@ -42,3 +42,13 @@ variable "cluster_name" {
   description = "The name of the ECS cluster"
   type        = string
 }
+
+variable "log_group_name" {
+  description = "The name of the CloudWatch log group"
+  type        = string
+}
+
+variable "region" {
+  description = "The AWS region"
+  type        = string
+}

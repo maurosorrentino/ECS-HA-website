@@ -14,6 +14,16 @@ resource "aws_ecs_task_definition" "project_name_task" {
       memory    = 512
       essential = true
       command   = ["echo", "Hello from Alpine!"]
+
+      log_configuration = {
+        log_driver = "awslogs"
+        options = {
+          awslogs-group         = var.log_group_name
+          awslogs-region        = var.region
+          awslogs-stream-prefix = "ecs"
+        }
+      }
+
       portMappings = [
         {
           containerPort = 80
