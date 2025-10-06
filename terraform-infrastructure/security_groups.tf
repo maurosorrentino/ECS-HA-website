@@ -59,6 +59,30 @@ resource "aws_security_group" "project_name_ecr_vpc_endpoint_sg" {
   depends_on = [aws_vpc.project_name_vpc]
 }
 
+resource "aws_security_group" "project_name_ecs_launch_template_sg" {
+  name        = "${var.project_name}-ecs-launch-template-sg"
+  description = "SG for ECS launch template: access ECR and internet via NAT"
+  vpc_id      = aws_vpc.project_name_vpc.id
+
+  egress {
+    from_port                = 443
+    to_port                  = 443
+    protocol                 = "tcp"
+    security_groups          = [aws_security_group.project_name_ecr_vpc_endpoint_sg.id]
+    description              = "Allow outbound HTTPS to ECR VPC endpoint"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow outbound traffic to the internet via NAT"
+  }
+
+  depends_on = [aws_vpc.project_name_vpc]
+}
+
 resource "aws_security_group" "vpc_endpoints_sg" {
   name        = "${var.project_name}-vpc-endpoints-sg"
   description = "Allow ECS tasks to reach interface VPC endpoints"
