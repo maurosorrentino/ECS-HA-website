@@ -17,8 +17,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "project_name_s3_lifecycle" {
     id     = "TransitionToDeepArchive"
     status = "Enabled"
 
-    filter {}
-
     transition {
       days          = 30
       storage_class = "DEEP_ARCHIVE"
