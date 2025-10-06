@@ -3,7 +3,7 @@ resource "aws_kms_key" "project_name_s3_bucket_key" {
   enable_key_rotation = true # automatic rotation every year
 
   policy = templatefile("${path.module}/kms_policy.json", {
-    ACCOUNT_ID = var.account_id
+    account_id = var.account_id
   })
 }
 

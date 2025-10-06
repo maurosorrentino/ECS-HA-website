@@ -1,14 +1,33 @@
 {
   "Version": "2012-10-17",
-  "Id": "restrict-to-account",
+  "Id": "restrict-kms-key-usage-to-test-role",
   "Statement": [
     {
-      "Sid": "AllowRootAccountOnly",
+      "Sid": "AllowSpecificRolesUseOfKey",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::ACCOUNT_ID:root"
+        "AWS": [
+          "arn:aws:iam::${var.account_id}:role/test-role"
+        ]
       },
-      "Action": "kms:*",
+      "Action": [
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowAdminKeyManagement",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::${var.account_id}:role/AdminRole"
+      },
+      "Action": [
+        "kms:*"
+      ],
       "Resource": "*"
     }
   ]
