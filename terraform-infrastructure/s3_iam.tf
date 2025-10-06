@@ -29,14 +29,14 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         ],
         Condition : {
           StringEquals : {
-            "aws:SourceVpce" : aws_vpc_endpoint.s3_alb_logs_vpc_endpoint.id
+            "aws:SourceVpce" : aws_vpc_endpoint.project_name_s3_alb_logs_vpc_endpoint.id
           }
         }
       }
     ]
   })
 
-  depends_on = [module.project_name_alb_logs_s3, aws_vpc_endpoint.s3_alb_logs_vpc_endpoint]
+  depends_on = [module.project_name_alb_logs_s3, aws_vpc_endpoint.project_name_s3_alb_logs_vpc_endpoint]
 }
 
 resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
