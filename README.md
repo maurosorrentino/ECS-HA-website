@@ -1,15 +1,4 @@
-TODO:
-- make a basic app frontend -> backend -> DB
-- make basic test
-- finish deploy pipeline
-- make build and push docker image to ECR pipeline
-- add app pipeline
-- add PR pipeline
-
-TODO terraform
-- alb acm
-- ecs frontend sg
-- alb (private subnet) sg
-- backend task / service + sg
-- rds + sg
-- all the rest
+TODO 
+- IAM policies for ecs
+- nat gateway
+- ecr images pipeline
