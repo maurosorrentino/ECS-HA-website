@@ -53,8 +53,8 @@ resource "aws_iam_policy" "project_name_ecs_frontend_policy" {
     ]
   })
 
-  depends_on = [module.project_name_frontend_cloudwatch_logs_kms.kms_arn, module.project_name_frontend_alb.alb_arn,
-    module.project_name_backend_alb.alb_arn, aws_cloudwatch_log_group.project_name_frontend_service_log_group.arn]
+  depends_on = [module.project_name_frontend_cloudwatch_logs_kms, module.project_name_frontend_alb,
+    module.project_name_backend_alb, aws_cloudwatch_log_group.project_name_frontend_service_log_group]
 }
 
 resource "aws_iam_role_policy_attachment" "project_name_ecs_frontend_role_attach" {
@@ -128,8 +128,8 @@ resource "aws_iam_policy" "project_name_ecs_backend_policy" {
     ]
   })
 
-  depends_on = [aws_db_instance.project_name_rds_instance.arn, data.aws_secretsmanager_secret_version.project_name_rds_instance_username.arn,
-  aws_cloudwatch_log_group.project_name_backend_service_log_group.arn]
+  depends_on = [aws_db_instance.project_name_rds_instance, data.aws_secretsmanager_secret_version.project_name_rds_instance_username,
+  aws_cloudwatch_log_group.project_name_backend_service_log_group]
 }
 
 resource "aws_iam_role_policy_attachment" "project_name_ecs_backend_role_attach" {
