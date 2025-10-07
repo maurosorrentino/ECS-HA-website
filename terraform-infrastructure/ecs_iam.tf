@@ -54,7 +54,7 @@ resource "aws_iam_policy" "project_name_ecs_frontend_policy" {
   })
 
   depends_on = [module.project_name_frontend_cloudwatch_logs_kms, module.project_name_frontend_alb,
-    module.project_name_backend_alb, aws_cloudwatch_log_group.project_name_frontend_service_log_group]
+  module.project_name_backend_alb, aws_cloudwatch_log_group.project_name_frontend_service_log_group]
 }
 
 resource "aws_iam_role_policy_attachment" "project_name_ecs_frontend_role_attach" {
