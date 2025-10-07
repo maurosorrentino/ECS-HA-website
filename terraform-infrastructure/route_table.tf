@@ -29,7 +29,6 @@ resource "aws_route_table" "private" {
   depends_on = [aws_vpc.project_name_vpc]
 }
 
-# Associate route table with private subnets
 resource "aws_route_table_association" "private" {
   for_each = {
     for name, subnet in aws_subnet.project_name_private_subnets : name => subnet.id if can(regex("alb", name))
