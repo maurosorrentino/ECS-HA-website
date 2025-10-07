@@ -19,7 +19,7 @@ module "project_name_frontend_ecs_service" {
   log_group_name                      = aws_cloudwatch_log_group.project_name_frontend_service_log_group.name
   region                              = var.region
   instance_profile_name               = aws_iam_instance_profile.project_name_ecs_instance_profile.name # TODO
-  launch_template_security_groups_ids = [aws_security_group.project_name_ecs_launch_template_sg.id]            # TODO
+  launch_template_security_groups_ids = [aws_security_group.project_name_ecs_launch_template_sg.id]
 
   depends_on = [aws_subnet.project_name_private_subnets, module.project_name_frontend_alb, aws_security_group.project_name_ecs_frontend_service_sg,
   aws_cloudwatch_log_group.project_name_frontend_service_log_group, aws_security_group.project_name_ecs_launch_template_sg]
@@ -37,7 +37,7 @@ module "project_name_backend_ecs_service" {
   log_group_name                      = aws_cloudwatch_log_group.project_name_backend_service_log_group.name
   region                              = var.region
   instance_profile_name               = aws_iam_instance_profile.project_name_ecs_instance_profile.name # TODO
-  launch_template_security_groups_ids = [aws_security_group.project_name_ecs_launch_template_sg.id]            # TODO
+  launch_template_security_groups_ids = [aws_security_group.project_name_ecs_launch_template_sg.id]
 
   depends_on = [aws_subnet.project_name_private_subnets, module.project_name_backend_alb, aws_security_group.project_name_ecs_backend_service_sg,
   aws_cloudwatch_log_group.project_name_backend_service_log_group, aws_security_group.project_name_ecs_launch_template_sg]
