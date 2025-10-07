@@ -31,7 +31,9 @@ resource "aws_route_table" "private" {
 
 # Associate route table with private subnets
 resource "aws_route_table_association" "private" {
-  for_each       = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("alb", name))]
+  for_each       = {
+    for name, subnet in aws_subnet.project_name_private_subnets : name => subnet.id if can(regex("alb", name))
+  }
   subnet_id      = each.value
   route_table_id = aws_route_table.private.id
 
