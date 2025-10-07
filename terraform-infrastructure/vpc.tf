@@ -27,7 +27,7 @@ resource "aws_vpc_endpoint" "project_name_ecr_api" {
   service_name      = "com.amazonaws.${var.region}.ecr.api"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name)) || can(regex("frontend", name))]
+  if can(regex("frontend|backend", name))]
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 }
 
@@ -36,7 +36,7 @@ resource "aws_vpc_endpoint" "project_name_ecr_dkr" {
   service_name      = "com.amazonaws.${var.region}.ecr.dkr"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name)) || can(regex("frontend", name))]
+  if can(regex("frontend|backend", name))]
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 }
 
@@ -45,7 +45,7 @@ resource "aws_vpc_endpoint" "project_name_logs" {
   service_name      = "com.amazonaws.${var.region}.logs"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name)) || can(regex("frontend", name))]
+  if can(regex("frontend|backend", name))]
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 }
 
@@ -54,7 +54,7 @@ resource "aws_vpc_endpoint" "project_name_ssm" {
   service_name      = "com.amazonaws.${var.region}.ssm"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name)) || can(regex("frontend", name))]
+  if can(regex("frontend|backend", name))]
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 }
 
@@ -63,7 +63,7 @@ resource "aws_vpc_endpoint" "project_name_ssm_messages" {
   service_name      = "com.amazonaws.${var.region}.ssmmessages"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name)) || can(regex("frontend", name))]
+  if can(regex("frontend|backend", name))]
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 }
 
@@ -72,7 +72,7 @@ resource "aws_vpc_endpoint" "project_name_ec2_messages" {
   service_name      = "com.amazonaws.${var.region}.ec2messages"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name)) || can(regex("frontend", name))]
+  if can(regex("frontend|backend", name))]
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 }
 
