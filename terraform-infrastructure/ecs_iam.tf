@@ -1,4 +1,5 @@
 # TODO module
+# TODO if I'm not mistaken I need permissions for SSM
 resource "aws_iam_role" "project_name_ecs_frontend_role" {
   name = "${var.project_name}-ecs-frontend-role"
 

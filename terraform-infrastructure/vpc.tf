@@ -27,7 +27,7 @@ resource "aws_vpc_endpoint" "project_name_ecr_api" {
   service_name      = "com.amazonaws.${var.region}.ecr.api"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name))]
+  if can(regex("backend", name))] # backend is in AZs a, b, c
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 
   tags = {
@@ -42,7 +42,7 @@ resource "aws_vpc_endpoint" "project_name_ecr_dkr" {
   service_name      = "com.amazonaws.${var.region}.ecr.dkr"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name))]
+  if can(regex("backend", name))] # backend is in AZs a, b, c
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 
   tags = {
@@ -57,7 +57,7 @@ resource "aws_vpc_endpoint" "project_name_cw_logs" {
   service_name      = "com.amazonaws.${var.region}.logs"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name))]
+  if can(regex("backend", name))] # backend is in AZs a, b, c
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 
   tags = {
@@ -72,7 +72,7 @@ resource "aws_vpc_endpoint" "project_name_ssm" {
   service_name      = "com.amazonaws.${var.region}.ssm"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name))]
+  if can(regex("backend", name))] # backend is in AZs a, b, c
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 
   tags = {
@@ -87,7 +87,7 @@ resource "aws_vpc_endpoint" "project_name_ssm_messages" {
   service_name      = "com.amazonaws.${var.region}.ssmmessages"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name))]
+  if can(regex("backend", name))] # backend is in AZs a, b, c
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 
   tags = {
@@ -102,7 +102,7 @@ resource "aws_vpc_endpoint" "project_name_ec2_messages" {
   service_name      = "com.amazonaws.${var.region}.ec2messages"
   vpc_endpoint_type = "Interface"
   subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
-  if can(regex("backend", name))]
+  if can(regex("backend", name))] # backend is in AZs a, b, c
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 
   tags = {
@@ -117,7 +117,8 @@ resource "aws_vpc_endpoint" "project_name_secretsmanager" {
   vpc_id             = aws_vpc.project_name_vpc.id
   service_name       = "com.amazonaws.${var.region}.secretsmanager"
   vpc_endpoint_type  = "Interface"
-  subnet_ids         = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("backend", name))]
+  subnet_ids         = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id 
+  if can(regex("backend", name))] # backend is in AZs a, b, c
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 
   tags = {
