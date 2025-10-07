@@ -22,7 +22,7 @@ resource "aws_db_instance" "project_name_rds_instance" {
   publicly_accessible                 = false
   backup_retention_period             = 7 # days
   backup_window                       = "03:00-04:00"
-  skip_final_snapshot                 = true # makes it hard to destroy the infra
+  skip_final_snapshot                 = true # false makes it hard to destroy the infra
 }
 
 resource "random_password" "rds_instance_password" {
