@@ -14,6 +14,7 @@ resource "aws_db_instance" "project_name_rds_instance" {
   storage_type                        = "gp2"
   username                            = local.rds_username
   iam_database_authentication_enabled = true
+  # a password is needed anyway even if you allow with IAM auth
   password                            = random_password.rds_instance_password.result
   db_subnet_group_name                = aws_db_subnet_group.project_name_rds_subnet_group.name
   vpc_security_group_ids              = [aws_security_group.project_name_rds_sg.id]
