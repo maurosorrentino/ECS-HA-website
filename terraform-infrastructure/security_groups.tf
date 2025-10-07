@@ -57,11 +57,11 @@ resource "aws_security_group" "project_name_ecs_launch_template_sg" {
   vpc_id      = aws_vpc.project_name_vpc.id
 
   egress {
-    from_port                = 443
-    to_port                  = 443
-    protocol                 = "tcp"
-    security_groups          = [aws_security_group.project_name_ecr_vpc_endpoint_sg.id]
-    description              = "Allow outbound HTTPS to ECR via VPC endpoint"
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.project_name_ecr_vpc_endpoint_sg.id]
+    description     = "Allow outbound HTTPS to ECR via VPC endpoint"
   }
 
   egress {
