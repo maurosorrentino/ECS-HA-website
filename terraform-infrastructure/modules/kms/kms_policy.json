@@ -1,25 +1,7 @@
 {
   "Version": "2012-10-17",
-  "Id": "restrict-kms-key-usage-to-role_name",
+  "Id": "restrict-kms-key-usage-to-admin",
   "Statement": [
-    // uncomment the following once you create the role
-    // {
-    //   "Sid": "AllowSpecificRolesUseOfKey",
-    //   "Effect": "Allow",
-    //   "Principal": {
-    //     "AWS": [
-    //       "arn:aws:iam::${account_id}:role/role_name"
-    //     ]
-    //   },
-    //   "Action": [
-    //     "kms:Encrypt",
-    //     "kms:Decrypt",
-    //     "kms:ReEncrypt*",
-    //     "kms:GenerateDataKey*",
-    //     "kms:DescribeKey"
-    //   ],
-    //   "Resource": "*"
-    // },
     {
       "Sid": "AllowAdminKeyManagement",
       "Effect": "Allow",
