@@ -6,7 +6,7 @@
       "Sid": "AllowAdminKeyManagement",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::${account_id}:role/AdminRole"
+        "AWS": "arn:aws:iam::${account_id}:role/devGitHubActionsProjectNameRole"
       },
       "Action": [
         "kms:*"
