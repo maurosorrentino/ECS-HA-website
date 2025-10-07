@@ -12,17 +12,6 @@ resource "aws_kms_alias" "project_name_s3_bucket_key_alias" {
   target_key_id = aws_kms_key.project_name_s3_bucket_key.id
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_encryption" {
-  bucket = var.bucket_name
-
-  rule {
-    apply_server_side_encryption_by_default {
-      kms_master_key_id = aws_kms_key.project_name_s3_bucket_key.arn
-      sse_algorithm     = "aws:kms"
-    }
-  }
-}
-
 output "kms_arn" {
   value = aws_kms_key.project_name_s3_bucket_key.arn
 }
