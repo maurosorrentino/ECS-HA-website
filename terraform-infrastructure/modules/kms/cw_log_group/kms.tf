@@ -7,10 +7,6 @@ resource "aws_kms_key" "project_name_cloudwatch_logs" {
   })
 }
 
-output "kms_key_id" {
-  value = aws_kms_key.project_name_cloudwatch_logs.id
-}
-
 output "kms_arn" {
   value = aws_kms_key.project_name_cloudwatch_logs.arn
 }
