@@ -11,9 +11,9 @@ resource "aws_kms_key" "project_name_cloudwatch_logs" {
         "Principal": {
           "AWS": [
             # need for terraform destroy, do not use in prod
-            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root", 
+            "arn:aws:iam::${var.account_id}:root", 
             # allow users with a specific role to decrypt logs
-            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/devGitHubActionsProjectNameRole" 
+            "arn:aws:iam::${var.account_id}:role/devGitHubActionsProjectNameRole" 
           ]
         },
         # in prod limit the actions to what is strictly necessary
