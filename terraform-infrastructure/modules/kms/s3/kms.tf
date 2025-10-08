@@ -35,6 +35,20 @@ resource "aws_kms_key" "project_name_s3_bucket_key" {
           "kms:DescribeKey"
         ],
         "Resource": "*"
+      },
+      {
+        "Sid": "AllowALBUse",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "elasticloadbalancing.amazonaws.com"
+        },
+        "Action": [
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:GenerateDataKey",
+          "kms:DescribeKey"
+        ],
+        "Resource": "*"
       }
     ]
   })
