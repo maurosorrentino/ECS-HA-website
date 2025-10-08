@@ -5,10 +5,15 @@ resource "aws_db_subnet_group" "project_name_rds_subnet_group" {
   depends_on = [aws_subnet.project_name_private_subnets]
 }
 
+resource "random_password" "rds_instance_password" {
+  length  = 16
+  special = true
+}
+
 resource "aws_db_instance" "project_name_rds_instance" {
   identifier                          = "${var.project_name}-rds-instance"
-  engine                              = "mysql"
-  engine_version                      = "8.0"
+  engine                              = "postgresql"
+  engine_version                      = "17.4"
   instance_class                      = "db.t3.micro" # free tier
   allocated_storage                   = 20
   storage_type                        = "gp2"
@@ -23,9 +28,4 @@ resource "aws_db_instance" "project_name_rds_instance" {
   backup_retention_period             = 7 # days
   backup_window                       = "03:00-04:00"
   skip_final_snapshot                 = true # change to false to make it hard to destroy the infra
-}
-
-resource "random_password" "rds_instance_password" {
-  length  = 16
-  special = true
 }
