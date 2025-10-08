@@ -12,7 +12,7 @@ resource "random_password" "rds_instance_password" {
 
 resource "aws_db_instance" "project_name_rds_instance" {
   identifier                          = "${var.project_name}-rds-instance"
-  engine                              = "postgresql"
+  engine                              = "postgres"
   engine_version                      = "17.4"
   instance_class                      = "db.t3.micro" # free tier
   allocated_storage                   = 20
