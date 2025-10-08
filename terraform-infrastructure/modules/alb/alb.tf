@@ -10,7 +10,7 @@ resource "aws_lb" "project_name_alb" {
 
   access_logs {
     bucket  = var.bucket_id
-    prefix  = "AWSLogs/${var.s3_prefix}"
+    prefix  = var.s3_prefix
     enabled = true
   }
 }
