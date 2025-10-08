@@ -8,7 +8,7 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         Sid : "AllowALBLogging",
         Effect : "Allow",
         Principal : {
-          Service : "logdelivery.elb.amazonaws.com"
+          Service : "elasticloadbalancing.amazonaws.com"
         },
         Action : "s3:PutObject",
         Resource : "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*",
