@@ -5,15 +5,12 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid : "AllowALBLogging",
+        Sid : "AllowALBPutObject",
         Effect : "Allow",
         Principal : {
           Service : "elasticloadbalancing.amazonaws.com"
         },
-        Action : [
-          "s3:PutObject",
-          "s3:GetBucketAcl"
-        ],
+        Action : "s3:PutObject",
         Resource : "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/AWSLogs/*",
         Condition : {
           StringEquals : {
@@ -22,10 +19,23 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         }
       },
       {
+        Sid = "AllowALBGetBucketAcl",
+        Effect = "Allow",
+        Principal = {
+          Service = "elasticloadbalancing.amazonaws.com"
+        },
+        Action = "s3:GetBucketAcl",
+        Resource = "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}"
+      },
+      {
         Sid : "AllowVPCEndpointAccess",
         Effect : "Allow",
         Principal : "*",
-        Action : "s3:*",
+        Action : [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:ListBucket"
+        ],
         Resource : [
           "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}",
           "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*"
