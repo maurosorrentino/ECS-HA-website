@@ -10,8 +10,11 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         Principal : {
           Service : "elasticloadbalancing.amazonaws.com"
         },
-        Action : "s3:PutObject",
-        Resource : "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*",
+        Action : [
+          "s3:PutObject",
+          "s3:GetBucketAcl"
+        ],
+        Resource : "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/AWSLogs/*",
         Condition : {
           StringEquals : {
             "aws:SourceAccount" : data.aws_caller_identity.current.account_id
