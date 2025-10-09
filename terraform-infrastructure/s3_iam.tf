@@ -1,91 +1,91 @@
-# resource "aws_s3_bucket_policy" "alb_logs_policy" {
-#   bucket = module.project_name_alb_logs_s3.bucket_id
+resource "aws_s3_bucket_policy" "alb_logs_policy" {
+  bucket = module.project_name_alb_logs_s3.bucket_id
 
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Sid : "AllowALBPutObject",
-#         Effect : "Allow",
-#         Principal : {
-#           Service : "elasticloadbalancing.amazonaws.com"
-#         },
-#         Action : "s3:PutObject",
-#         Resource : "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
-#         Condition : {
-#           StringEquals : {
-#             "aws:SourceAccount" : data.aws_caller_identity.current.account_id
-#           },
-#           # need to allow all the ALBs in the account to write logs to the same bucket otherwise it won't work
-#           # as when tf creates the ALB it s3 needs to allow it to write logs
-#           ArnLike = {
-#             "aws:SourceArn" = "arn:aws:elasticloadbalancing:${var.region}:${data.aws_caller_identity.current.account_id}:loadbalancer/*"
-#           }
-#         }
-#       },
-#       {
-#         Sid = "AllowALBGetBucketAcl",
-#         Effect = "Allow",
-#         Principal = {
-#           Service = "elasticloadbalancing.amazonaws.com"
-#         },
-#         Action = "s3:GetBucketAcl",
-#         Resource = "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}"
-#       },
-#       {
-#         Sid : "AllowVPCEndpointAccess",
-#         Effect : "Allow",
-#         Principal : "*",
-#         Action : [
-#           "s3:GetObject",
-#           "s3:PutObject",
-#           "s3:ListBucket"
-#         ],
-#         Resource : [
-#           "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}",
-#           "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*"
-#         ],
-#         Condition : {
-#           StringEquals : {
-#             "aws:SourceVpce" : aws_vpc_endpoint.project_name_s3_alb_logs_vpc_endpoint.id
-#           }
-#         }
-#       }
-#     ]
-#   })
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid : "AllowALBPutObject",
+        Effect : "Allow",
+        Principal : {
+          Service : "elasticloadbalancing.amazonaws.com"
+        },
+        Action : "s3:PutObject",
+        Resource : "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+        Condition : {
+          StringEquals : {
+            "aws:SourceAccount" : data.aws_caller_identity.current.account_id
+          },
+          # need to allow all the ALBs in the account to write logs to the same bucket otherwise it won't work
+          # as when tf creates the ALB it s3 needs to allow it to write logs
+          ArnLike = {
+            "aws:SourceArn" = "arn:aws:elasticloadbalancing:${var.region}:${data.aws_caller_identity.current.account_id}:loadbalancer/*"
+          }
+        }
+      },
+      {
+        Sid = "AllowALBGetBucketAcl",
+        Effect = "Allow",
+        Principal = {
+          Service = "elasticloadbalancing.amazonaws.com"
+        },
+        Action = "s3:GetBucketAcl",
+        Resource = "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}"
+      },
+      {
+        Sid : "AllowVPCEndpointAccess",
+        Effect : "Allow",
+        Principal : "*",
+        Action : [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:ListBucket"
+        ],
+        Resource : [
+          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}",
+          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*"
+        ],
+        Condition : {
+          StringEquals : {
+            "aws:SourceVpce" : aws_vpc_endpoint.project_name_s3_alb_logs_vpc_endpoint.id
+          }
+        }
+      }
+    ]
+  })
 
-#   depends_on = [module.project_name_alb_logs_s3, aws_vpc_endpoint.project_name_s3_alb_logs_vpc_endpoint]
-# }
+  depends_on = [module.project_name_alb_logs_s3, aws_vpc_endpoint.project_name_s3_alb_logs_vpc_endpoint]
+}
 
-# resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
-#   bucket = module.project_name_cloudfront_logs_s3.bucket_id
+resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
+  bucket = module.project_name_cloudfront_logs_s3.bucket_id
 
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Sid : "AllowCloudFrontLogs",
-#         Effect : "Allow",
-#         Principal = {
-#           Service = "delivery.logs.amazonaws.com"
-#         },
-#         Action   = "s3:PutObject",
-#         Resource = "arn:aws:s3:::${module.project_name_cloudfront_logs_s3.bucket_id}/*",
-#         Condition = {
-#           StringEquals = {
-#             "aws:SourceAccount" = data.aws_caller_identity.current.account_id
-#           }
-#         }
-#       },
-#       {
-#         Sid : "AllowBucketAclCheck",
-#         Effect : "Allow",
-#         Principal = {
-#           Service = "delivery.logs.amazonaws.com"
-#         },
-#         Action   = "s3:GetBucketAcl",
-#         Resource = "arn:aws:s3:::${module.project_name_cloudfront_logs_s3.bucket_id}"
-#       }
-#     ]
-#   })
-# }
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid : "AllowCloudFrontLogs",
+        Effect : "Allow",
+        Principal = {
+          Service = "delivery.logs.amazonaws.com"
+        },
+        Action   = "s3:PutObject",
+        Resource = "arn:aws:s3:::${module.project_name_cloudfront_logs_s3.bucket_id}/*",
+        Condition = {
+          StringEquals = {
+            "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+          }
+        }
+      },
+      {
+        Sid : "AllowBucketAclCheck",
+        Effect : "Allow",
+        Principal = {
+          Service = "delivery.logs.amazonaws.com"
+        },
+        Action   = "s3:GetBucketAcl",
+        Resource = "arn:aws:s3:::${module.project_name_cloudfront_logs_s3.bucket_id}"
+      }
+    ]
+  })
+}
