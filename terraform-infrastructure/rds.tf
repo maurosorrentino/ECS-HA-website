@@ -8,6 +8,7 @@ resource "aws_db_subnet_group" "project_name_rds_subnet_group" {
 resource "random_password" "rds_instance_password" {
   length  = 16
   special = true
+  override_special = "!#$%^&*()-_=+[]{}<>?:"
 }
 
 resource "aws_db_instance" "project_name_rds_instance" {
