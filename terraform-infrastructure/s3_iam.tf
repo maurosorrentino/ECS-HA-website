@@ -15,6 +15,12 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         Condition : {
           StringEquals : {
             "aws:SourceAccount" : data.aws_caller_identity.current.account_id
+          },
+          ArnLike = {
+            "aws:SourceArn" = [
+              module.project_name_frontend_alb.alb_arn,
+              module.project_name_backend_alb.alb_arn
+            ]
           }
         }
       },
