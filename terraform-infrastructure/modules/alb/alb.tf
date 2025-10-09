@@ -8,11 +8,11 @@ resource "aws_lb" "project_name_alb" {
   idle_timeout               = 60
   drop_invalid_header_fields = true
 
-  # access_logs {
-  #   bucket  = var.bucket_id
-  #   prefix  = var.s3_prefix
-  #   enabled = true
-  # }
+  access_logs {
+    bucket  = var.bucket_id
+    prefix  = var.s3_prefix
+    enabled = true
+  }
 }
 
 resource "aws_lb_target_group" "project_name_tg" {
