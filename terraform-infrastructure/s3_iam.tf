@@ -55,7 +55,8 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
     ]
   })
 
-  depends_on = [module.project_name_alb_logs_s3, aws_vpc_endpoint.project_name_s3_alb_logs_vpc_endpoint]
+  depends_on = [module.project_name_alb_logs_s3, aws_vpc_endpoint.project_name_s3_alb_logs_vpc_endpoint,
+  module.project_name_frontend_alb, module.project_name_backend_alb]
 }
 
 resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
