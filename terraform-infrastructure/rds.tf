@@ -15,7 +15,7 @@ resource "aws_db_instance" "project_name_rds_instance" {
   identifier                          = "${var.project_name}-rds-instance"
   engine                              = "postgres"
   engine_version                      = "17.4"
-  instance_class                      = "db.t3.micro" # free tier
+  instance_class                      = "db.t4g.micro" # free tier
   allocated_storage                   = 20
   storage_type                        = "gp2"
   username                            = local.rds_username
