@@ -8,7 +8,7 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         Sid : "AllowALBPutObject",
         Effect : "Allow",
         Principal : {
-          Service : "elasticloadbalancing.amazonaws.com"
+          Service : "logdelivery.elasticloadbalancing.amazonaws.com"
         },
         Action : "s3:PutObject",
         Resource : [
@@ -35,7 +35,7 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         Sid = "AllowALBGetBucketAcl",
         Effect = "Allow",
         Principal = {
-          Service = "elasticloadbalancing.amazonaws.com"
+          Service = "logdelivery.elasticloadbalancing.amazonaws.com"
         },
         Action = "s3:GetBucketAcl",
         Resource = module.project_name_alb_logs_s3.bucket_arn,
