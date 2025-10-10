@@ -13,8 +13,8 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         Action : "s3:PutObject",
         # try first with /* and then s3_prefix
         Resource : [
-          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/${module.project_name_frontend_alb.s3_prefix}/AWSLogs/*",
-          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/${module.project_name_backend_alb.s3_prefix}/AWSLogs/*"
+          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*"
+          # "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/${module.project_name_backend_alb.s3_prefix}/AWSLogs/*"
         ],
         Condition : {
           StringEquals : {
