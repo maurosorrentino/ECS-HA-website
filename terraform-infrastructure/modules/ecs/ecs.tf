@@ -74,7 +74,7 @@ data "aws_ami" "amazon_linux_2" {
 resource "aws_launch_template" "project_name_ecs_lt" {
   name_prefix   = var.launch_template_name_prefix
   image_id      = data.aws_ami.amazon_linux_2.id
-  instance_type = "t2.micro" # free tier
+  instance_type = "t3.micro" # free tier
 
   iam_instance_profile {
     name = var.instance_profile_name
