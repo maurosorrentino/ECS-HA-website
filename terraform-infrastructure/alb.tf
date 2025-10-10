@@ -8,7 +8,8 @@ module "project_name_frontend_alb" {
   bucket_id             = module.project_name_alb_logs_s3.bucket_id
   s3_prefix             = "frontend-alb-logs"
 
-  depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_frontend_alb_sg, module.project_name_alb_logs_s3]
+  depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_frontend_alb_sg,
+  module.project_name_alb_logs_s3, aws_s3_bucket_policy.alb_logs_policy]
 }
 
 module "project_name_backend_alb" {
@@ -21,5 +22,6 @@ module "project_name_backend_alb" {
   bucket_id             = module.project_name_alb_logs_s3.bucket_id
   s3_prefix             = "backend-alb-logs"
 
-  depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_backend_alb_sg, module.project_name_alb_logs_s3]
+  depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_backend_alb_sg, 
+  module.project_name_alb_logs_s3, aws_s3_bucket_policy.alb_logs_policy]
 }
