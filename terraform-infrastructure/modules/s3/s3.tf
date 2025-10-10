@@ -26,17 +26,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "project_name_s3_lifecycle" {
   }
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "project_name_s3_encryption" {
-  bucket = aws_s3_bucket.project_name_s3.id
-
-  rule {
-    apply_server_side_encryption_by_default {
-      kms_master_key_id = var.kms_key_arn
-      sse_algorithm     = "aws:kms"
-    }
-  }
-}
-
 output "bucket_name" {
   value = aws_s3_bucket.project_name_s3.bucket
 }
