@@ -12,8 +12,8 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         },
         Action : "s3:PutObject",
         Resource : [
-          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/frontend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}*",
-          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/backend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}*"
+          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/frontend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*",
+          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/backend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*"
         ],
         Condition : {
           StringEquals : {
