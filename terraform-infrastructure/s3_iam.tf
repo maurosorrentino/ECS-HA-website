@@ -70,37 +70,40 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
   depends_on = [module.project_name_alb_logs_s3, aws_vpc_endpoint.project_name_s3_alb_logs_vpc_endpoint]
 }
 
-# resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
-#   bucket = module.project_name_cloudfront_logs_s3.bucket_id
+resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
+  bucket = module.project_name_cloudfront_logs_s3.bucket_id
 
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Sid : "AllowCloudFrontLogs",
-#         Effect : "Allow",
-#         Principal = {
-#           Service = "delivery.logs.amazonaws.com"
-#         },
-#         Action   = "s3:PutObject",
-#         Resource = "${module.project_name_cloudfront_logs_s3.bucket_arn}/*",
-#         Condition = {
-#           StringEquals = {
-#             "aws:SourceAccount" = data.aws_caller_identity.current.account_id
-#           }
-#         }
-#       },
-#       {
-#         Sid : "AllowBucketAclCheck",
-#         Effect : "Allow",
-#         Principal = {
-#           Service = "delivery.logs.amazonaws.com"
-#         },
-#         Action   = "s3:GetBucketAcl",
-#         Resource = module.project_name_cloudfront_logs_s3.bucket_arn
-#       }
-#     ]
-#   })
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid : "AllowCloudFrontLogs",
+        Effect : "Allow",
+        Principal = {
+          Service = "delivery.logs.amazonaws.com"
+        },
+        Action   = "s3:PutObject",
+        Resource = [
+          "${module.project_name_cloudfront_logs_s3.bucket_arn}/*",
+          "${module.project_name_cloudfront_logs_s3.bucket_arn}/AWSLogs/${data.aws_caller_identity.current.id}/*",
+        ],
+        Condition = {
+          StringEquals = {
+            "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+          }
+        }
+      },
+      {
+        Sid : "AllowBucketAclCheck",
+        Effect : "Allow",
+        Principal = {
+          Service = "delivery.logs.amazonaws.com"
+        },
+        Action   = "s3:GetBucketAcl",
+        Resource = module.project_name_cloudfront_logs_s3.bucket_arn
+      }
+    ]
+  })
 
-#   depends_on = [module.project_name_cloudfront_logs_s3]
-# }
+  depends_on = [module.project_name_cloudfront_logs_s3]
+}

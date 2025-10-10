@@ -53,7 +53,6 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
 
   logging_config {
     bucket = module.project_name_cloudfront_logs_s3.bucket_domain_name
-    prefix = "cloudfront-logs/"
   }
 
   viewer_certificate {
@@ -78,4 +77,7 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
   tags = {
     Name = "${var.project_name}-cloudfront"
   }
+
+  # if you have a domain add aws_acm_certificate.project_name_cdn_cert in depends_on
+  depends_on = [module.project_name_frontend_alb, module.project_name_cloudfront_logs_s3]
 }
