@@ -23,11 +23,7 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
           # need to allow all the ALBs in the account to write logs to the same bucket otherwise it won't work
           # as when tf creates the ALB it s3 needs to allow it to write logs
           ArnLike = {
-            "aws:SourceArn" = [
-              "arn:aws:elasticloadbalancing:${var.region}:${data.aws_caller_identity.current.account_id}:loadbalancer/*"
-              # module.project_name_frontend_alb.alb_arn,
-              # module.project_name_backend_alb.alb_arn
-            ]
+            "aws:SourceArn" = "arn:aws:elasticloadbalancing:${var.region}:${data.aws_caller_identity.current.account_id}:loadbalancer/*"
           }
         }
       },
@@ -44,11 +40,7 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
             "aws:SourceAccount" : data.aws_caller_identity.current.account_id
           },
           ArnLike = {
-            "aws:SourceArn" = [
-              "arn:aws:elasticloadbalancing:${var.region}:${data.aws_caller_identity.current.account_id}:loadbalancer/*"
-              # module.project_name_frontend_alb.alb_arn,
-              # module.project_name_backend_alb.alb_arn
-            ]
+            "aws:SourceArn" = "arn:aws:elasticloadbalancing:${var.region}:${data.aws_caller_identity.current.account_id}:loadbalancer/*"
           }
         }
       },
@@ -76,7 +68,6 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
   })
 
   depends_on = [module.project_name_alb_logs_s3, aws_vpc_endpoint.project_name_s3_alb_logs_vpc_endpoint]
-  #module.project_name_frontend_alb.alb_arn, module.project_name_backend_alb.alb_arn]
 }
 
 resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
@@ -110,4 +101,6 @@ resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
       }
     ]
   })
+
+  depends_on = [module.project_name_cloudfront_logs_s3]
 }
