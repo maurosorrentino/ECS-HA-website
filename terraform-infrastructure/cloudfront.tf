@@ -78,7 +78,4 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
   tags = {
     Name = "${var.project_name}-cloudfront"
   }
-
-  # if you have a domain add aws_acm_certificate.project_name_cdn_cert in depends_on
-  depends_on = [aws_s3_bucket_policy.cloudfront_logs_policy]
 }
