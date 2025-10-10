@@ -114,10 +114,10 @@ resource "aws_vpc_endpoint" "project_name_ec2_messages" {
 
 # probably don't need the following TODO
 resource "aws_vpc_endpoint" "project_name_secretsmanager" {
-  vpc_id             = aws_vpc.project_name_vpc.id
-  service_name       = "com.amazonaws.${var.region}.secretsmanager"
-  vpc_endpoint_type  = "Interface"
-  subnet_ids         = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id 
+  vpc_id            = aws_vpc.project_name_vpc.id
+  service_name      = "com.amazonaws.${var.region}.secretsmanager"
+  vpc_endpoint_type = "Interface"
+  subnet_ids = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
   if can(regex("backend", name))] # backend is in AZs a, b, c
   security_group_ids = [aws_security_group.vpc_endpoints_sg.id]
 

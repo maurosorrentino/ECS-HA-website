@@ -6,8 +6,8 @@ resource "aws_db_subnet_group" "project_name_rds_subnet_group" {
 }
 
 resource "random_password" "rds_instance_password" {
-  length  = 16
-  special = true
+  length           = 16
+  special          = true
   override_special = "!#$%^&*()-_=+[]{}<>?:"
 }
 
@@ -21,12 +21,12 @@ resource "aws_db_instance" "project_name_rds_instance" {
   username                            = local.rds_username
   iam_database_authentication_enabled = true
   # a password is needed anyway even if you allow with IAM auth
-  password                            = random_password.rds_instance_password.result
-  db_subnet_group_name                = aws_db_subnet_group.project_name_rds_subnet_group.name
-  vpc_security_group_ids              = [aws_security_group.project_name_rds_sg.id]
-  multi_az                            = true
-  publicly_accessible                 = false
-  backup_retention_period             = 7 # days
-  backup_window                       = "03:00-04:00"
-  skip_final_snapshot                 = true # change to false to make it hard to destroy the infra
+  password                = random_password.rds_instance_password.result
+  db_subnet_group_name    = aws_db_subnet_group.project_name_rds_subnet_group.name
+  vpc_security_group_ids  = [aws_security_group.project_name_rds_sg.id]
+  multi_az                = true
+  publicly_accessible     = false
+  backup_retention_period = 7 # days
+  backup_window           = "03:00-04:00"
+  skip_final_snapshot     = true # change to false to make it hard to destroy the infra
 }

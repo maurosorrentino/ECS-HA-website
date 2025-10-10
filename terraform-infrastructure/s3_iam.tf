@@ -12,12 +12,12 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         },
         Action : "s3:PutObject",
         Resource : [
-          "${module.project_name_alb_logs_s3.bucket_arn}/frontend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*",
-          "${module.project_name_alb_logs_s3.bucket_arn}/backend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*"
+          "${module.project_name_alb_logs_s3.bucket_arn}/${local.s3_frontend_alb_prefix}/AWSLogs/${data.aws_caller_identity.current.id}/*",
+          "${module.project_name_alb_logs_s3.bucket_arn}/${local.s3_backend_alb_prefix}/AWSLogs/${data.aws_caller_identity.current.id}/*"
         ],
         Condition : {
           StringEquals : {
-            "s3:x-amz-acl": "bucket-owner-full-control",
+            "s3:x-amz-acl" : "bucket-owner-full-control",
             "aws:SourceAccount" : data.aws_caller_identity.current.account_id
           },
           # need to allow all the ALBs in the account to write logs to the same bucket otherwise it won't work
@@ -28,12 +28,12 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         }
       },
       {
-        Sid = "AllowALBGetBucketAcl",
+        Sid    = "AllowALBGetBucketAcl",
         Effect = "Allow",
         Principal = {
           Service = "logdelivery.elasticloadbalancing.amazonaws.com"
         },
-        Action = "s3:GetBucketAcl",
+        Action   = "s3:GetBucketAcl",
         Resource = module.project_name_alb_logs_s3.bucket_arn,
         Condition : {
           StringEquals : {
