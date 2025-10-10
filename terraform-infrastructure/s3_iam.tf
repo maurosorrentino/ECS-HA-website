@@ -62,8 +62,8 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
           "s3:ListBucket"
         ],
         Resource : [
-          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}",
-          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}/*"
+          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_name}",
+          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_name}/*"
         ],
         Condition : {
           StringEquals : {
