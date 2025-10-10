@@ -83,10 +83,7 @@ resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
           Service = "delivery.logs.amazonaws.com"
         },
         Action   = "s3:PutObject",
-        Resource = [
-          "${module.project_name_cloudfront_logs_s3.bucket_arn}/*",
-          "${module.project_name_cloudfront_logs_s3.bucket_arn}/AWSLogs/${data.aws_caller_identity.current.id}/*",
-        ],
+        Resource = "${module.project_name_cloudfront_logs_s3.bucket_arn}/AWSLogs/${data.aws_caller_identity.current.id}/*",
         Condition = {
           StringEquals = {
             "aws:SourceAccount" = data.aws_caller_identity.current.account_id
