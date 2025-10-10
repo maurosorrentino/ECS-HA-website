@@ -62,6 +62,7 @@ Some configurations are intentionally incomplete to keep the setup free-tier fri
 - Add NAT Gateway configuration
 - Clean up unused IAM policies in ecs_iam.tf
 - Implement and test the App Deployment Pipeline (ECR + ECS update)
+- Add env variables values from pipeline
 - Enable Route 53 & ACM resources once a custom domain is purchased 
 
 ## Notes for Reviewers
