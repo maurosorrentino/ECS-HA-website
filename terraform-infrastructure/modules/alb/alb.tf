@@ -55,3 +55,7 @@ output "target_group_arn" {
 output "alb_arn" {
   value = aws_lb.project_name_alb.arn
 }
+
+output "s3_prefix" {
+  value = var.s3_prefix
+}
