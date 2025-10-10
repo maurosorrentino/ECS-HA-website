@@ -1,6 +1,6 @@
 resource "aws_ecs_task_definition" "project_name_task" {
   family                   = var.service_name
-  network_mode             = "bridge"
+  network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
   cpu                      = "256" # 0.25 vCPU
   memory                   = "512"
