@@ -1,6 +1,4 @@
 locals {
-  cloudfront_bucket_name = "${var.project_name}-cloudfront-logs"
-  alb_bucket_name        = "${var.project_name}-alb-logs"
   rds_username           = data.aws_secretsmanager_secret_version.project_name_rds_instance_username.secret_string
 
   # 256 IPs addresses per subnet
