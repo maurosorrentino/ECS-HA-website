@@ -14,9 +14,10 @@ registration.
 ## TODO
 
 - Fix ASG, ECS service, SG errors.
+- NAT gateway.
 - Cleanup ecs_iam.tf file.
 
 ## License
 
 You can use the code if you like to deploy the infrastructure, just follow the instructions in the comments if you want to
-pay and own a custom domain
+pay and own a custom domain.
