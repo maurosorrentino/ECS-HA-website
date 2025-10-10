@@ -1,11 +1,11 @@
 resource "aws_iam_openid_connect_provider" "github" {
   url             = "https://token.actions.githubusercontent.com"
   client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = [var.GITHUB_THUMBPRINT]
+  thumbprint_list = [var.github_thumbprint]
 }
 
 resource "aws_iam_role" "github_actions_role" {
-  name = "${var.ENV}GitHubActionsProjectNameRole"
+  name = "${var.env}GitHubActionsProjectNameRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -18,8 +18,8 @@ resource "aws_iam_role" "github_actions_role" {
       Condition = {
         StringLike = {
           "token.actions.githubusercontent.com:sub" = [
-            "repo:${var.GITHUB_REPO}:ref:refs/tags/v*",
-            "repo:${var.GITHUB_REPO}:environment:*"
+            "repo:${var.github_repo}:ref:refs/tags/v*",
+            "repo:${var.github_repo}:environment:*"
           ]
         }
       }
