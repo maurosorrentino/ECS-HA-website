@@ -17,7 +17,6 @@ resource "aws_s3_bucket_ownership_controls" "cloudfront_logs" {
   }
 }
 
-# Allow CloudFront to write logs
 resource "aws_s3_bucket_acl" "cloudfront_logs" {
   bucket = module.project_name_cloudfront_logs_s3.bucket_id
   acl    = "log-delivery-write"
