@@ -30,6 +30,14 @@ output "bucket_name" {
   value = aws_s3_bucket.project_name_s3.bucket
 }
 
+output "bucket_arn" {
+  value = aws_s3_bucket.project_name_s3.arn
+}
+
+output "bucket_arn" {
+  value = aws_s3_bucket.project_name_s3.
+}
+
 output "bucket_domain_name" {
   value = aws_s3_bucket.project_name_s3.bucket_domain_name
 }

@@ -12,8 +12,8 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         },
         Action : "s3:PutObject",
         Resource : [
-          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_name}/frontend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*",
-          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_name}/backend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*"
+          "${module.project_name_alb_logs_s3.bucket_arn}/frontend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*",
+          "${module.project_name_alb_logs_s3.bucket_arn}/backend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*"
         ],
         Condition : {
           StringEquals : {
@@ -38,7 +38,7 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
           Service = "elasticloadbalancing.amazonaws.com"
         },
         Action = "s3:GetBucketAcl",
-        Resource = "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_id}",
+        Resource = module.project_name_alb_logs_s3.bucket_arn,
         Condition : {
           StringEquals : {
             "aws:SourceAccount" : data.aws_caller_identity.current.account_id
@@ -62,8 +62,9 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
           "s3:ListBucket"
         ],
         Resource : [
-          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_name}",
-          "arn:aws:s3:::${module.project_name_alb_logs_s3.bucket_name}/*"
+          module.project_name_alb_logs_s3.bucket_arn,
+          "${module.project_name_alb_logs_s3.bucket_arn}/frontend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*",
+          "${module.project_name_alb_logs_s3.bucket_arn}/backend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*"
         ],
         Condition : {
           StringEquals : {
@@ -91,7 +92,7 @@ resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
           Service = "delivery.logs.amazonaws.com"
         },
         Action   = "s3:PutObject",
-        Resource = "arn:aws:s3:::${module.project_name_cloudfront_logs_s3.bucket_id}/*",
+        Resource = "${module.project_name_cloudfront_logs_s3.bucket_arn}/*",
         Condition = {
           StringEquals = {
             "aws:SourceAccount" = data.aws_caller_identity.current.account_id
@@ -105,7 +106,7 @@ resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
           Service = "delivery.logs.amazonaws.com"
         },
         Action   = "s3:GetBucketAcl",
-        Resource = "arn:aws:s3:::${module.project_name_cloudfront_logs_s3.bucket_id}"
+        Resource = "${module.project_name_cloudfront_logs_s3.bucket_arn}"
       }
     ]
   })
