@@ -23,6 +23,10 @@ The terraform-bootstrap/ directory contains Terraform code to:
 This directory must be run manually once before using the GitHub pipelines.
 After bootstrap, all other Terraform operations are automated via CI/CD.
 
+⚠️ Security Note:
+When the repository was made public, all GitHub Actions IAM permissions were revoked to prevent unauthorized access to AWS.
+From this point onward, Terraform is executed manually via the terminal to maintain full security control.
+
 2. Pipelines
 ✅ Pipeline 1 – Infrastructure Deployment (infrastructure_pipeline.yml)
 
