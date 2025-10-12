@@ -1,9 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "terraform-state-department-name"
-    key            = "terraform.tfstate"
-    region         = "eu-west-2"
-    dynamodb_table = "terraform-lock-table"
+    # bucket key and region is in the terraform init command and env variable are in .github/workflows/ENV/env_vars.json
     encrypt        = true
   }
 }

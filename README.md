@@ -35,6 +35,14 @@ From this point onward, Terraform is executed manually via the terminal to maint
 - Stores and retrieves Terraform state from the bootstrap S3 backend
 - Uses GitHub OIDC to authenticate securely to AWS
 
+# How It Works
+
+Triggering the Workflow:
+- Runs automatically to the `dev` environment on pushes to the main branch.
+- Can also be triggered manually from the GitHub Actions UI using the “Run workflow” button.
+- When run manually, it prompts for an environment selection (I have `dev` and `prod` environments but you can choose the 
+names and how many you want, you only need to put the role arn in the secrets)using the workflow input field.
+
 🧩 Pipeline 2 – Application Deployment (TODO) (app_deployment_pipeline.yml)
 
 Will:

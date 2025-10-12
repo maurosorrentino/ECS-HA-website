@@ -2,7 +2,7 @@ name: infrastructure-pipeline
 
 on:
   push:
-    branches: [feature]
+    branches: [xx]
   workflow_dispatch:
     inputs:
       environment:
