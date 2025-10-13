@@ -28,16 +28,16 @@ resource "aws_kms_key" "project_name_cloudwatch_logs" {
           "Service" : "logs.${var.region}.amazonaws.com"
         },
         "Action" : [
-          "kms:Encrypt*",
-          "kms:Decrypt*",
+          "kms:Encrypt",
+          "kms:Decrypt",
           "kms:ReEncrypt*",
           "kms:GenerateDataKey*",
-          "kms:DescribeKey"
+          "kms:Describe*"
         ],
         "Resource" : "*",
         "Condition" : {
           "ArnLike" : {
-            "kms:EncryptionContext:aws:logs:arn" : "arn:aws:logs:${var.region}:${var.account_id}:log-group:*"
+            "kms:EncryptionContext:aws:logs:arn" : "arn:aws:logs:${var.region}:${var.account_id}:log-group:${var.log_group_name}"
           }
         }
       }
