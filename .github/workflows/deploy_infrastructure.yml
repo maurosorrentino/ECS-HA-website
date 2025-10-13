@@ -45,11 +45,11 @@ jobs:
 
       - name: Terraform Plan
         working-directory: terraform-infrastructure
-        run: terraform plan -var="region=${aws_region}" -var="environment=${environment}"
+        run: terraform plan -var="region=${aws_region}" -var="environment=${environment}" -var="project_name=${tf_project_name}"
 
       - name: Terraform Apply
         working-directory: terraform-infrastructure
-        run: terraform apply -auto-approve -var="region=${aws_region}" -var="environment=${environment}"
+        run: terraform apply -auto-approve -var="region=${aws_region}" -var="environment=${environment}" -var="project_name=${tf_project_name}"
 
       - name: Get Terraform Outputs
         uses: actions/upload-artifact@v4
