@@ -97,12 +97,13 @@ resource "aws_security_group" "vpc_endpoints_sg" {
 }
 
 resource "aws_security_group_rule" "project_name_frontend_alb_sg_ingress" {
+  for_each = { for idx, chunk in local.cloudfront_cidr_chunks : idx => chunk }
   type              = "ingress"
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
   security_group_id = aws_security_group.project_name_frontend_alb_sg.id
-  cidr_blocks       = [data.aws_prefix_list.cloudfront.id]
+  cidr_blocks       = each.value
 }
 
 resource "aws_security_group_rule" "project_name_frontend_alb_sg_egress" {

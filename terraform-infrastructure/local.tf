@@ -5,6 +5,12 @@ locals {
   cw_log_group_frontend_name = "/ecs/${var.project_name}-frontend-service-log-group"
   cw_log_group_backend_name  = "/ecs/${var.project_name}-backend-service-log-group"
 
+  # Split the CloudFront CIDRs into chunks of max 60 as it's hitting the sg rule limit
+  cloudfront_cidr_chunks = [
+    for i in range(0, length(data.aws_ip_ranges.cloudfront.cidr_blocks), 60) :
+    slice(data.aws_ip_ranges.cloudfront.cidr_blocks, i, i + 60)
+  ]
+
   # 256 IPs addresses per subnet
   private_subnets = [
     {
