@@ -5,7 +5,7 @@ locals {
   cw_log_group_frontend_name = "/ecs/${var.project_name}-frontend-service-log-group"
   cw_log_group_backend_name  = "/ecs/${var.project_name}-backend-service-log-group"
 
-  # 256 IPs addresses per subnet
+  # 256 IPs addresses per subnet, adjust as you need
   private_subnets = [
     {
       name = "${var.project_name}-backend-private-subnet-a"
