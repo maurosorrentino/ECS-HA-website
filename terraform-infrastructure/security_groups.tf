@@ -102,7 +102,7 @@ resource "aws_security_group_rule" "project_name_frontend_alb_sg_ingress" {
   to_port           = 443
   protocol          = "tcp"
   security_group_id = aws_security_group.project_name_frontend_alb_sg.id
-  cidr_blocks       = data.aws_ip_ranges.cloudfront.cidr_blocks
+  cidr_blocks       = [data.aws_prefix_list.cloudfront.id]
 }
 
 resource "aws_security_group_rule" "project_name_frontend_alb_sg_egress" {
