@@ -2,6 +2,8 @@ locals {
   rds_username           = data.aws_secretsmanager_secret_version.project_name_rds_instance_username.secret_string
   s3_frontend_alb_prefix = "frontend-alb-logs"
   s3_backend_alb_prefix  = "backend-alb-logs"
+  cw_log_group_frontend_name = "ecs/${var.project_name}-frontend-service-log-group"
+  cw_log_group_backend_name = "ecs/${var.project_name}-backend-service-log-group"
 
   # 256 IPs addresses per subnet
   private_subnets = [
