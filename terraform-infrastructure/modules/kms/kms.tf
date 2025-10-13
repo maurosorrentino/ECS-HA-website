@@ -37,7 +37,7 @@ resource "aws_kms_key" "project_name_cloudwatch_logs" {
         "Resource" : "*",
         "Condition" : {
           "ArnLike" : {
-            "kms:EncryptionContext:aws:logs:arn" : "arn:aws:logs:${var.region}:${var.account_id}:log-group:${var.log_group_name}"
+            "kms:EncryptionContext:aws:logs:arn" : "arn:aws:logs:${var.region}:${var.account_id}:log-group:*"
           }
         }
       }
