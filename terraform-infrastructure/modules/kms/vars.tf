@@ -12,8 +12,3 @@ variable "log_group_name" {
   description = "log group name for kms policy"
   type        = string
 }
-
-variable "account_id" {
-  description = "aws account id where log groups are deployed"
-  type        = string
-}
