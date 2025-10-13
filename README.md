@@ -70,7 +70,6 @@ Will:
 
 Some configurations are intentionally incomplete to keep the setup free-tier friendly.
 
-- Fix minor ECS/ASG/Security Group dependency issues
 - Add NAT Gateway configuration
 - Clean up unused IAM policies in ecs_iam.tf
 - Implement and test the App Deployment Pipeline (ECR + ECS update)
