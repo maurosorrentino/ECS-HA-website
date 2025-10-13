@@ -30,7 +30,7 @@ resource "aws_lb_target_group" "project_name_tg" {
     matcher             = "200-399"
   }
 
-  target_type = "ip"
+  target_type = "instance"
 }
 
 resource "aws_lb_listener" "project_name_listener_https" {
