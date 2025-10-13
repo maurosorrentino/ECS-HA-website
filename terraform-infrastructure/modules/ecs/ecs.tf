@@ -49,11 +49,6 @@ resource "aws_ecs_service" "project_name_service" {
   desired_count   = 1
   launch_type     = "EC2"
 
-  network_configuration {
-    subnets         = var.subnets_ids
-    security_groups = var.security_groups_ids
-  }
-
   load_balancer {
     target_group_arn = var.alb_target_group_arn
     container_name   = var.service_name
@@ -78,6 +73,11 @@ resource "aws_launch_template" "project_name_ecs_lt" {
 
   iam_instance_profile {
     name = var.instance_profile_name
+  }
+
+  network_interfaces {
+    associate_public_ip_address = false
+    security_groups             = var.launch_template_security_groups_ids
   }
 
   # this is needed to connect the instance to the ECS cluster
