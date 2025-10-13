@@ -8,11 +8,6 @@ variable "cluster_id" {
   type        = string
 }
 
-variable "subnets_ids" {
-  description = "List of subnet IDs for the ECS service"
-  type        = list(string)
-}
-
 variable "security_groups_ids" {
   description = "List of security group IDs for the ECS service"
   type        = list(string)

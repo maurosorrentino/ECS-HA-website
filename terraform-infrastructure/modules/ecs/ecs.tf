@@ -80,11 +80,6 @@ resource "aws_launch_template" "project_name_ecs_lt" {
     name = var.instance_profile_name
   }
 
-  network_interfaces {
-    associate_public_ip_address = false
-    security_groups             = var.launch_template_security_groups_ids
-  }
-
   # this is needed to connect the instance to the ECS cluster
   user_data = base64encode(<<-EOT
               #!/bin/bash
