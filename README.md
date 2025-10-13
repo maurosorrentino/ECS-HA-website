@@ -71,10 +71,11 @@ Will:
 Some configurations are intentionally incomplete to keep the setup free-tier friendly.
 
 - Add NAT Gateway configuration
-- Clean up unused IAM policies in ecs_iam.tf
+- Clean up IAM policies in ecs_iam.tf
 - Implement and test the App Deployment Pipeline (ECR + ECS update)
-- Add env variables values from pipeline
 - Make / attach to GitHub Actions a role with less permissions
+- Make docker images upload pipeline
+- Make pipeline that runs tests on PR raise
 - Enable Route 53 & ACM resources once a custom domain is purchased 
 
 ## Notes for Reviewers
