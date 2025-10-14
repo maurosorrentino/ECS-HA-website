@@ -61,7 +61,7 @@ Will:
 - **Private Subnets:** Contain compute resources and databases, fully isolated for security.
 - **ECS / EC2 (Auto Scaling Groups):** Application containers and backend services scale automatically.
 - **Application Load Balancers (ALB):** Distribute HTTP traffic to frontend and backend EC2s.
-- **Amazon RDS (MySQL):** Managed relational database for persistent data storage.
+- **Amazon RDS:** Managed relational database for persistent data storage.
 - **Amazon S3:** Used for CDN and ALB logs with lifecycle policies to Glacier Archive.
 - **VPC Endpoints:** Enable private access to AWS services (S3, ECR, CloudWatch) without internet exposure.
 - **AWS KMS:** Encrypts sensitive resources and CloudWatch Logs.
