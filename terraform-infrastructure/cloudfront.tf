@@ -82,9 +82,9 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
   depends_on = [module.project_name_frontend_alb, module.project_name_cloudfront_logs_s3]
 }
 
-# data "aws_prefix_list" "cloudfront_prefix_list" {
-#   filter {
-#     name   = "prefix-list-name"
-#     values = ["com.amazonaws.global.cloudfront.origin-facing"]
-#   }
-# }
+data "aws_prefix_list" "cloudfront_prefix_list" {
+  filter {
+    name   = "prefix-list-name"
+    values = ["com.amazonaws.global.cloudfront.origin-facing"]
+  }
+}

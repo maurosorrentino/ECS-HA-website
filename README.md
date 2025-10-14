@@ -70,10 +70,11 @@ Will:
 
 Some configurations are intentionally incomplete to keep the setup free-tier friendly.
 
-- I think last error to fix is that cdn has too many CIDR blocks and sg is reaching the limit of inbound rules
+- Last error to fix is that cdn has too many CIDR blocks and sg is reaching the limit of inbound rules
 - Add NAT Gateway configuration
 - Clean up IAM policies in ecs_iam.tf
 - Implement and test the App Deployment Pipeline (ECR + ECS update)
+- Check everything is working as expected
 - Make / attach to GitHub Actions a role with less permissions
 - Make docker images upload pipeline
 - Make pipeline that runs tests on PR raise
