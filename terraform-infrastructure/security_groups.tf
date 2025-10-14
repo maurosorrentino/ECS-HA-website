@@ -11,9 +11,17 @@ resource "aws_security_group" "project_name_ecs_frontend_service_sg" {
   depends_on = [aws_vpc.project_name_vpc]
 }
 
-resource "aws_security_group" "project_name_frontend_alb_sg" {
-  name        = "${var.project_name}-frontend-alb-sg"
-  description = "Allow HTTPS from CloudFront to ALB"
+resource "aws_security_group" "project_name_frontend_alb_ipv4_sg" {
+  name        = "${var.project_name}-frontend-alb-ipv4-sg"
+  description = "Allow HTTPS from CloudFront to ALB via ipv4"
+  vpc_id      = aws_vpc.project_name_vpc.id
+
+  depends_on = [aws_vpc.project_name_vpc]
+}
+
+resource "aws_security_group" "project_name_frontend_alb_ipv6_sg" {
+  name        = "${var.project_name}-frontend-alb-ipv6-sg"
+  description = "Allow HTTPS from CloudFront to ALB via ipv6"
   vpc_id      = aws_vpc.project_name_vpc.id
 
   depends_on = [aws_vpc.project_name_vpc]
@@ -96,21 +104,30 @@ resource "aws_security_group" "vpc_endpoints_sg" {
   }
 }
 
-resource "aws_security_group_rule" "project_name_frontend_alb_sg_ingress" {
+resource "aws_security_group_rule" "project_name_frontend_alb_ipv4_sg_ingress" {
   type              = "ingress"
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  security_group_id = aws_security_group.project_name_frontend_alb_sg.id
-  prefix_list_ids   = [data.aws_prefix_list.cloudfront_prefix_list.id]
+  security_group_id = aws_security_group.project_name_frontend_alb_ipv4_sg.id
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.cloudfront_ipv4_prefix_list.id]
 }
 
-resource "aws_security_group_rule" "project_name_frontend_alb_sg_egress" {
+resource "aws_security_group_rule" "project_name_frontend_alb_ipv6_sg_ingress" {
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  security_group_id = aws_security_group.project_name_frontend_alb_ipv6_sg.id
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.cloudfront_ipv6_prefix_list.id]
+}
+
+resource "aws_security_group_rule" "project_name_frontend_alb_ipv4_sg_egress" {
   type                     = "egress"
   from_port                = 80
   to_port                  = 80
   protocol                 = "tcp"
-  security_group_id        = aws_security_group.project_name_frontend_alb_sg.id
+  security_group_id        = aws_security_group.project_name_frontend_alb_ipv4_sg.id
   source_security_group_id = aws_security_group.project_name_ecs_frontend_service_sg.id
 }
 
@@ -120,7 +137,7 @@ resource "aws_security_group_rule" "project_name_ecs_frontend_service_sg_ingress
   to_port                  = 80
   protocol                 = "tcp"
   security_group_id        = aws_security_group.project_name_ecs_frontend_service_sg.id
-  source_security_group_id = aws_security_group.project_name_frontend_alb_sg.id
+  source_security_group_id = aws_security_group.project_name_frontend_alb_ipv4_sg.id
 }
 
 resource "aws_security_group_rule" "project_name_ecs_frontend_service_sg_egress" {
