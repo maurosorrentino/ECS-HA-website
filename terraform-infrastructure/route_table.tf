@@ -38,10 +38,12 @@ resource "aws_route_table" "private" {
 
 resource "aws_route_table_association" "private" {
   for_each = {
-    for name, subnet in aws_subnet.project_name_private_subnets : name => subnet.id if can(regex("alb", name))
+    for name, subnet in aws_subnet.project_name_private_subnets : name => subnet
   }
-  subnet_id      = each.value
-  route_table_id = aws_route_table.private.id
+
+  subnet_id      = each.value.id
+  # association to nat gateway in the same AZ
+  route_table_id = aws_route_table.private[aws_subnet.project_name_private_subnets[each.key].availability_zone].id
 
   depends_on = [aws_subnet.project_name_private_subnets]
 }
