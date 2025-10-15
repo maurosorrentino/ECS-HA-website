@@ -37,9 +37,7 @@ resource "aws_route_table" "private" {
 }
 
 resource "aws_route_table_association" "private" {
-  for_each = {
-    for name, subnet in aws_subnet.project_name_private_subnets : name => subnet
-  }
+  for_each = aws_subnet.project_name_private_subnets
 
   subnet_id      = each.value.id
   # association to nat gateway in the same AZ
