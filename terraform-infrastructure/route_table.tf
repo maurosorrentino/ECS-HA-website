@@ -20,15 +20,17 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_route_table" "private" {
+  for_each = aws_nat_gateway.project_name_nat_gateway
+
   vpc_id = aws_vpc.project_name_vpc.id
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.project_name_nat_gateway.id
+    nat_gateway_id = each.value.id
   }
 
   tags = {
-    Name = "${var.project_name}-private-route-table"
+    Name = "${var.project_name}-private-route-table-${each.key}"
   }
 
   depends_on = [aws_vpc.project_name_vpc, aws_nat_gateway.project_name_nat_gateway]
