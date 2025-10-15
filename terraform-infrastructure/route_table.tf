@@ -31,7 +31,7 @@ resource "aws_route_table" "private" {
     Name = "${var.project_name}-private-route-table"
   }
 
-  depends_on = [aws_vpc.project_name_vpc]
+  depends_on = [aws_vpc.project_name_vpc, aws_nat_gateway.project_name_nat_gateway]
 }
 
 resource "aws_route_table_association" "private" {
