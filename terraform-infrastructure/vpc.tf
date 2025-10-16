@@ -22,6 +22,7 @@ resource "aws_vpc_endpoint" "project_name_s3_alb_logs_vpc_endpoint" {
   depends_on = [aws_route_table.private]
 }
 
+# TODO make module for it
 resource "aws_vpc_endpoint" "project_name_ecr_api" {
   vpc_id            = aws_vpc.project_name_vpc.id
   service_name      = "com.amazonaws.${var.region}.ecr.api"
