@@ -41,6 +41,7 @@ Triggering the Workflow:
 - Can also be triggered manually from the GitHub Actions UI using the “Run workflow” button.
 - When run manually, it prompts for an environment selection (I have `dev` and `prod` environments but you can choose the 
 names and how many you want, you only need to put the role arn in the secrets)using the workflow input field.
+- Runs automatically to the `prod` environment on tag creation (starting with v) to the main branch.
 
 🧩 Pipeline 2 – Application Deployment (TODO) (app_deployment_pipeline.yml)
 
