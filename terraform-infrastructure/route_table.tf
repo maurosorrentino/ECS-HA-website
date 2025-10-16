@@ -40,8 +40,10 @@ resource "aws_route_table_association" "private" {
   for_each = aws_subnet.project_name_private_subnets
 
   subnet_id      = each.value.id
-  # association to nat gateway in the same AZ
-  route_table_id = aws_route_table.private[aws_subnet.project_name_private_subnets[each.key].availability_zone].id
+  # Looks up the private route table associated with the NAT gateway for the corresponding AZ
+  route_table_id = aws_route_table.private[
+    "${var.project_name}-public-subnet-${regex("[a-c]$", each.key)}"
+  ].id
 
   depends_on = [aws_subnet.project_name_private_subnets]
 }
