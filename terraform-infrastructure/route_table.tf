@@ -30,7 +30,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name = "${var.project_name}-private-route-table-${each.key}"
+    Name = "${var.project_name}-private-rt-${each.key}"
   }
 
   depends_on = [aws_vpc.project_name_vpc, aws_nat_gateway.project_name_nat_gateway]
