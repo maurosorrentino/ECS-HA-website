@@ -17,7 +17,6 @@ The terraform-bootstrap/ directory contains Terraform code to:
 
 - Create an S3 bucket to store the Terraform remote state
 - Configure the necessary IAM permissions for GitHub Actions
-- Set up the state backend used by all future Terraform runs
 
 ⚠️ Important:
 This directory must be run manually once before using the GitHub pipelines.
