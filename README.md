@@ -70,7 +70,7 @@ Will:
 
 Some configurations are intentionally incomplete to keep the setup free-tier friendly.
 
-- Add NAT Gateway configuration
+- Add NAT / Internet Gateway configuration
 - Clean up IAM policies in ecs_iam.tf
 - Implement and test the App Deployment Pipeline (ECR + ECS update)
 - Check everything is working as expected
