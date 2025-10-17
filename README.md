@@ -31,7 +31,7 @@ From this point onward, Terraform is executed manually via the terminal to maint
 
 - Automatically provisions all AWS infrastructure (VPC, ALBs, ECS, RDS, S3, etc.)
 - Runs terraform init, plan, and apply
-- Stores and retrieves Terraform state from the bootstrap S3 backend
+- Stores and retrieves Terraform state from S3 backend
 - Uses GitHub OIDC to authenticate securely to AWS
 
 # How It Works
