@@ -12,10 +12,10 @@ resource "aws_s3_bucket_ownership_controls" "project_name_s3_ownership" {
 resource "aws_s3_bucket_public_access_block" "project_name_s3_access" {
   bucket = aws_s3_bucket.project_name_s3.id
 
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 resource "aws_s3_bucket_versioning" "project_name_s3_versioning" {
