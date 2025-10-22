@@ -6,6 +6,14 @@ on:
         required: true
         type: string
 
+env:
+  AWS_REGION: eu-west-2
+  TF_BACKEND_BUCKET: terraform-state-department-name
+  TF_BACKEND_KEY: terraform.tfstate
+  TF_DYNAMODB_TABLE: terraform-lock-table
+  TF_PROJECT_NAME: project-name
+  ENV: ${{ inputs.environment }}
+
 jobs:
   deploy:
     environment: ${{ inputs.environment }} 
@@ -14,23 +22,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Load environment configuration
-        id: load-env
-        run: |
-          CONFIG_FILE=".github/workflows/env/${{ inputs.environment }}/env_vars.json"
-          echo "Loading environment variables from $CONFIG_FILE"
-          if [ ! -f "$CONFIG_FILE" ]; then
-            echo "❌ Config file not found: $CONFIG_FILE"
-            exit 1
-          fi
-
-          cat $CONFIG_FILE | jq -r 'to_entries | .[] | "echo \(.key)=\(.value) >> $GITHUB_ENV"' | bash
-
       - name: Set up AWS CLI with OIDC Role
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ env.aws_region }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -38,18 +34,18 @@ jobs:
       - name: Terraform Init
         working-directory: terraform-infrastructure
         run: terraform init \
-          -backend-config="bucket=${tf_backend_bucket}" \
-          -backend-config="key=${tf_backend_key}" \
-          -backend-config="region=${aws_region}" \
-          -backend-config="dynamodb_table={tf_dynamodb_table}"
+          -backend-config="bucket=${TF_BACKEND_BUCKET}" \
+          -backend-config="key=${TF_BACKEND_KEY}" \
+          -backend-config="region=${AWS_REGION}" \
+          -backend-config="dynamodb_table=${TF_DYNAMODB_TABLE}"
 
       - name: Terraform Plan
         working-directory: terraform-infrastructure
-        run: terraform plan -var="region=${aws_region}" -var="environment=${environment}" -var="project_name=${tf_project_name}"
+        run: terraform plan -var="region=${AWS_REGION}" -var="environment=${ENV}" -var="project_name=${TF_PROJECT_NAME}"
 
       - name: Terraform Apply
         working-directory: terraform-infrastructure
-        run: terraform apply -auto-approve -var="region=${aws_region}" -var="environment=${environment}" -var="project_name=${tf_project_name}"
+        run: terraform apply -auto-approve -var="region=${AWS_REGION}" -var="environment=${ENV}" -var="project_name=${TF_PROJECT_NAME}"
 
       - name: Get Terraform Outputs
         uses: actions/upload-artifact@v4
