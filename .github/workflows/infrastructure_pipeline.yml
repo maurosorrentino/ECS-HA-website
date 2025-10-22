@@ -15,14 +15,6 @@ on:
           - dev
           - prod
 
-env:
-  AWS_REGION: eu-west-2
-  TF_BACKEND_BUCKET: terraform-state-department-name
-  TF_BACKEND_KEY: terraform.tfstate
-  TF_DYNAMODB_TABLE: terraform-lock-table
-  TF_PROJECT_NAME: project-name
-  ENV: ${{ inputs.environment }}
-
 permissions:
   id-token: write
   contents: read
