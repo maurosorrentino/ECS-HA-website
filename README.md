@@ -75,9 +75,8 @@ Some configurations are intentionally incomplete to keep the setup free-tier fri
 - Implement and test the App Deployment Pipeline (ECR + ECS update)
 - Check everything is working as expected
 - Make / attach to GitHub Actions a role with less permissions
-- Make docker images upload pipeline
 - Make pipeline that runs tests on PR raise
-- Enable Route 53 & ACM resources once a custom domain is purchased 
+- Enable Route 53 & ACM resources once a custom domain is purchased (optional)
 
 ## Notes for Reviewers
 
