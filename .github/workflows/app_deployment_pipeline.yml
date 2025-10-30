@@ -2,8 +2,7 @@ name: app deployment pipeline
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [xx] # change to main or desidered branch
   workflow_dispatch:
     inputs:
       environment:
