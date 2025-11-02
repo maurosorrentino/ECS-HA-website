@@ -14,6 +14,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # loading environment variables from .github/workflows/env_vars/<environment>/env_vars.json
+      # the reason why is because we can set the vars once and use them in multiple pipelines
       - name: Load environment configuration
         id: load-env
         run: |
