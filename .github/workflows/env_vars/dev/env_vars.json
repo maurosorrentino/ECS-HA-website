@@ -1,0 +1,13 @@
+{
+    "AWS_REGION": "eu-west-2",
+    "ECR_REPO_BACKEND": "backend-repo",
+    "ECR_REPO_FRONTEND": "frontend-repo",
+    "ECS_CLUSTER": "ecs-cluster",
+    "ECS_SERVICE_BACKEND": "backend-service",
+    "ECS_SERVICE_FRONTEND": "frontend-service",
+    "TF_BACKEND_BUCKET": "terraform-state-department-name",
+    "TF_BACKEND_KEY": "terraform.tfstate",
+    "TF_DYNAMODB_TABLE": "terraform-lock-table",
+    "ENVIRONMENT": "dev",
+    "TF_PROJECT_NAME": "project-name"
+}

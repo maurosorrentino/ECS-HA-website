@@ -47,11 +47,11 @@ jobs:
 
       - name: Terraform Plan
         working-directory: terraform-infrastructure
-        run: terraform plan -var="region=${AWS_REGION}" -var="environment=${ENV}" -var="project_name=${TF_PROJECT_NAME}"
+        run: terraform plan -var="region=${AWS_REGION}" -var="environment=${{ inputs.environment }}" -var="project_name=${TF_PROJECT_NAME}"
 
       - name: Terraform Apply
         working-directory: terraform-infrastructure
-        run: terraform apply -auto-approve -var="region=${AWS_REGION}" -var="environment=${ENV}" -var="project_name=${TF_PROJECT_NAME}"
+        run: terraform apply -auto-approve -var="region=${AWS_REGION}" -var="environment=${{ inputs.environment }}" -var="project_name=${TF_PROJECT_NAME}"
 
       - name: Get Terraform Outputs
         uses: actions/upload-artifact@v4

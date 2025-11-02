@@ -6,15 +6,6 @@ on:
         required: true
         type: string
 
-# TODO : Move common environment variables to a central location
-env:
-  AWS_REGION: eu-west-2
-  ECR_REPO_BACKEND: backend-repo
-  ECR_REPO_FRONTEND: frontend-repo
-  ECS_CLUSTER: ecs-cluster
-  ECS_SERVICE_BACKEND: backend-service
-  ECS_SERVICE_FRONTEND: frontend-service
-
 jobs:
   build-and-deploy:
     environment: ${{ inputs.environment }} 
