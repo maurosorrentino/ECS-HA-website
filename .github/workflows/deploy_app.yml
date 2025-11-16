@@ -54,9 +54,7 @@ jobs:
           ./github/scripts/build_push_image_to_ecr.sh $FRONTEND_TAG $ECR_REPO_FRONTEND $REGISTRY app/frontend FRONTEND_IMAGE
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.9.0
+        uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
         working-directory: terraform-ecs-image-update
