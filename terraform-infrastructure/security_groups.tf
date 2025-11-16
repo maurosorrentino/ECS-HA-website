@@ -1,8 +1,3 @@
-data "aws_ip_ranges" "cloudfront" {
-  services = ["CLOUDFRONT"]
-  regions  = ["GLOBAL"]
-}
-
 resource "aws_security_group" "project_name_ecs_frontend_service_sg" {
   name        = "${var.project_name}-ecs-frontend-service-sg"
   description = "ECS service SG: ALB in ECS private ALB out"
