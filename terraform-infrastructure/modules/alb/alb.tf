@@ -1,6 +1,6 @@
 resource "aws_lb" "project_name_alb" {
   name                       = var.alb_name
-  internal                   = false # TODO change this with var. cloudfront in front of it
+  internal                   = true
   load_balancer_type         = "application"
   security_groups            = var.alb_security_groups
   subnets                    = var.alb_subnets

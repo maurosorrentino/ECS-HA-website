@@ -32,3 +32,4 @@ variable "bucket_id" {
   description = "The ID of the S3 bucket to store ALB access logs"
   type        = string
 }
+
