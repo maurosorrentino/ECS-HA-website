@@ -43,14 +43,28 @@ jobs:
         run: |
           BACKEND_TAG=${{ inputs.app_version }}
           REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          ECR_REPO_BACKEND=${{ env.ECR_REPO_BACKEND }}
 
+          # Arguments
+          # APP_VERSION="$1"
+          # ECR_REPO="$2"
+          # REGISTRY="$3"
+          # APP_PATH="$4"
+          # IMAGE_URI="$5"
           ./github/scripts/build_push_image_to_ecr.sh $BACKEND_TAG $ECR_REPO_BACKEND $REGISTRY app/backend BACKEND_IMAGE
 
       - name: Build and push Frontend image
         run: |
           FRONTEND_TAG=${{ inputs.app_version }}
           REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          ECR_REPO_FRONTEND=${{ env.ECR_REPO_FRONTEND }}
 
+          # Arguments
+          # APP_VERSION="$1"
+          # ECR_REPO="$2"
+          # REGISTRY="$3"
+          # APP_PATH="$4"
+          # IMAGE_URI="$5"
           ./github/scripts/build_push_image_to_ecr.sh $FRONTEND_TAG $ECR_REPO_FRONTEND $REGISTRY app/frontend FRONTEND_IMAGE
 
       - name: Setup Terraform
