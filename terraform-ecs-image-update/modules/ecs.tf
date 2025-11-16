@@ -1,5 +1,5 @@
 data "aws_ecs_task_definition" "current_task_definition" {
-  task_definition = var.task_definition_name
+  task_definition = var.service_name
 }
 
 resource "aws_ecs_task_definition" "new_task_definition" {
