@@ -9,6 +9,7 @@ app.add_middleware(
     CORSMiddleware,
     # should be frontend domain which is not the purpose of this project
     # project is about infrastructure not development
+    # domain wasn't purchased for that and we are using cloudfront default domain
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
