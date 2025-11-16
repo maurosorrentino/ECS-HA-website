@@ -13,6 +13,11 @@ on:
         options:
           - dev
           - prod
+      app_version:
+        description: 'App version to deploy (e.g., dev-v1.0.0)'
+        required: true
+        default: 'dev-v1.0.0'
+        type: string
 
 permissions:
   id-token: write

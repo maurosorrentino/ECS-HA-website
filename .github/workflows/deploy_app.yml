@@ -1,4 +1,4 @@
-name: Build and Deploy to ECS
+name: Build and Deploy App to ECS steps
 on:
   workflow_call:
     inputs:
@@ -41,39 +41,52 @@ jobs:
 
       - name: Build and push Backend image
         run: |
-          BACKEND_TAG=${{ github.sha }}
-          docker build -t $ECR_REPO_BACKEND:$BACKEND_TAG app/backend
-          docker tag $ECR_REPO_BACKEND:$BACKEND_TAG ${{ steps.login-ecr.outputs.registry }}/${ECR_REPO_BACKEND}:$BACKEND_TAG
-          docker push ${{ steps.login-ecr.outputs.registry }}/${ECR_REPO_BACKEND}:$BACKEND_TAG
-          echo "BACKEND_IMAGE=${{ steps.login-ecr.outputs.registry }}/${ECR_REPO_BACKEND}:$BACKEND_TAG" >> $GITHUB_ENV
+          BACKEND_TAG=${{ inputs.app_version }}
+          REGISTRY=${{ steps.login-ecr.outputs.registry }}
+
+          ./github/scripts/build_push_image_to_ecr.sh $BACKEND_TAG $ECR_REPO_BACKEND $REGISTRY app/backend BACKEND_IMAGE
 
       - name: Build and push Frontend image
         run: |
-          FRONTEND_TAG=${{ github.sha }}
-          docker build -t $ECR_REPO_FRONTEND:$FRONTEND_TAG app/frontend
-          docker tag $ECR_REPO_FRONTEND:$FRONTEND_TAG ${{ steps.login-ecr.outputs.registry }}/${ECR_REPO_FRONTEND}:$FRONTEND_TAG
-          docker push ${{ steps.login-ecr.outputs.registry }}/${ECR_REPO_FRONTEND}:$FRONTEND_TAG
-          echo "FRONTEND_IMAGE=${{ steps.login-ecr.outputs.registry }}/${ECR_REPO_FRONTEND}:$FRONTEND_TAG" >> $GITHUB_ENV
+          FRONTEND_TAG=${{ inputs.app_version }}
+          REGISTRY=${{ steps.login-ecr.outputs.registry }}
+
+          ./github/scripts/build_push_image_to_ecr.sh $FRONTEND_TAG $ECR_REPO_FRONTEND $REGISTRY app/frontend FRONTEND_IMAGE
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.9.0
 
-      - name: Terraform init
+      - name: Terraform Init
         working-directory: terraform-ecs-image-update
-        run: terraform init
+        run: terraform init \
+          -backend-config="bucket=${TF_BACKEND_BUCKET}" \
+          -backend-config="key=${TF_BACKEND_KEY}" \
+          -backend-config="region=${AWS_REGION}" \
+          -backend-config="dynamodb_table=${TF_DYNAMODB_TABLE}"
 
-      - name: Terraform plan
+      - name: Terraform Plan
         working-directory: terraform-ecs-image-update
-        env:
-          TF_VAR_backend_image: ${{ env.BACKEND_IMAGE }}
-          TF_VAR_frontend_image: ${{ env.FRONTEND_IMAGE }}
-        run: terraform plan
+        run: terraform plan \
+          -var="region=${AWS_REGION}" \
+          -var="environment=${{ inputs.environment }}" \
+          -var="project_name=${TF_PROJECT_NAME}" \
+          -var="backend_image=${BACKEND_IMAGE}" \
+          -var="frontend_image=${FRONTEND_IMAGE}"
 
-      - name: Terraform apply
+      - name: Terraform Apply
         working-directory: terraform-ecs-image-update
-        env:
-          TF_VAR_backend_image: ${{ env.BACKEND_IMAGE }}
-          TF_VAR_frontend_image: ${{ env.FRONTEND_IMAGE }}
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve \
+          -var="region=${AWS_REGION}" \
+          -var="environment=${{ inputs.environment }}" \
+          -var="project_name=${TF_PROJECT_NAME}" \
+          -var="backend_image=${BACKEND_IMAGE}" \
+          -var="frontend_image=${FRONTEND_IMAGE}"
+
+      - name: Get Terraform Outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-outputs-${{ inputs.environment }}
+          path: terraform-ecs-image-update/outputs.json
+          retention-days: 1
