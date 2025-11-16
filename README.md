@@ -70,13 +70,12 @@ Will:
 
 Some configurations are intentionally incomplete to keep the setup free-tier friendly.
 
-- Add NAT Gateway configuration
 - Clean up IAM policies in ecs_iam.tf
-- Implement and test the App Deployment Pipeline (ECR + ECS update)
+- Test the App Deployment Pipeline (ECR + ECS update)
 - Check everything is working as expected
 - Make / attach to GitHub Actions a role with less permissions
 - Make pipeline that runs tests on PR raise
-- Enable Route 53 & ACM resources once a custom domain is purchased (optional)
+- If you purchase a custom domain uncomment route53 , ACM and part of cloudfront code (instructions are in the comments)
 
 ## Notes for Reviewers
 
