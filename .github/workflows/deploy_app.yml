@@ -51,7 +51,8 @@ jobs:
           # REGISTRY="$3"
           # APP_PATH="$4"
           # IMAGE_URI="$5"
-          ./github/scripts/build_push_image_to_ecr.sh $BACKEND_TAG $ECR_REPO_BACKEND $REGISTRY app/backend BACKEND_IMAGE
+          chmod +rwx ./.github/scripts/build_push_image_to_ecr.sh
+          ./.github/scripts/build_push_image_to_ecr.sh $BACKEND_TAG $ECR_REPO_BACKEND $REGISTRY app/backend BACKEND_IMAGE
 
       - name: Build and push Frontend image
         run: |
@@ -65,7 +66,8 @@ jobs:
           # REGISTRY="$3"
           # APP_PATH="$4"
           # IMAGE_URI="$5"
-          ./github/scripts/build_push_image_to_ecr.sh $FRONTEND_TAG $ECR_REPO_FRONTEND $REGISTRY app/frontend FRONTEND_IMAGE
+          chmod +rwx ./.github/scripts/build_push_image_to_ecr.sh
+          ./.github/scripts/build_push_image_to_ecr.sh $FRONTEND_TAG $ECR_REPO_FRONTEND $REGISTRY app/frontend FRONTEND_IMAGE
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
