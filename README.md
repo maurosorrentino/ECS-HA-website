@@ -9,6 +9,9 @@ It demonstrates cloud infrastructure engineering best practices for a real-world
 
 The stack includes ECS, EC2 Auto Scaling, ALBs, RDS, CloudFront, Route 53, ACM, S3, and KMS, designed for fault tolerance, performance, and maintainability.
 
+For more advanced pipeline design refer here: 
+- [serverless-MVP-app Pipelines](https://github.com/maurosorrentino/serverless-MVP-app/tree/main/.github/workflows)
+
 ## Terraform Setup
 
 1. Bootstrap (Manual Step)
