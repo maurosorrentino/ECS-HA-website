@@ -5,6 +5,8 @@ locals {
   cw_log_group_frontend_name = "/ecs/${var.project_name}-frontend-service-log-group"
   cw_log_group_backend_name  = "/ecs/${var.project_name}-backend-service-log-group"
   account_id                 = data.aws_caller_identity.current.account_id
+  vpc_endpoint_subnets = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id
+  if can(regex("backend", name))] # backend is in AZs a, b, c
 
   # 256 IPs addresses per subnet, adjust as you need
   private_subnets = [
