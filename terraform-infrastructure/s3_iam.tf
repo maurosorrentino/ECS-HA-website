@@ -12,18 +12,18 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         },
         Action : "s3:PutObject",
         Resource : [
-          "${module.project_name_alb_logs_s3.bucket_arn}/${local.s3_frontend_alb_prefix}/AWSLogs/${data.aws_caller_identity.current.id}/*",
-          "${module.project_name_alb_logs_s3.bucket_arn}/${local.s3_backend_alb_prefix}/AWSLogs/${data.aws_caller_identity.current.id}/*"
+          "${module.project_name_alb_logs_s3.bucket_arn}/${local.s3_frontend_alb_prefix}/AWSLogs/${local.account_id}/*",
+          "${module.project_name_alb_logs_s3.bucket_arn}/${local.s3_backend_alb_prefix}/AWSLogs/${local.account_id}/*"
         ],
         Condition : {
           StringEquals : {
             "s3:x-amz-acl" : "bucket-owner-full-control",
-            "aws:SourceAccount" : data.aws_caller_identity.current.account_id
+            "aws:SourceAccount" : local.account_id
           },
           # need to allow all the ALBs in the account to write logs to the same bucket otherwise it won't work
           # as when tf creates the ALB it s3 needs to allow it to write logs
           ArnLike = {
-            "aws:SourceArn" = "arn:aws:elasticloadbalancing:${var.region}:${data.aws_caller_identity.current.account_id}:loadbalancer/*"
+            "aws:SourceArn" = "arn:aws:elasticloadbalancing:${var.region}:${local.account_id}:loadbalancer/*"
           }
         }
       },
@@ -37,10 +37,10 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         Resource = module.project_name_alb_logs_s3.bucket_arn,
         Condition : {
           StringEquals : {
-            "aws:SourceAccount" : data.aws_caller_identity.current.account_id
+            "aws:SourceAccount" : local.account_id
           },
           ArnLike = {
-            "aws:SourceArn" = "arn:aws:elasticloadbalancing:${var.region}:${data.aws_caller_identity.current.account_id}:loadbalancer/*"
+            "aws:SourceArn" = "arn:aws:elasticloadbalancing:${var.region}:${local.account_id}:loadbalancer/*"
           }
         }
       },
@@ -55,8 +55,8 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         ],
         Resource : [
           module.project_name_alb_logs_s3.bucket_arn,
-          "${module.project_name_alb_logs_s3.bucket_arn}/frontend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*",
-          "${module.project_name_alb_logs_s3.bucket_arn}/backend-alb-logs/AWSLogs/${data.aws_caller_identity.current.id}/*"
+          "${module.project_name_alb_logs_s3.bucket_arn}/frontend-alb-logs/AWSLogs/${local.account_id}/*",
+          "${module.project_name_alb_logs_s3.bucket_arn}/backend-alb-logs/AWSLogs/${local.account_id}/*"
         ],
         Condition : {
           StringEquals : {
@@ -83,10 +83,10 @@ resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
           Service = "delivery.logs.amazonaws.com"
         },
         Action   = "s3:PutObject",
-        Resource = "${module.project_name_cloudfront_logs_s3.bucket_arn}/AWSLogs/${data.aws_caller_identity.current.id}/*",
+        Resource = "${module.project_name_cloudfront_logs_s3.bucket_arn}/AWSLogs/${local.account_id}/*",
         Condition = {
           StringEquals = {
-            "aws:SourceAccount" = data.aws_caller_identity.current.account_id
+            "aws:SourceAccount" = local.account_id
           }
         }
       },

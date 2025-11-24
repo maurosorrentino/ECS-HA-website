@@ -4,6 +4,7 @@ locals {
   s3_backend_alb_prefix      = "backend-alb-logs"
   cw_log_group_frontend_name = "/ecs/${var.project_name}-frontend-service-log-group"
   cw_log_group_backend_name  = "/ecs/${var.project_name}-backend-service-log-group"
+  account_id                 = data.aws_caller_identity.current.account_id
 
   # 256 IPs addresses per subnet, adjust as you need
   private_subnets = [
