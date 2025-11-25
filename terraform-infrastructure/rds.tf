@@ -17,7 +17,7 @@ resource "aws_db_instance" "project_name_rds_instance" {
   engine_version                      = "17.4"
   instance_class                      = "db.t3.micro" # free tier
   allocated_storage                   = 20
-  storage_type                        = "gp2"
+  storage_type                        = "gp2" # free tier
   username                            = local.rds_username
   iam_database_authentication_enabled = true
   # a password is needed anyway even if you allow with IAM auth
@@ -28,5 +28,5 @@ resource "aws_db_instance" "project_name_rds_instance" {
   publicly_accessible     = false
   backup_retention_period = 7 # days
   backup_window           = "03:00-04:00"
-  skip_final_snapshot     = true # change to false to make it hard to destroy the infra
+  skip_final_snapshot     = true # change to false in prod to make it hard to destroy the infra
 }

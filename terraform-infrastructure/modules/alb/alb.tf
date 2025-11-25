@@ -4,8 +4,8 @@ resource "aws_lb" "project_name_alb" {
   load_balancer_type         = "application"
   security_groups            = var.alb_security_groups
   subnets                    = var.alb_subnets
-  enable_deletion_protection = false
-  idle_timeout               = 60
+  enable_deletion_protection = false # change to true in prod, it's false so I can easily remove it
+  idle_timeout               = 60 # connection open if no data sent
   drop_invalid_header_fields = true
 
   access_logs {

@@ -17,6 +17,7 @@ resource "aws_ecs_task_definition" "project_name_task" {
 
       log_configuration = {
         log_driver = "awslogs"
+        
         options = {
           awslogs-group         = var.log_group_name
           awslogs-region        = var.region
@@ -46,7 +47,7 @@ resource "aws_ecs_service" "project_name_service" {
   name            = var.service_name
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.project_name_task.arn
-  desired_count   = 1
+  desired_count   = 3
   launch_type     = "EC2"
 
   load_balancer {

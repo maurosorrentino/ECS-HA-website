@@ -4,6 +4,7 @@ resource "aws_s3_bucket" "project_name_s3" {
 
 resource "aws_s3_bucket_ownership_controls" "project_name_s3_ownership" {
   bucket = aws_s3_bucket.project_name_s3.id
+  
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
