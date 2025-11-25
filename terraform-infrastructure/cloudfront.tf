@@ -38,7 +38,7 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
     compress = true
   }
 
-  # can cache based on specific API as well
+  # can cache based on specific API path as well
   # ordered_cache_behavior {
   #   path_pattern     = "/api/*"
   #   target_origin_id = "alb-origin"

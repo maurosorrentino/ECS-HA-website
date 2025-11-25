@@ -11,6 +11,6 @@ resource "aws_autoscaling_group" "project_name_ecs_asg" {
     version = "$Latest"
   }
 
-  health_check_type         = "EC2"
+  health_check_type         = "ELB"
   health_check_grace_period = 300
 }
