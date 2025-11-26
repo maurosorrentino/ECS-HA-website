@@ -4,7 +4,7 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
 
   origin {
     domain_name = module.project_name_frontend_alb.alb_dns_name
-    origin_id   = "alb-origin"
+    origin_id   = "${var.project_name}-alb-origin"
 
     custom_origin_config {
       origin_protocol_policy = "https-only"
@@ -15,7 +15,7 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
   }
 
   default_cache_behavior {
-    target_origin_id = "alb-origin"
+    target_origin_id = "${var.project_name}-alb-origin"
 
     allowed_methods = ["GET", "HEAD", "OPTIONS"]
     cached_methods  = ["GET", "HEAD"]
@@ -25,6 +25,7 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
 
     forwarded_values {
       query_string = true
+
       cookies {
         forward = "none"
       }
@@ -41,7 +42,7 @@ resource "aws_cloudfront_distribution" "project_name_cdn" {
   # can cache based on specific API path as well
   # ordered_cache_behavior {
   #   path_pattern     = "/api/*"
-  #   target_origin_id = "alb-origin"
+  #   target_origin_id = "${var.project_name}-alb-origin"
   #   allowed_methods  = ["GET","HEAD","OPTIONS","POST","PUT","PATCH","DELETE"]
   #   cached_methods   = ["GET","HEAD"]
   #   viewer_protocol_policy = "https-only"

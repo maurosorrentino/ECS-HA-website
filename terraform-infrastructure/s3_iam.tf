@@ -21,7 +21,8 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
             "aws:SourceAccount" : local.account_id
           },
           # need to allow all the ALBs in the account to write logs to the same bucket otherwise it won't work
-          # as when tf creates the ALB it s3 needs to allow it to write logs
+          # as when tf creates the ALB and s3 needs to allow it to write logs
+          # TODO put name of alb in locals and use that?
           ArnLike = {
             "aws:SourceArn" = "arn:aws:elasticloadbalancing:${var.region}:${local.account_id}:loadbalancer/*"
           }
