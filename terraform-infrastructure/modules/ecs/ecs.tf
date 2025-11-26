@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "project_name_task" {
 
       log_configuration = {
         log_driver = "awslogs"
-        
+
         options = {
           awslogs-group         = var.log_group_name
           awslogs-region        = var.region
