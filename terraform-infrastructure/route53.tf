@@ -22,10 +22,22 @@
 #   depends_on = [aws_acm_certificate.project_name_cdn_cert]
 # }
 
-# resource "aws_route53_record" "project_name_cdn_alias" {
+# resource "aws_route53_record" "project_name_cdn_A_alias" {
 #   zone_id = aws_route53_zone.project_name_zone.zone_id
 #   name    = "app.${var.project_name}.com"
 #   type    = "A"
+
+#   alias {
+#     name                   = aws_cloudfront_distribution.project_name_cdn.domain_name
+#     zone_id                = aws_cloudfront_distribution.project_name_cdn.hosted_zone_id
+#     evaluate_target_health = false # ALB will do the health check
+#   }
+# }
+
+# resource "aws_route53_record" "project_name_cdn_AAAA_alias" {
+#   zone_id = aws_route53_zone.project_name_zone.zone_id
+#   name    = "app.${var.project_name}.com"
+#   type    = "AAAA"
 
 #   alias {
 #     name                   = aws_cloudfront_distribution.project_name_cdn.domain_name

@@ -14,3 +14,17 @@ resource "aws_autoscaling_group" "project_name_ecs_asg" {
   health_check_type         = "ELB"
   health_check_grace_period = 300
 }
+
+resource "aws_autoscaling_policy" "project_name_asg_cpu_target" {
+  name                   = "${var.asg_name}-cpu-scaling"
+  autoscaling_group_name = aws_autoscaling_group.project_name_ecs_asg.name
+  policy_type            = "TargetTrackingScaling"
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+
+    target_value = 80
+  }
+}
