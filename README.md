@@ -55,6 +55,11 @@ Will:
 - Automatically update the ECS service with the new image version
 - Intended to demonstrate a zero-downtime CI/CD release flow
 
+Additionally, GitHub Actions environments have been configured (e.g., dev), each containing a secret named AWS_ROLE_ARN. 
+The CI/CD workflows assume this secret is available so they can dynamically assume the correct AWS IAM role for that 
+environment. This allows us to reuse the same Terraform code across all environments without needing separate configuration 
+files.
+
 ## Key Components
 
 - **Route 53 & CloudFront:** Global DNS and CDN for fast, secure content delivery.
