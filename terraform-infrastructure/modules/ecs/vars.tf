@@ -50,5 +50,5 @@ variable "region" {
 
 variable "private_subnet_ids" {
   description = "List of private subnets for tasks ENIs"
-  type = list(string)
+  type        = list(string)
 }
