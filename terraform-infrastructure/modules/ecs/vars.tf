@@ -8,8 +8,8 @@ variable "cluster_id" {
   type        = string
 }
 
-variable "security_groups_ids" {
-  description = "List of security group IDs for the ECS service"
+variable "launch_template_security_groups_ids" {
+  description = "List of security group IDs for the launch template"
   type        = list(string)
 }
 

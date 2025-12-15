@@ -76,7 +76,7 @@ resource "aws_launch_template" "project_name_ecs_lt" {
 
   network_interfaces {
     associate_public_ip_address = false
-    security_groups             = var.security_groups_ids
+    security_groups             = var.launch_template_security_groups_ids
   }
 
   # this is needed to connect the instance to the ECS cluster
