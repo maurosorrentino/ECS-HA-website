@@ -1,17 +1,17 @@
 resource "aws_ecs_task_definition" "project_name_task" {
   family                   = var.service_name
-  network_mode             = "host"
+  network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
-  cpu                      = "256" # 0.25 vCPU
-  memory                   = "512"
+  cpu                      = "256" # 0.25 vCPU adjust as you need
+  memory                   = "512" # adjust as you need
 
   container_definitions = jsonencode([
     {
       name = var.service_name
       # smallest possible base image as real image update will happen via another pipeline
       image     = "alpine:latest"
-      cpu       = 256 # 0.25 vCPU
-      memory    = 512
+      cpu       = 256 # 0.25 vCPU adjust as you need
+      memory    = 512 # adjust as you need
       essential = true
       command   = ["echo", "Hello from Alpine!"]
 
@@ -24,13 +24,6 @@ resource "aws_ecs_task_definition" "project_name_task" {
           awslogs-stream-prefix = "ecs"
         }
       }
-
-      portMappings = [
-        {
-          containerPort = 80
-          hostPort      = 80
-        }
-      ]
     }
   ])
 
@@ -55,6 +48,11 @@ resource "aws_ecs_service" "project_name_service" {
     container_name   = var.service_name
     container_port   = 80
   }
+
+  network_configuration {
+    subnets         = var.private_subnet_ids
+    security_groups = var.task_security_group_ids
+  }
 }
 
 data "aws_ami" "amazon_linux_2" {
@@ -78,7 +76,7 @@ resource "aws_launch_template" "project_name_ecs_lt" {
 
   network_interfaces {
     associate_public_ip_address = false
-    security_groups             = var.launch_template_security_groups_ids
+    security_groups             = var.security_groups_ids
   }
 
   # this is needed to connect the instance to the ECS cluster

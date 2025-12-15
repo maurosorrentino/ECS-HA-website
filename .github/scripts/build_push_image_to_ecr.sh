@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail # makes pipeline fail on any error
 
-# Arguments
 APP_VERSION="$1"
 ECR_REPO="$2"
 REGISTRY="$3"
@@ -9,7 +8,7 @@ APP_PATH="$4"
 IMAGE_URI="$5" # used in terraform for building tasks
 
 echo "Using tag: $APP_VERSION"
-echo "Backend repo: $ECR_REPO"
+echo "Using repo: $ECR_REPO"
 echo "Registry: $REGISTRY"
 
 # Check if image exists

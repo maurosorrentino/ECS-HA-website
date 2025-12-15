@@ -28,8 +28,8 @@ variable "instance_profile_name" {
   type        = string
 }
 
-variable "launch_template_security_groups_ids" {
-  description = "List of security group IDs for the launch template"
+variable "task_security_group_ids" {
+  description = "List of security group IDs for the tasks"
   type        = list(string)
 }
 
@@ -46,4 +46,9 @@ variable "log_group_name" {
 variable "region" {
   description = "The AWS region"
   type        = string
+}
+
+variable "private_subnet_ids" {
+  description = "List of private subnets for tasks ENIs"
+  type = list(string)
 }
