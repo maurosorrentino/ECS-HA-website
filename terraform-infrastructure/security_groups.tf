@@ -55,8 +55,8 @@ resource "aws_security_group" "project_name_ecr_vpc_endpoint_sg" {
 }
 
 resource "aws_security_group" "project_name_ecs_task_sg" {
-  name        = "${var.project_name}-ecs-launch-template-sg"
-  description = "SG for ECS launch template: access ECR and internet via NAT"
+  name        = "${var.project_name}-ecs-task-sg"
+  description = "SG for ECS task: access ECR and internet via NAT"
   vpc_id      = aws_vpc.project_name_vpc.id
 
   egress {
