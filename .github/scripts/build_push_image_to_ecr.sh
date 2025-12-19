@@ -5,6 +5,7 @@ APP_VERSION="$1"
 ECR_REPO="$2"
 REGISTRY="$3"
 APP_PATH="$4"
+IMAGE_URI="$5" # used by terraform for deploying
 
 echo "Using tag: $APP_VERSION"
 echo "Using repo: $ECR_REPO"
