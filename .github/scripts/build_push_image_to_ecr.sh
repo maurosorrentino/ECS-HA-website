@@ -22,5 +22,4 @@ else
   docker push "$REGISTRY/$ECR_REPO:$APP_VERSION"
 fi
 
-# Export the image URI for GitHub Actions
 echo "$IMAGE_URI=$REGISTRY/$ECR_REPO:$APP_VERSION" >> "$GITHUB_ENV"
