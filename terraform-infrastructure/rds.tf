@@ -26,7 +26,8 @@ resource "aws_db_instance" "project_name_rds_instance" {
   vpc_security_group_ids  = [aws_security_group.project_name_rds_sg.id]
   multi_az                = true
   publicly_accessible     = false
-  backup_retention_period = 7 # days
-  backup_window           = "03:00-04:00"
+  # uncomment if not using free tier
+  # backup_retention_period = 7 # days
+  # backup_window           = "03:00-04:00"
   skip_final_snapshot     = true # change to false in prod to make it hard to destroy the infra
 }
