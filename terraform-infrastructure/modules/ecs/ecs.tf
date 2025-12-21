@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "project_name_task" {
   # with "fake" image
   lifecycle {
     ignore_changes = [
-      container_definitions
+      
     ]
   }
 }
