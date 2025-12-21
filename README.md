@@ -82,7 +82,6 @@ Some configurations are intentionally incomplete to keep the setup free-tier fri
 - Test the App Deployment Pipeline (ECR + ECS update)
 - Check everything is working as expected
 - Make / attach to GitHub Actions a role with less permissions
-- Make pipeline that runs tests on PR raise
 - If you purchase a custom domain uncomment route53 , ACM and part of cloudfront code (instructions are in the comments)
 
 ## Notes for Reviewers
