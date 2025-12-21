@@ -78,7 +78,6 @@ files.
 
 Some configurations are intentionally incomplete to keep the setup free-tier friendly.
 
-- Deploy services (configuration was changed so it's broken now)
 - Clean up IAM policies in ecs_iam.tf
 - Test the App Deployment Pipeline (ECR + ECS update)
 - Check everything is working as expected
