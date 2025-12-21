@@ -15,6 +15,13 @@ resource "aws_ecs_task_definition" "project_name_task" {
       essential = true
       command   = ["echo", "Hello from Alpine!"]
 
+      portMappings = [
+        {
+          containerPort = 80
+          protocol      = "tcp"
+        }
+      ]
+
       log_configuration = {
         log_driver = "awslogs"
 
