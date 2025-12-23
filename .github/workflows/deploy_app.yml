@@ -5,6 +5,9 @@ on:
       environment:
         required: true
         type: string
+      app_version:
+        required: true
+        type: string
 
 jobs:
   build-and-deploy:

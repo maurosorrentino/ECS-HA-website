@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail # makes pipeline fail on any error
+set -euo pipefail # makes pipeline fail on any command error
 
 APP_VERSION="$1"
 ECR_REPO="$2"
