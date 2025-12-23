@@ -21,16 +21,16 @@ The terraform-bootstrap/ directory contains Terraform code to:
 - Create an S3 bucket to store the Terraform remote state
 - Configure the necessary IAM permissions for GitHub Actions
 
-⚠️ Important:
+Important:
 This directory must be run manually once before using the GitHub pipelines.
 After bootstrap, all other Terraform operations are automated via CI/CD.
 
-⚠️ Security Note:
+Security Note:
 When the repository was made public, all GitHub Actions IAM permissions were revoked to prevent unauthorized access to AWS.
 From this point onward, Terraform is executed manually via the terminal to maintain full security control.
 
 2. Pipelines
-✅ Pipeline 1 – Infrastructure Deployment (infrastructure_pipeline.yml)
+Pipeline 1 – Infrastructure Deployment (infrastructure_pipeline.yml)
 
 - Automatically provisions all AWS infrastructure (VPC, ALBs, ECS, RDS, S3, etc.)
 - Runs terraform init, plan, and apply
@@ -46,7 +46,7 @@ Triggering the Workflow:
 names and how many you want, you only need to put the role arn in the secrets)using the workflow input field.
 - Runs automatically to the `prod` environment on tag creation (starting with v) to the main branch.
 
-🧩 Pipeline 2 – Application Deployment (TODO) (app_deployment_pipeline.yml)
+Pipeline 2 – Application Deployment (TODO) (app_deployment_pipeline.yml)
 
 Will:
 
@@ -79,7 +79,7 @@ files.
 Some configurations are intentionally incomplete to keep the setup free-tier friendly.
 
 - Clean up IAM policies in ecs_iam.tf
-- Test the App Deployment Pipeline (ECR + ECS update)
+- Test the App Deployment Pipeline (ECR + ECS update) + final test on infrastructure pipeline
 - Check everything is working as expected
 - Make / attach to GitHub Actions a role with less permissions
 - If you purchase a custom domain uncomment route53 , ACM and part of cloudfront code (instructions are in the comments)
