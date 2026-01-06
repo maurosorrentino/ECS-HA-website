@@ -2,7 +2,7 @@
     "AWS_REGION": "eu-west-2",
     "ECR_REPO_BACKEND": "backend-repo",
     "ECR_REPO_FRONTEND": "frontend-repo",
-    "ECS_CLUSTER": "ecs-cluster",
+    "ECS_CLUSTER_NAME": "project-name-ecs-cluster",
     "ECS_SERVICE_BACKEND_NAME": "backend-service",
     "ECS_SERVICE_FRONTEND_NAME": "frontend-service",
     "TF_BACKEND_BUCKET": "terraform-state-department-name",

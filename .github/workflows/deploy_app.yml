@@ -86,7 +86,8 @@ jobs:
           -var="backend_image_uri=${BACKEND_IMAGE}" \
           -var="frontend_image_uri=${FRONTEND_IMAGE}" \
           -var="service_backend_name=${ECS_SERVICE_BACKEND_NAME}" \
-          -var="service_frontend_name=${ECS_SERVICE_FRONTEND_NAME}"
+          -var="service_frontend_name=${ECS_SERVICE_FRONTEND_NAME}" \
+          -var="ecs_cluster_name=${{ ECS_CLUSTER_NAME }}"
 
       - name: Terraform Apply
         working-directory: terraform-ecs-image-update
@@ -97,7 +98,8 @@ jobs:
           -var="backend_image_uri=${BACKEND_IMAGE}" \
           -var="frontend_image_uri=${FRONTEND_IMAGE}" \
           -var="service_backend_name=${ECS_SERVICE_BACKEND_NAME}" \
-          -var="service_frontend_name=${ECS_SERVICE_FRONTEND_NAME}"
+          -var="service_frontend_name=${ECS_SERVICE_FRONTEND_NAME}" \
+          -var="ecs_cluster_name=${{ ECS_CLUSTER_NAME }}"
 
       - name: Get Terraform Outputs
         uses: actions/upload-artifact@v4

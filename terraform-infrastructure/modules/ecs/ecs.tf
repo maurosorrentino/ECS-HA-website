@@ -62,6 +62,7 @@ resource "aws_ecs_service" "project_name_service" {
   }
 }
 
+# TODO move this to asg
 data "aws_ami" "amazon_linux_2" {
   most_recent = true
   owners      = ["amazon"]
