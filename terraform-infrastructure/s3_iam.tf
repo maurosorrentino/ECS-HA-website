@@ -56,8 +56,8 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
         ],
         Resource : [
           module.project_name_alb_logs_s3.bucket_arn,
-          "${module.project_name_alb_logs_s3.bucket_arn}/frontend-alb-logs/AWSLogs/${local.account_id}/*",
-          "${module.project_name_alb_logs_s3.bucket_arn}/backend-alb-logs/AWSLogs/${local.account_id}/*"
+          "${module.project_name_alb_logs_s3.bucket_arn}/${local.s3_frontend_alb_prefix}/AWSLogs/${local.account_id}/*",
+          "${module.project_name_alb_logs_s3.bucket_arn}/${local.s3_backend_alb_prefix}/AWSLogs/${local.account_id}/*"
         ],
         Condition : {
           StringEquals : {
