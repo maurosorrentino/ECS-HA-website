@@ -65,9 +65,9 @@ files.
 - **Route 53 & CloudFront:** Global DNS and CDN for fast, secure content delivery.
 - **ACM (AWS Certificate Manager):** Manages TLS/SSL certificates for HTTPS traffic.
 - **VPC with Multi-AZ setup:** Ensures redundancy and high availability.
-- **Public Subnets:** Host Internet Gateways and NAT Gateways for outbound access.
+- **Public Subnets:** Host NAT Gateways (working together with Internet Gateway) for outbound access.
 - **Private Subnets:** Contain compute resources and databases, fully isolated for security.
-- **ECS / EC2 (Auto Scaling Groups):** Application containers and backend services scale automatically.
+- **ECS / EC2 (Auto Scaling Groups):** Application containers and services scale automatically.
 - **Application Load Balancers (ALB):** Distribute HTTP traffic to frontend and backend EC2s.
 - **Amazon RDS:** Managed relational database for persistent data storage.
 - **Amazon S3:** Used for CDN and ALB logs with lifecycle policies to Glacier Archive.
