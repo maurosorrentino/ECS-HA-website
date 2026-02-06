@@ -36,9 +36,9 @@ jobs:
         run: |
           terraform init \
             -backend-config="bucket=${TF_BACKEND_BUCKET}" \
-            -backend-config="key=${TF_BACKEND_DEPLOY_INFRA_KEY}" \
+            -backend-config="key=${TF_BACKEND_KEY}" \
             -backend-config="region=${AWS_REGION}" \
-            -backend-config="dynamodb_table=${TF_DYNAMODB_DEPLOY_INFRA_TABLE}"
+            -backend-config="dynamodb_table=${TF_DYNAMODB_TABLE}"
 
       - name: Terraform Plan
         working-directory: terraform-infrastructure
