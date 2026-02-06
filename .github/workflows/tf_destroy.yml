@@ -25,6 +25,14 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      # loading environment variables from .github/workflows/env_vars/<environment>/env_vars.json
+      # the reason why is because we can set the vars once and use them in multiple pipelines
+      - name: Load environment configuration
+        id: load-env
+        run: |
+          chmod +rwx ./.github/scripts/set_env_vars.sh
+          ./.github/scripts/set_env_vars.sh ${{ inputs.environment }}
+
       - name: Terraform Init
         working-directory: ${{ inputs.working_directory }}
         run: |
@@ -46,4 +54,3 @@ jobs:
             -var="backend_ecr_repo_name=${ECR_REPO_BACKEND_NAME}" \
             -var="frontend_ecr_repo_name=${ECR_REPO_FRONTEND_NAME}" \
             -var="ecs_cluster_name=${ECS_CLUSTER_NAME}"
-            
