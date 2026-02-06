@@ -6,10 +6,10 @@
     "ECS_SERVICE_BACKEND_NAME": "backend-service",
     "ECS_SERVICE_FRONTEND_NAME": "frontend-service",
     "TF_BACKEND_BUCKET": "terraform-state-department-name",
-    "TF_BACKEND_KEY": "terraform.tfstate",
-    "TF_DYNAMODB_TABLE": "terraform-lock-table",
-    "TF_BACKEND_APP_KEY": "terraform_app.tfstate",
-    "TF_DYNAMODB_APP_TABLE": "terraform-app-lock-table",
+    "TF_BACKEND_DEPLOY_INFRA_KEY": "terraform_infra.tfstate",
+    "TF_DYNAMODB_DEPLOY_INFRA_TABLE": "terraform_infra-lock-table",
+    "TF_BACKEND_DEPLOY_APP_KEY": "terraform_app.tfstate",
+    "TF_DYNAMODB_DEPLOY_APP_TABLE": "terraform-app-lock-table",
     "ENVIRONMENT": "dev",
     "TF_PROJECT_NAME": "project-name"
 }

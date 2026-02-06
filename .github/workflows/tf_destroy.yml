@@ -46,11 +46,19 @@ jobs:
       - name: Terraform Init
         working-directory: ${{ inputs.working_directory }}
         run: |
+          if [ "${{ inputs.working_directory }}" == "terraform-infrastructure" ]; then
+            KEY="${TF_BACKEND_DEPLOY_INFRA_KEY}"
+            TABLE="${TF_DYNAMODB_DEPLOY_INFRA_TABLE}"
+          else
+            KEY="${TF_BACKEND_DEPLOY_APP_KEY}"
+            TABLE="${TF_DYNAMODB_DEPLOY_APP_TABLE}"
+          fi
+
           terraform init \
             -backend-config="bucket=${TF_BACKEND_BUCKET}" \
-            -backend-config="key=${TF_BACKEND_KEY}" \
+            -backend-config="key=${KEY}" \
             -backend-config="region=${AWS_REGION}" \
-            -backend-config="dynamodb_table=${TF_DYNAMODB_TABLE}"
+            -backend-config="dynamodb_table=${TABLE}"
 
       - name: Terraform Destroy
         working-directory: ${{ inputs.working_directory }}
