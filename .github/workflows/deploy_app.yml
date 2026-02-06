@@ -83,7 +83,6 @@ jobs:
         run: |
           terraform plan \
             -var="region=${AWS_REGION}" \
-            -var="environment=${{ inputs.environment }}" \
             -var="project_name=${TF_PROJECT_NAME}" \
             -var="backend_image_uri=${BACKEND_IMAGE}" \
             -var="frontend_image_uri=${FRONTEND_IMAGE}" \
@@ -96,7 +95,6 @@ jobs:
         run: |
           terraform apply -auto-approve \
             -var="region=${AWS_REGION}" \
-            -var="environment=${{ inputs.environment }}" \
             -var="project_name=${TF_PROJECT_NAME}" \
             -var="backend_image_uri=${BACKEND_IMAGE}" \
             -var="frontend_image_uri=${FRONTEND_IMAGE}" \
