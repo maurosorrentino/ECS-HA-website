@@ -43,7 +43,7 @@ jobs:
       - name: Terraform Plan
         working-directory: terraform-infrastructure
         run: |
-          terraform plan \ 
+          terraform plan \
             -var="region=${AWS_REGION}" \
             -var="environment=${{ inputs.environment }}" \
             -var="project_name=${TF_PROJECT_NAME}" \
