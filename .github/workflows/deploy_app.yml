@@ -71,35 +71,38 @@ jobs:
 
       - name: Terraform Init
         working-directory: terraform-ecs-image-update
-        run: terraform init \
-          -backend-config="bucket=${TF_BACKEND_BUCKET}" \
-          -backend-config="key=${TF_BACKEND_KEY}" \
-          -backend-config="region=${AWS_REGION}" \
-          -backend-config="dynamodb_table=${TF_DYNAMODB_TABLE}"
+        run: |
+          terraform init \
+            -backend-config="bucket=${TF_BACKEND_BUCKET}" \
+            -backend-config="key=${TF_BACKEND_KEY}" \
+            -backend-config="region=${AWS_REGION}" \
+            -backend-config="dynamodb_table=${TF_DYNAMODB_TABLE}"
 
       - name: Terraform Plan
         working-directory: terraform-ecs-image-update
-        run: terraform plan \
-          -var="region=${AWS_REGION}" \
-          -var="environment=${{ inputs.environment }}" \
-          -var="project_name=${TF_PROJECT_NAME}" \
-          -var="backend_image_uri=${BACKEND_IMAGE}" \
-          -var="frontend_image_uri=${FRONTEND_IMAGE}" \
-          -var="service_backend_name=${ECS_SERVICE_BACKEND_NAME}" \
-          -var="service_frontend_name=${ECS_SERVICE_FRONTEND_NAME}" \
-          -var="ecs_cluster_name=${ECS_CLUSTER_NAME}"
+        run: |
+          terraform plan \
+            -var="region=${AWS_REGION}" \
+            -var="environment=${{ inputs.environment }}" \
+            -var="project_name=${TF_PROJECT_NAME}" \
+            -var="backend_image_uri=${BACKEND_IMAGE}" \
+            -var="frontend_image_uri=${FRONTEND_IMAGE}" \
+            -var="service_backend_name=${ECS_SERVICE_BACKEND_NAME}" \
+            -var="service_frontend_name=${ECS_SERVICE_FRONTEND_NAME}" \
+            -var="ecs_cluster_name=${ECS_CLUSTER_NAME}"
 
       - name: Terraform Apply
         working-directory: terraform-ecs-image-update
-        run: terraform apply -auto-approve \
-          -var="region=${AWS_REGION}" \
-          -var="environment=${{ inputs.environment }}" \
-          -var="project_name=${TF_PROJECT_NAME}" \
-          -var="backend_image_uri=${BACKEND_IMAGE}" \
-          -var="frontend_image_uri=${FRONTEND_IMAGE}" \
-          -var="service_backend_name=${ECS_SERVICE_BACKEND_NAME}" \
-          -var="service_frontend_name=${ECS_SERVICE_FRONTEND_NAME}" \
-          -var="ecs_cluster_name=${ECS_CLUSTER_NAME}"
+        run: |
+          terraform apply -auto-approve \
+            -var="region=${AWS_REGION}" \
+            -var="environment=${{ inputs.environment }}" \
+            -var="project_name=${TF_PROJECT_NAME}" \
+            -var="backend_image_uri=${BACKEND_IMAGE}" \
+            -var="frontend_image_uri=${FRONTEND_IMAGE}" \
+            -var="service_backend_name=${ECS_SERVICE_BACKEND_NAME}" \
+            -var="service_frontend_name=${ECS_SERVICE_FRONTEND_NAME}" \
+            -var="ecs_cluster_name=${ECS_CLUSTER_NAME}"
 
       - name: Get Terraform Outputs
         uses: actions/upload-artifact@v4
