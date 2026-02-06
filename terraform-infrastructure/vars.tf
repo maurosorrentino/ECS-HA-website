@@ -26,5 +26,4 @@ variable "environment" {
 
 variable "ecs_cluster_name" {
   type = string
-  default = "project-name-ecs-cluster"
 }
