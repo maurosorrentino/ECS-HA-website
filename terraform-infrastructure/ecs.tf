@@ -9,7 +9,7 @@ resource "aws_ecs_cluster" "project_name_ecs_cluster" {
 
 module "project_name_frontend_ecs_service" {
   source                              = "./modules/ecs"
-  service_name                        = "frontend"
+  service_name                        = var.frontend_service_name
   cluster_name                        = aws_ecs_cluster.project_name_ecs_cluster.name
   cluster_id                          = aws_ecs_cluster.project_name_ecs_cluster.id
   launch_template_security_groups_ids = [aws_security_group.project_name_ecs_frontend_service_sg.id]
@@ -28,7 +28,7 @@ module "project_name_frontend_ecs_service" {
 
 module "project_name_backend_ecs_service" {
   source                              = "./modules/ecs"
-  service_name                        = "backend"
+  service_name                        = var.backend_service_name
   cluster_name                        = aws_ecs_cluster.project_name_ecs_cluster.name
   cluster_id                          = aws_ecs_cluster.project_name_ecs_cluster.id
   launch_template_security_groups_ids = [aws_security_group.project_name_ecs_backend_service_sg.id]
