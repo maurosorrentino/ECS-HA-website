@@ -36,4 +36,13 @@ jobs:
 
       - name: Terraform Destroy
         working-directory: ${{ inputs.working_directory }}
-        run: terraform apply -destroy -auto-approve destroy.tfplan
+        run: |
+          terraform destroy -lock=false
+            -var="region=${AWS_REGION}" \
+            -var="environment=${{ inputs.environment }}" \
+            -var="project_name=${TF_PROJECT_NAME}" \
+            -var="backend_service_name=${ECS_SERVICE_BACKEND_NAME}" \
+            -var="frontend_service_name=${ECS_SERVICE_FRONTEND_NAME}" \
+            -var="backend_ecr_repo_name=${ECR_REPO_BACKEND_NAME}" \
+            -var="frontend_ecr_repo_name=${ECR_REPO_FRONTEND_NAME}" \
+            -var="ecs_cluster_name=${ECS_CLUSTER_NAME}"
