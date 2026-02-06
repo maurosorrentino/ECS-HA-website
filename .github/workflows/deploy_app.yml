@@ -66,45 +66,18 @@ jobs:
           chmod +rwx ./.github/scripts/build_push_image_to_ecr.sh
           ./.github/scripts/build_push_image_to_ecr.sh $FRONTEND_TAG $ECR_REPO_FRONTEND_NAME $REGISTRY app/frontend FRONTEND_IMAGE
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-
-      - name: Terraform Init
-        working-directory: terraform-ecs-image-update
+      - name: Deploy Backend to ECS
         run: |
-          terraform init \
-            -backend-config="bucket=${TF_BACKEND_BUCKET}" \
-            -backend-config="key=${TF_BACKEND_DEPLOY_APP_KEY}" \
-            -backend-config="region=${AWS_REGION}" \
-            -backend-config="dynamodb_table=${TF_DYNAMODB_DEPLOY_APP_TABLE}"
+          chmod +rwx ./.github/scripts/update_ecs_service.sh
+          ./.github/scripts/update_ecs_service.sh \
+            "${ECS_SERVICE_BACKEND_NAME}" \
+            "${ECS_CLUSTER_NAME}" \
+            "${{ steps.login-ecr.outputs.registry }}/${ECR_REPO_BACKEND_NAME}:${{ inputs.app_version }}"
 
-      - name: Terraform Plan
-        working-directory: terraform-ecs-image-update
+      - name: Deploy Frontend to ECS
         run: |
-          terraform plan \
-            -var="region=${AWS_REGION}" \
-            -var="project_name=${TF_PROJECT_NAME}" \
-            -var="backend_image_uri=${BACKEND_IMAGE}" \
-            -var="frontend_image_uri=${FRONTEND_IMAGE}" \
-            -var="backend_service_name=${ECS_SERVICE_BACKEND_NAME}" \
-            -var="frontend_service_name=${ECS_SERVICE_FRONTEND_NAME}" \
-            -var="cluster_name=${ECS_CLUSTER_NAME}"
-
-      - name: Terraform Apply
-        working-directory: terraform-ecs-image-update
-        run: |
-          terraform apply -auto-approve \
-            -var="region=${AWS_REGION}" \
-            -var="project_name=${TF_PROJECT_NAME}" \
-            -var="backend_image_uri=${BACKEND_IMAGE}" \
-            -var="frontend_image_uri=${FRONTEND_IMAGE}" \
-            -var="backend_service_name=${ECS_SERVICE_BACKEND_NAME}" \
-            -var="frontend_service_name=${ECS_SERVICE_FRONTEND_NAME}" \
-            -var="cluster_name=${ECS_CLUSTER_NAME}"
-
-      - name: Get Terraform Outputs
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform-outputs-${{ inputs.environment }}
-          path: terraform-ecs-image-update/outputs.json
-          retention-days: 1
+          # Script is already chmodded from previous step
+          ./.github/scripts/update_ecs_service.sh \
+            "${ECS_SERVICE_FRONTEND_NAME}" \
+            "${ECS_CLUSTER_NAME}" \
+            "${{ steps.login-ecr.outputs.registry }}/${ECR_REPO_FRONTEND_NAME}:${{ inputs.app_version }}"
