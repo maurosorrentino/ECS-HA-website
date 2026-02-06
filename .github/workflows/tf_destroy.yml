@@ -37,7 +37,7 @@ jobs:
       - name: Terraform Destroy
         working-directory: ${{ inputs.working_directory }}
         run: |
-          terraform destroy -lock=false
+          terraform destroy -lock=false \
             -var="region=${AWS_REGION}" \
             -var="environment=${{ inputs.environment }}" \
             -var="project_name=${TF_PROJECT_NAME}" \
