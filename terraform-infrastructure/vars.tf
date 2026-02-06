@@ -17,6 +17,13 @@ variable "backend_service_name" {
   type = string
 }
 
+variable "backend_ecr_repo_name" {
+  type = string
+}
+
+variable "frontend_ecr_repo_name" {
+  type = string
+}
 # this is an example of variable that can be used based on the environment
 # the value it's passed from the pipeline to use the same code for each environemnt
 variable "environment" {

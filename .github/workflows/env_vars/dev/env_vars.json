@@ -1,7 +1,7 @@
 {
     "AWS_REGION": "eu-west-2",
-    "ECR_REPO_BACKEND": "project-name-backend-ecr-repo",
-    "ECR_REPO_FRONTEND": "project-name-frontend-ecr-repo",
+    "ECR_REPO_BACKEND_NAME": "project-name-backend-ecr-repo",
+    "ECR_REPO_FRONTEND_NAME": "project-name-frontend-ecr-repo",
     "ECS_CLUSTER_NAME": "project-name-ecs-cluster",
     "ECS_SERVICE_BACKEND_NAME": "backend-service",
     "ECS_SERVICE_FRONTEND_NAME": "frontend-service",

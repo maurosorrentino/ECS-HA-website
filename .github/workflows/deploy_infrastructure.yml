@@ -49,6 +49,8 @@ jobs:
             -var="project_name=${TF_PROJECT_NAME}" \
             -var="backend_service_name=${ECS_SERVICE_BACKEND_NAME}" \
             -var="frontend_service_name=${ECS_SERVICE_FRONTEND_NAME}" \
+            -var="backend_ecr_repo_name=${ECR_REPO_BACKEND_NAME}" \
+            -var="frontend_ecr_repo_name=${ECR_REPO_FRONTEND_NAME}" \
             -var="ecs_cluster_name=${ECS_CLUSTER_NAME}"
 
       - name: Terraform Apply
@@ -60,6 +62,8 @@ jobs:
             -var="project_name=${TF_PROJECT_NAME}" \
             -var="backend_service_name=${ECS_SERVICE_BACKEND_NAME}" \
             -var="frontend_service_name=${ECS_SERVICE_FRONTEND_NAME}" \
+            -var="backend_ecr_repo_name=${ECR_REPO_BACKEND_NAME}" \
+            -var="frontend_ecr_repo_name=${ECR_REPO_FRONTEND_NAME}" \
             -var="ecs_cluster_name=${ECS_CLUSTER_NAME}"
 
       - name: Get Terraform Outputs
