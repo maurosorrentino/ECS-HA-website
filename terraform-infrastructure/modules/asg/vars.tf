@@ -8,11 +8,6 @@ variable "private_subnet_ids" {
   type        = list(string)
 }
 
-variable "template_id" {
-  description = "The ID of the launch template to use for the Auto Scaling Group"
-  type        = string
-}
-
 variable "instance_profile_name" {
   type = string
 }
