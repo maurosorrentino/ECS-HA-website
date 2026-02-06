@@ -25,4 +25,3 @@ variable "project_name" {
 variable "region" {
   type    = string
 }
-
