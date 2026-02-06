@@ -28,7 +28,6 @@ variable "frontend_ecr_repo_name" {
 # the value it's passed from the pipeline to use the same code for each environemnt
 variable "environment" {
   type = string
-  default = "dev"
 }
 
 variable "ecs_cluster_name" {

@@ -40,7 +40,7 @@ jobs:
         run: |
           BACKEND_TAG=${{ inputs.app_version }}
           REGISTRY=${{ steps.login-ecr.outputs.registry }}
-          ECR_REPO_BACKEND=${{ env.ECR_REPO_BACKEND }}
+          ECR_REPO_BACKEND_NAME=${{ env.ECR_REPO_BACKEND_NAME }}
 
           # Arguments
           # APP_VERSION="$1"
@@ -49,13 +49,13 @@ jobs:
           # APP_PATH="$4"
           # IMAGE_URI="$5"
           chmod +rwx ./.github/scripts/build_push_image_to_ecr.sh
-          ./.github/scripts/build_push_image_to_ecr.sh $BACKEND_TAG $ECR_REPO_BACKEND $REGISTRY app/backend BACKEND_IMAGE
+          ./.github/scripts/build_push_image_to_ecr.sh $BACKEND_TAG $ECR_REPO_BACKEND_NAME $REGISTRY app/backend BACKEND_IMAGE
 
       - name: Build and push Frontend image
         run: |
           FRONTEND_TAG=${{ inputs.app_version }}
           REGISTRY=${{ steps.login-ecr.outputs.registry }}
-          ECR_REPO_FRONTEND=${{ env.ECR_REPO_FRONTEND }}
+          ECR_REPO_FRONTEND_NAME=${{ env.ECR_REPO_FRONTEND_NAME }}
 
           # Arguments
           # APP_VERSION="$1"
@@ -64,7 +64,7 @@ jobs:
           # APP_PATH="$4"
           # IMAGE_URI="$5"
           chmod +rwx ./.github/scripts/build_push_image_to_ecr.sh
-          ./.github/scripts/build_push_image_to_ecr.sh $FRONTEND_TAG $ECR_REPO_FRONTEND $REGISTRY app/frontend FRONTEND_IMAGE
+          ./.github/scripts/build_push_image_to_ecr.sh $FRONTEND_TAG $ECR_REPO_FRONTEND_NAME $REGISTRY app/frontend FRONTEND_IMAGE
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
