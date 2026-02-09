@@ -46,14 +46,12 @@ Triggering the Workflow:
 names and how many you want, you only need to put the role arn in the secrets)using the workflow input field.
 - Runs automatically to the `prod` environment on tag creation (starting with v) to the main branch.
 
-Pipeline 2 – Application Deployment (TODO) (app_deployment_pipeline.yml)
+Pipeline 2 – Application Deployment (app_deployment_pipeline.yml)
 
-Will:
-
-- Run tests on the app
-- Build and push a Docker image to Amazon ECR
+Triggering:
+- Same as above pipeline
+- Build and push a Docker image to Amazon ECR (uses semantic versioning for rolling back)
 - Automatically update the ECS service with the new image version
-- Intended to demonstrate a zero-downtime CI/CD release flow
 
 Additionally, GitHub Actions environments have been configured (e.g., dev), each containing a secret named AWS_ROLE_ARN. 
 The CI/CD workflows assume this secret is available so they can dynamically assume the correct AWS IAM role for that 
@@ -79,7 +77,6 @@ files.
 Some configurations are intentionally incomplete to keep the setup free-tier friendly.
 
 - Clean up IAM policies in ecs_iam.tf
-- Test the App Deployment Pipeline (ECR + ECS update) + final test on infrastructure pipeline
 - Check everything is working as expected
 - Make / attach to GitHub Actions a role with less permissions
 - If you purchase a custom domain uncomment route53 , ACM and part of cloudfront code (instructions are in the comments)
