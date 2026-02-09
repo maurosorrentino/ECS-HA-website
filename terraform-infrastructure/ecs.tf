@@ -19,7 +19,7 @@ module "project_name_frontend_ecs_service" {
 
   depends_on = [module.project_name_frontend_alb, aws_security_group.project_name_ecs_frontend_service_sg,
     aws_cloudwatch_log_group.project_name_frontend_service_log_group, aws_security_group.project_name_ecs_task_sg,
-  aws_iam_instance_profile.project_name_ecs_frontend_profile]
+  aws_iam_role.frontend_task_role]
 }
 
 module "project_name_backend_ecs_service" {
@@ -34,5 +34,5 @@ module "project_name_backend_ecs_service" {
 
   depends_on = [module.project_name_backend_alb, aws_security_group.project_name_ecs_backend_service_sg,
     aws_cloudwatch_log_group.project_name_backend_service_log_group, aws_security_group.project_name_ecs_task_sg,
-  aws_iam_instance_profile.project_name_ecs_backend_profile]
+  aws_iam_role.backend_task_role]
 }

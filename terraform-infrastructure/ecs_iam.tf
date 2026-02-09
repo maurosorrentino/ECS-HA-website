@@ -91,3 +91,41 @@ resource "aws_iam_role_policy_attachment" "backend_task_attach" {
   role       = aws_iam_role.backend_task_role.name
   policy_arn = aws_iam_policy.backend_app_policy.arn
 }
+
+resource "aws_iam_role" "frontend_task_role" {
+  name = "${var.project_name}-frontend-task-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = { Service = "ecs-tasks.amazonaws.com" }
+    }]
+  })
+}
+
+resource "aws_iam_policy" "frontend_debug_policy" {
+  name = "${var.project_name}-frontend-debug-policy"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        # Required for ECS Exec (SSM) debugging
+        Effect = "Allow"
+        Action = [
+          "ssmmessages:CreateControlChannel",
+          "ssmmessages:CreateDataChannel",
+          "ssmmessages:OpenControlChannel",
+          "ssmmessages:OpenDataChannel"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "frontend_attach" {
+  role       = aws_iam_role.frontend_task_role.name
+  policy_arn = aws_iam_policy.frontend_debug_policy.arn
+}
