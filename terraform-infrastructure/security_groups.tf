@@ -54,7 +54,7 @@ resource "aws_security_group" "project_name_ecr_vpc_endpoint_sg" {
   depends_on = [aws_vpc.project_name_vpc]
 }
 
-resource "aws_security_group" "project_name_ecs_task_sg" {
+resource "aws_security_group" "project_name_ecs_allow_ecr_sg" {
   name        = "${var.project_name}-ecs-task-sg"
   description = "SG for ECS task: access ECR and internet via NAT"
   vpc_id      = aws_vpc.project_name_vpc.id
