@@ -48,6 +48,7 @@ resource "aws_iam_role_policy_attachment" "ecs_exec_role_attach" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
 }
 
+# TODO module?
 # tasks roles
 resource "aws_iam_role" "backend_task_role" {
   name = "${var.project_name}-backend-task-role"
