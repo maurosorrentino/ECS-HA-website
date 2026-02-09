@@ -14,7 +14,7 @@ module "project_name_frontend_ecs_service" {
   alb_target_group_arn    = module.project_name_frontend_alb.target_group_arn
   log_group_name          = aws_cloudwatch_log_group.project_name_frontend_service_log_group.name
   region                  = var.region
-  task_security_group_ids = [aws_security_group.project_name_ecs_allow_ecr_sg.id]
+  task_security_group_ids = [aws_security_group.project_name_ecs_frontend_service_sg.id]
   private_subnet_ids      = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("frontend", name))]
 
   depends_on = [module.project_name_frontend_alb, aws_security_group.project_name_ecs_frontend_service_sg,
@@ -29,7 +29,7 @@ module "project_name_backend_ecs_service" {
   alb_target_group_arn    = module.project_name_backend_alb.target_group_arn
   log_group_name          = aws_cloudwatch_log_group.project_name_backend_service_log_group.name
   region                  = var.region
-  task_security_group_ids = [aws_security_group.project_name_ecs_allow_ecr_sg.id]
+  task_security_group_ids = [aws_security_group.project_name_ecs_backend_service_sg.id]
   private_subnet_ids      = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("backend", name))]
 
   depends_on = [module.project_name_backend_alb, aws_security_group.project_name_ecs_backend_service_sg,
