@@ -5,34 +5,40 @@ SERVICE_NAME=$1
 CLUSTER_NAME=$2
 IMAGE_URI=$3
 
-echo "updating service: $SERVICE_NAME in Cluster: $CLUSTER_NAME"
-echo "new Image: $IMAGE_URI"
+echo "Updating service: $SERVICE_NAME in Cluster: $CLUSTER_NAME"
 
-# get the current task definition
+# Get current task definition
 aws ecs describe-task-definition \
     --task-definition "$SERVICE_NAME" \
     --query taskDefinition > task-def.json
 
-# use jq to update the image in the containerDefinitions and remove fields that AWS prevents you from sending 
-# back in a 'register' call
+# Update image and clean up JSON
 jq --arg IMAGE "$IMAGE_URI" '
     .containerDefinitions[0].image = $IMAGE | 
     del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)
 ' task-def.json > new-task-def.json
 
-# register the new task definition revision
+# Register new revision
 NEW_REVISION_ARN=$(aws ecs register-task-definition \
     --cli-input-json file://new-task-def.json \
     --query 'taskDefinition.taskDefinitionArn' \
     --output text)
 
-echo "registered new revision: $NEW_REVISION_ARN"
+echo "Registered revision: $NEW_REVISION_ARN"
 
-# update the service to use the new revision
+# Update the service
 aws ecs update-service \
     --cluster "$CLUSTER_NAME" \
     --service "$SERVICE_NAME" \
-    --task-definition "$NEW_REVISION_ARN" \
-    --force-new-deployment
+    --task-definition "$NEW_REVISION_ARN"
+
+echo "Waiting for service to reach a steady state..."
+
+# This is the key part:
+# It will poll every 15 seconds. If it doesn't stabilize, it exits with error.
+if ! aws ecs wait services-stable --cluster "$CLUSTER_NAME" --services "$SERVICE_NAME"; then
+    echo "Error: Service failed to stabilize. Deployment failed."
+    exit 1
+fi
 
 echo "service $SERVICE_NAME update initiated successfully."
