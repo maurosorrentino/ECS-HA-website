@@ -3,7 +3,7 @@ resource "aws_ecs_task_definition" "project_name_task" {
   network_mode             = "awsvpc"
   requires_compatibilities = ["EC2"]
   cpu                      = "256" # 0.25 vCPU adjust as you need
-  memory                   = "512" # adjust as you need
+  memory                   = "256" # adjust as you need
 
   container_definitions = jsonencode([
     {
@@ -11,7 +11,7 @@ resource "aws_ecs_task_definition" "project_name_task" {
       # smallest possible base image as real image update will happen via another pipeline
       image     = "alpine:latest"
       cpu       = 256 # 0.25 vCPU adjust as you need
-      memory    = 512 # adjust as you need
+      memory    = 256 # adjust as you need
       essential = true
       command   = ["echo", "Hello from Alpine!"]
 
