@@ -8,12 +8,11 @@ resource "aws_ecs_task_definition" "project_name_task" {
   container_definitions = jsonencode([
     {
       name = var.service_name
-      # smallest possible base image as real image update will happen via another pipeline
-      image     = "alpine:latest"
+      # "fake" image as real image update will happen via another pipeline
+      image     = "public.ecr.aws/nginx/nginx:latest" # stays alive
       cpu       = 256 # 0.25 vCPU adjust as you need
       memory    = 256 # adjust as you need
       essential = true
-      command   = ["echo", "Hello from Alpine!"]
 
       portMappings = [
         {
