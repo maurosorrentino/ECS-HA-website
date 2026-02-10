@@ -35,8 +35,8 @@ resource "aws_lb_target_group" "project_name_tg" {
 
 resource "aws_lb_listener" "project_name_listener_https" {
   load_balancer_arn = aws_lb.project_name_alb.arn
-  port              = "80"
-  protocol          = "HTTP"
+  port              = var.listener_port
+  protocol          = var.listener_port == 443 ? "HTTPS" : "HTTP"
 
   default_action {
     type             = "forward"

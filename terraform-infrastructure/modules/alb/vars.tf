@@ -33,3 +33,6 @@ variable "bucket_id" {
   type        = string
 }
 
+variable "listener_port" {
+  type = string
+}

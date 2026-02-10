@@ -7,6 +7,7 @@ module "project_name_frontend_alb" {
   alb_subnets           = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("alb", name))]
   bucket_id             = module.project_name_alb_logs_s3.bucket_id
   s3_prefix             = local.s3_frontend_alb_prefix
+  listener_port = 443
 
   depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_frontend_alb_ipv4_sg,
   module.project_name_alb_logs_s3, aws_s3_bucket_policy.alb_logs_policy, aws_security_group.project_name_frontend_alb_ipv6_sg]
@@ -21,6 +22,7 @@ module "project_name_backend_alb" {
   alb_subnets           = [for name, subnet in aws_subnet.project_name_private_subnets : subnet.id if can(regex("alb", name))]
   bucket_id             = module.project_name_alb_logs_s3.bucket_id
   s3_prefix             = local.s3_backend_alb_prefix
+  listener_port = 80
 
   depends_on = [aws_subnet.project_name_private_subnets, aws_security_group.project_name_backend_alb_sg,
   module.project_name_alb_logs_s3, aws_s3_bucket_policy.alb_logs_policy]
