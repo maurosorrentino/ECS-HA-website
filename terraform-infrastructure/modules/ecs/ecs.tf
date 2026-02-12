@@ -48,8 +48,6 @@ resource "aws_ecs_service" "project_name_service" {
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.project_name_task.arn
   desired_count   = 1 # free tier, change as you need (increase by 1 for each AZ)
-  deployment_minimum_healthy_percent = 0 # free tier, forces to use 1 ENI per EC2 - change as you need
-  deployment_maximum_percent         = 100 # free tier, forces to use 1 ENI per EC2 - change as you need
   launch_type     = "EC2"
 
   load_balancer {

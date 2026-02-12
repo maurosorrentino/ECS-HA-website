@@ -33,7 +33,7 @@ resource "aws_lb_target_group" "project_name_tg" {
   target_type = "ip"
 }
 
-resource "aws_lb_listener" "project_name_listener_https" {
+resource "aws_lb_listener" "project_name_listener_http" {
   load_balancer_arn = aws_lb.project_name_alb.arn
   port              = var.listener_port
   protocol          = var.listener_port == 443 ? "HTTPS" : "HTTP"
