@@ -47,9 +47,8 @@ jobs:
           # ECR_REPO="$2"
           # REGISTRY="$3"
           # APP_PATH="$4"
-          # IMAGE_URI="$5"
           chmod +rwx ./.github/scripts/build_push_image_to_ecr.sh
-          ./.github/scripts/build_push_image_to_ecr.sh $BACKEND_TAG $ECR_REPO_BACKEND_NAME $REGISTRY app/backend BACKEND_IMAGE
+          ./.github/scripts/build_push_image_to_ecr.sh $BACKEND_TAG $ECR_REPO_BACKEND_NAME $REGISTRY app/backend
 
       - name: Build and push Frontend image
         run: |
@@ -62,9 +61,8 @@ jobs:
           # ECR_REPO="$2"
           # REGISTRY="$3"
           # APP_PATH="$4"
-          # IMAGE_URI="$5"
           chmod +rwx ./.github/scripts/build_push_image_to_ecr.sh
-          ./.github/scripts/build_push_image_to_ecr.sh $FRONTEND_TAG $ECR_REPO_FRONTEND_NAME $REGISTRY app/frontend FRONTEND_IMAGE
+          ./.github/scripts/build_push_image_to_ecr.sh $FRONTEND_TAG $ECR_REPO_FRONTEND_NAME $REGISTRY app/frontend
 
       - name: Deploy Backend to ECS
         run: |
