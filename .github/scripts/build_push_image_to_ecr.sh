@@ -10,7 +10,7 @@ echo "Using tag: $APP_VERSION"
 echo "Using repo: $ECR_REPO"
 echo "Registry: $REGISTRY"
 
-# Check if image exists
+# check if image exists
 if aws ecr describe-images --repository-name "$ECR_REPO" --image-ids imageTag="$APP_VERSION"; then
   echo "Image already exists. Skipping build and push."
 else

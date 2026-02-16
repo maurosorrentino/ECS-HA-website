@@ -24,6 +24,8 @@ aws ecs describe-task-definition \
     --task-definition "$SERVICE_NAME" \
     --query taskDefinition > task-def.json
 
+# update the image in the task definition and remove fields that are not needed for registration
+# to avoid errors when registering the new task definition
 jq --arg IMAGE "$IMAGE_URI" '
     .containerDefinitions[0].image = $IMAGE | 
     del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)
@@ -34,7 +36,6 @@ NEW_REVISION_ARN=$(aws ecs register-task-definition \
     --query 'taskDefinition.taskDefinitionArn' \
     --output text)
 
-# Perform the update
 aws ecs update-service \
     --cluster "$CLUSTER_NAME" \
     --service "$SERVICE_NAME" \
