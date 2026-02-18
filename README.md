@@ -36,6 +36,7 @@ Pipeline 1 – Infrastructure Deployment (infrastructure_pipeline.yml)
 - Runs terraform init, plan, and apply
 - Stores and retrieves Terraform state from S3 backend
 - Uses GitHub OIDC to authenticate securely to AWS
+- Dev environment is set to use Free Tier so it has 1 Docker container in each EC2 to save up money
 
 # How It Works
 
