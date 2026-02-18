@@ -35,9 +35,9 @@ resource "aws_launch_template" "project_name_ecs_lt" {
 
 resource "aws_autoscaling_group" "project_name_ecs_asg" {
   name                = var.asg_name
-  max_size            = var.environment == "dev" ? 1 : 6 # free tier, change as you need
-  min_size            = var.environment == "dev" ? 1 : 1 # free tier, change as you need
-  desired_capacity    = var.environment == "dev" ? 1 : 3 # free tier, change as you need
+  max_size            = var.environment == "dev" ? 1 : 6 # change as you need
+  min_size            = var.environment == "dev" ? 1 : 1 # change as you need
+  desired_capacity    = var.environment == "dev" ? 1 : 3 # change as you need
   vpc_zone_identifier = var.private_subnet_ids
 
   # remove the following if not using spot instances
