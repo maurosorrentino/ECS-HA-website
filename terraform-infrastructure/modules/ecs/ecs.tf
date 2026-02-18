@@ -47,8 +47,27 @@ resource "aws_ecs_service" "project_name_service" {
   name            = var.service_name
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.project_name_task.arn
-  desired_count   = var.environment == "dev" ? 1 : 3 # change as you need (1 per each AZ)
-  launch_type     = "EC2"
+
+  desired_count = var.environment == "dev" ? 1 : 3 # change as you need (1 per each AZ)
+  launch_type   = "EC2"
+
+  # in dev (t3.micro), we must kill the old task first (0%).
+  # in prod (t3.medium), we want at least 2 tasks running during an update (66%).
+  # change as you need
+  deployment_minimum_healthy_percent = var.environment == "dev" ? 0 : 66
+
+  # in dev, we can't surge (max 100%).
+  # in prod, we can surge to 6 tasks briefly to speed up deployment (200%).
+  deployment_maximum_percent = var.environment == "dev" ? 100 : 200
+
+  # AWS requires this to be DISABLED if maximum_percent is 100 (which happens in Dev)
+  availability_zone_rebalancing = var.environment == "dev" ? "DISABLED" : "ENABLED"
+
+  # makes app pipeline fail if there are any issues in updating the service
+  deployment_circuit_breaker {
+    enable   = true
+    rollback = true # automatically go back to the old version on failure
+  }
 
   load_balancer {
     target_group_arn = var.alb_target_group_arn
@@ -59,11 +78,5 @@ resource "aws_ecs_service" "project_name_service" {
   network_configuration {
     subnets         = var.private_subnet_ids
     security_groups = var.task_security_group_ids
-  }
-
-  # makes app pipeline fail if there are any issues in updating the service
-  deployment_circuit_breaker {
-    enable   = true
-    rollback = true # automatically go back to the old version on failure
   }
 }
