@@ -47,14 +47,8 @@ resource "aws_ecs_service" "project_name_service" {
   name            = var.service_name
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.project_name_task.arn
-  desired_count   = 1 # free tier, change as you need (increase by 1 for each AZ)
+  desired_count   = 3 # change as you need (1 per each AZ)
   launch_type     = "EC2"
-
-  # This allows the task count to drop to 0 during a deployment
-  deployment_minimum_healthy_percent = 0
-
-  # This prevents ECS from trying to run 2 tasks at once on the same instance
-  deployment_maximum_percent = 100
 
   load_balancer {
     target_group_arn = var.alb_target_group_arn

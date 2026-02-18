@@ -11,7 +11,7 @@ data "aws_ami" "amazon_linux_2" {
 resource "aws_launch_template" "project_name_ecs_lt" {
   name_prefix   = var.launch_template_name_prefix
   image_id      = data.aws_ami.amazon_linux_2.id
-  instance_type = "t3.micro" # free tier
+  instance_type = "t3.medium"
 
   iam_instance_profile {
     name = var.instance_profile_name
@@ -26,15 +26,18 @@ resource "aws_launch_template" "project_name_ecs_lt" {
   user_data = base64encode(<<-EOT
               #!/bin/bash
               echo ECS_CLUSTER=${var.cluster_name} >> /etc/ecs/ecs.config
+
+              # remove the following if you have a critical workload
+              echo ECS_ENABLE_SPOT_INSTANCE_DRAINING=true >> /etc/ecs/ecs.config
               EOT
   )
 }
 
 resource "aws_autoscaling_group" "project_name_ecs_asg" {
   name                = var.asg_name
-  max_size            = 1 # free tier, change as you need
-  min_size            = 1 # free tier, change as you need
-  desired_capacity    = 1 # free tier, change as you need
+  max_size            = 6 # change as you need
+  min_size            = 1 # change as you need
+  desired_capacity    = 3 # change as you need
   vpc_zone_identifier = var.private_subnet_ids
 
   launch_template {
