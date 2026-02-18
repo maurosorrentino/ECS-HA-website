@@ -60,4 +60,10 @@ resource "aws_ecs_service" "project_name_service" {
     subnets         = var.private_subnet_ids
     security_groups = var.task_security_group_ids
   }
+
+  # makes app pipeline fail if there are any issues in updating the service
+  deployment_circuit_breaker {
+    enable   = true
+    rollback = true # automatically go back to the old version on failure
+  }
 }
