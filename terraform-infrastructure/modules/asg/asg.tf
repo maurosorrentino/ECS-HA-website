@@ -11,7 +11,7 @@ data "aws_ami" "amazon_linux_2" {
 resource "aws_launch_template" "project_name_ecs_lt" {
   name_prefix   = var.launch_template_name_prefix
   image_id      = data.aws_ami.amazon_linux_2.id
-  instance_type = "t3.micro"
+  instance_type = var.environment == "dev" ? "t3.micro" : "t3.medium" # free tier, change as you need
 
   iam_instance_profile {
     name = var.instance_profile_name
@@ -35,9 +35,9 @@ resource "aws_launch_template" "project_name_ecs_lt" {
 
 resource "aws_autoscaling_group" "project_name_ecs_asg" {
   name                = var.asg_name
-  max_size            = 1 # free tier, change as you need
-  min_size            = 1 # free tier, change as you need
-  desired_capacity    = 1 # free tier, change as you need
+  max_size            = var.environment == "dev" ? 1 : 6 # free tier, change as you need
+  min_size            = var.environment == "dev" ? 1 : 1 # free tier, change as you need
+  desired_capacity    = var.environment == "dev" ? 1 : 3 # free tier, change as you need
   vpc_zone_identifier = var.private_subnet_ids
 
   # remove the following if not using spot instances
@@ -45,8 +45,8 @@ resource "aws_autoscaling_group" "project_name_ecs_asg" {
     instances_distribution {
       # 0 means use Spot for everything. 
       # Set to 1 if you want at least one guaranteed On-Demand instance.
-      on_demand_base_capacity                  = 0 
-      on_demand_percentage_above_base_capacity = 0 
+      on_demand_base_capacity                  = 0
+      on_demand_percentage_above_base_capacity = 0
       spot_allocation_strategy                 = "capacity-optimized"
     }
 
@@ -55,6 +55,10 @@ resource "aws_autoscaling_group" "project_name_ecs_asg" {
         launch_template_id = aws_launch_template.project_name_ecs_lt.id
         version            = "$Latest"
       }
+
+      # If t3.micro is unavailable, it will grab a t3a.micro (AMD version).
+      override { instance_type = var.environment == "dev" ? "t3.micro" : "t3.medium" }
+      override { instance_type = var.environment == "dev" ? "t3a.micro" : "t3a.medium" }
     }
   }
 

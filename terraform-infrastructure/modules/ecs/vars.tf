@@ -32,3 +32,9 @@ variable "private_subnet_ids" {
   description = "List of private subnets for tasks ENIs"
   type        = list(string)
 }
+
+# this is an example of variable that can be used based on the environment
+# the value it's passed from the pipeline to use the same code for each environemnt
+variable "environment" {
+  type = string
+}

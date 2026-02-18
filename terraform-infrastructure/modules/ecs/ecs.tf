@@ -47,7 +47,7 @@ resource "aws_ecs_service" "project_name_service" {
   name            = var.service_name
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.project_name_task.arn
-  desired_count   = 1 # free tier, change as you need (1 per each AZ)
+  desired_count   = var.environment == "dev" ? 1 : 3 # free tier, change as you need (1 per each AZ)
   launch_type     = "EC2"
 
   load_balancer {

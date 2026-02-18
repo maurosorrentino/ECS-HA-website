@@ -6,6 +6,7 @@ module "name_project_ecs_frontend_asg" {
   instance_profile_name               = aws_iam_instance_profile.ecs_instance_profile.name
   launch_template_security_groups_ids = [aws_security_group.project_name_ecs_allow_ecr_sg.id]
   cluster_name                        = aws_ecs_cluster.project_name_ecs_cluster.name
+  environment                         = var.environment
 
   depends_on = [module.project_name_frontend_alb, aws_subnet.project_name_private_subnets, aws_ecs_cluster.project_name_ecs_cluster,
   aws_security_group.project_name_ecs_allow_ecr_sg]
@@ -19,6 +20,7 @@ module "name_project_ecs_backend_asg" {
   instance_profile_name               = aws_iam_instance_profile.ecs_instance_profile.name
   launch_template_security_groups_ids = [aws_security_group.project_name_ecs_allow_ecr_sg.id]
   cluster_name                        = aws_ecs_cluster.project_name_ecs_cluster.name
+  environment                         = var.environment
 
   depends_on = [module.project_name_backend_alb, aws_subnet.project_name_private_subnets, aws_ecs_cluster.project_name_ecs_cluster,
   aws_security_group.project_name_ecs_allow_ecr_sg]
