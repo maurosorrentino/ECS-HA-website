@@ -10,8 +10,8 @@ resource "aws_ecs_task_definition" "project_name_task" {
       name = var.service_name
       # "fake" image as real image update will happen via another pipeline
       image     = "public.ecr.aws/nginx/nginx:latest" # stays alive
-      cpu       = 256 # 0.25 vCPU adjust as you need
-      memory    = 256 # adjust as you need
+      cpu       = 256                                 # 0.25 vCPU adjust as you need
+      memory    = 256                                 # adjust as you need
       essential = true
 
       portMappings = [
@@ -49,6 +49,12 @@ resource "aws_ecs_service" "project_name_service" {
   task_definition = aws_ecs_task_definition.project_name_task.arn
   desired_count   = 1 # free tier, change as you need (increase by 1 for each AZ)
   launch_type     = "EC2"
+
+  # This allows the task count to drop to 0 during a deployment
+  deployment_minimum_healthy_percent = 0
+
+  # This prevents ECS from trying to run 2 tasks at once on the same instance
+  deployment_maximum_percent = 100
 
   load_balancer {
     target_group_arn = var.alb_target_group_arn
