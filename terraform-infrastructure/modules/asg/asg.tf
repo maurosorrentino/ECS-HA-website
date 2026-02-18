@@ -40,10 +40,34 @@ resource "aws_autoscaling_group" "project_name_ecs_asg" {
   desired_capacity    = 3 # change as you need
   vpc_zone_identifier = var.private_subnet_ids
 
-  launch_template {
-    id      = aws_launch_template.project_name_ecs_lt.id
-    version = "$Latest"
+  # remove the following if not using spot instances
+  mixed_instances_policy {
+    instances_distribution {
+      # 0 means use Spot for EVERYTHING. 
+      # Set to 1 if you want at least one guaranteed On-Demand instance.
+      on_demand_base_capacity                  = 0 
+      on_demand_percentage_above_base_capacity = 0 
+      spot_allocation_strategy                 = "capacity-optimized"
+    }
+
+    launch_template {
+      launch_template_specification {
+        launch_template_id = aws_launch_template.project_name_ecs_lt.id
+        version            = "$Latest"
+      }
+
+      # Best Practice: Offer a few similar instance types. 
+      # If t3.medium is unavailable, it will grab a t3a.medium (AMD version).
+      override { instance_type = "t3.medium" }
+      override { instance_type = "t3a.medium" }
+    }
   }
+
+  # keep the following if not using spot instances
+  # launch_template {
+  #   id      = aws_launch_template.project_name_ecs_lt.id
+  #   version = "$Latest"
+  # }
 
   health_check_type         = "EC2"
   health_check_grace_period = 300
